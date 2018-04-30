@@ -1,21 +1,20 @@
 import os
 from flask import Flask, request, render_template, g
 
-from .extensions import (mongo, login_manager)
+from .extensions import (mongo, login_manager, mail)
 
 
-def create_app(config=None, app_name='project', blueprints=None):
+def create_app(config=None, app_name='project'):
     app = Flask(app_name,
         static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'),
         template_folder="templates"
     )
 
     app.config.from_object('project.config')
-    app.config.from_pyfile('../local.cfg', silent=True)
     if config:
-        app.config.from_pyfile(config)
+        app.config.from_pyfile(config, silent=True)
 
-    configure_logging(app)
+    extensions_fabrics(app)
     error_pages(app)
     gvars(app)
 
@@ -23,17 +22,8 @@ def create_app(config=None, app_name='project', blueprints=None):
 
 
 def extensions_fabrics(app):
-    db.init_app(app)
     mail.init_app(app)
-    babel.init_app(app)
-    pages.init_app(app)
-    init_social(app, db)
     login_manager.init_app(app)
-    manager.init_app(app, flask_sqlalchemy_db=db)
-    migrate.init_app(app, db)
-    csrf.init_app(app)
-    cache.init_app(app)
-    celery.config_from_object(app.config)
 
 
 def error_pages(app):
@@ -62,9 +52,8 @@ def gvars(app):
         else:
             g.debug = False
 
-    app.context_processor(backends)
-
-    from .models import User
+    with app.app_context():
+        from .models import User
 
     @login_manager.user_loader
     def load_user(userid):

@@ -11,6 +11,10 @@ setup(
     zip_safe=False,
     install_requires=[
         'Flask',
+        'Flask-Mail',
+        'Flask-Flatpages',
+        'Flask-Login',
+        'Flask-WTF',
         'PyMongo',
     ],
 )

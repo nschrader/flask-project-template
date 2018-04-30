@@ -4,11 +4,12 @@ from flask_login import UserMixin
 
 
 class User(UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    password = db.Column(db.String(200), default='')
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(200))
-    active = db.Column(db.Boolean, default=True)
+    #TODO: Needs to be ported to mongodb
+    id = 666 #db.Column(db.Integer, primary_key=True)
+    password = 'oma123' #db.Column(db.String(200), default='')
+    name = 'deine Mudda' #db.Column(db.String(100))
+    email = 'deine@mudda.de' #db.Column(db.String(200))
+    active = True #db.Column(db.Boolean, default=True)
 
     def is_active(self):
         return self.active
