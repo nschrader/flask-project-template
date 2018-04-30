@@ -1,23 +1,16 @@
-# -*- coding: utf-8 -*-
 from setuptools import setup
 
 setup(
-    name="flask-project-template",
+    name="Project Whiskey",
     version='0.1',
-    url='',
-    description='',
-    author='Mikhail Kashkin',
-    author_email='mkashkin@gmail.com',
+    url='https://github.com/nschrader/project_whiskey',
+    author='Nick Schrader',
+    author_email='nick.schrader@insa-lyon.fr',
     packages=["project"],
     include_package_data=True,
     zip_safe=False,
     install_requires=[
         'Flask',
+        'PyMongo',
     ],
-    classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-    ]
 )
