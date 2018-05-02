@@ -11,7 +11,7 @@
 
 {%  macro logout_button(provider='', id=None) -%}
 <form action="{{ url_for("social.disconnect", backend=provider, association_id=id) }}" method="POST" class="nobox">
-<button type="submit" class="btn btn-link btn-lg" data-confirm="{{ _('Do you want to disconnect this service from your profile?')}}" data-title="{{ _('Are you sure?') }}">
+<button type="submit" class="btn btn-link btn-lg" data-confirm="{{ 'Do you want to disconnect this service from your profile?'}}" data-title="{{ 'Are you sure?' }}">
 {% if provider == 'google-oauth2' %}
 <i class="fa fa-google-plus-square" style="color: #DC4A38"></i> Google
 {% elif provider == 'github' %}
@@ -22,4 +22,3 @@
 </form>
 
 {% endmacro -%}
-

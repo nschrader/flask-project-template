@@ -8,7 +8,7 @@
   <meta name="author" content="">
   <link rel="shortcut icon" href="/static/favicon.png">
 
-  <title>{% block title %}{{ page_title|default(_('New site')) }}{% endblock %}</title>
+  <title>{% block title %}{{ page_title|default('New site') }}{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='libs/bootstrap/dist/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='libs/font-awesome/css/font-awesome.min.css') }}">
   {% block include_css %}
@@ -56,7 +56,7 @@
 
 <div id="footer">
   <div class="container">
-    <p>&copy; 2014 <a href="{{ url_for('frontend.index', _external=True) }}">{{_("New site")}}</a></p>
+    <p>&copy; 2014 <a href="{{ url_for('frontend.index', _external=True) }}">{{"New site"}}</a></p>
   </div>
 </div>
 

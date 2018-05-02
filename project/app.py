@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, render_template, g
-
+from flask_login import current_user
 from .extensions import (mongo, login_manager, mail)
 
 

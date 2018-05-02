@@ -9,11 +9,11 @@ FLATPAGES_ROOT = os.path.join(os.path.dirname(__file__), 'docs')
 
 # make sure that you have started debug mail server using command
 # $ make mail
-MAIL_SERVER = 'localhost'
-MAIL_PORT = 20025
-MAIL_USE_SSL = False
-MAIL_USERNAME = 'your@email.address'
-#MAIL_PASSWORD = 'topsecret'
+MAIL_SERVER = 'smtp.yandex.com'
+MAIL_PORT = 465
+MAIL_USE_SSL = True
+MAIL_USERNAME = 'project.whiskey@yandex.com'
+MAIL_PASSWORD = 'webWEB123'
 
 # Auth
 SESSION_COOKIE_NAME = 'session'

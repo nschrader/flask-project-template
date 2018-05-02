@@ -4,5 +4,9 @@ __pycache__
 # Production config
 local.cfg
 
-# Other stuff here
+# Builds
 *.egg-info
+build/
+dist/
+db/
+log/
