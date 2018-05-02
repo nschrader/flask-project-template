@@ -1,10 +1,10 @@
 {%  macro login_button(provider='') -%}
 {% if provider == 'google-oauth2' %}
-<a href='{{ url_for("social.auth", backend="google-oauth2") }}{% if next %}?next={{next}}{% endif %}' class="btn btn-default btn-lg"><i class="fa fa-google-plus-square" style="color: #DC4A38"></i> Google</a>
+<a href='{{ url_for("index", backend="google-oauth2") }}{% if next %}?next={{next}}{% endif %}' class="btn btn-default btn-lg"><i class="fa fa-google-plus-square" style="color: #DC4A38"></i> Google</a>
 {% elif provider == 'github' %}
-<a href='{{ url_for("social.auth", backend="github") }}{% if next %}?next={{next}}{% endif %}' class="btn btn-default btn-lg"><i class="fa fa-github"></i> Github</a>
+<a href='{{ url_for("index", backend="github") }}{% if next %}?next={{next}}{% endif %}' class="btn btn-default btn-lg"><i class="fa fa-github"></i> Github</a>
 {% else %}
-<a href="{{ url_for("social.auth", backend=provider) }}{% if next %}?next={{next}}{% endif %}" class="btn btn-default btn-lg">{{ provider }}</a>
+<a href="{{ url_for("index", backend=provider) }}{% if next %}?next={{next}}{% endif %}" class="btn btn-default btn-lg">{{ provider }}</a>
 {% endif %}
 {% endmacro -%}
 

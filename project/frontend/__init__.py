@@ -1,1 +1,1 @@
-from .views import frontend
+from .views import *

@@ -12,7 +12,7 @@ def login():
 
 @app.route('/loggedin')
 def loggedin():
-    return redirect(request.args.get('next') or url_for('frontend.index'))
+    return redirect(request.args.get('next') or url_for('index'))
 
 
 @app.route('/profile')

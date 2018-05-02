@@ -6,7 +6,7 @@
 
 {% from 'macros.html' import render_bootstrap_field with context%}
 
-<form action="{{ url_for('auth.settings') }}" method="POST" role="form" class="form-horizontal">
+<form action="{{ url_for('settings') }}" method="POST" role="form" class="form-horizontal">
 
   {{ form.csrf_token }}
   {{ render_bootstrap_field(form.ui_lang) }}

@@ -7,20 +7,20 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand {% if url_for('frontend.index') == request.path %}active{% endif %}" href="{{ url_for('frontend.index') }}">{{ "Site" }}</a>
+    <a class="navbar-brand {% if url_for('index') == request.path %}active{% endif %}" href="{{ url_for('index') }}">{{ "Site" }}</a>
   </div>
   <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-      <li {% if url_for('frontend.index') == request.path %}class="active"{% endif %}><a href="{{ url_for('frontend.index') }}">{{ "Splash page" }}</a></li>
+      <li {% if url_for('index') == request.path %}class="active"{% endif %}><a href="{{ url_for('index') }}">{{ "Splash page" }}</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li {% if url_for('frontend.page') == request.path %}class="active"{% endif %}><a href="{{ url_for('frontend.page') }}"><i class="fa fa-book"></i> {{ "About site " }}</a></li>
+      <li {% if url_for('page') == request.path %}class="active"{% endif %}><a href="{{ url_for('page') }}"><i class="fa fa-book"></i> {{ "About site " }}</a></li>
 
-      {% if user.is_authenticated() %}
-      <li><a href="{{ url_for('auth.settings') }}">{{ "Settings"}}</a></li>
-      <li><a href="{{ url_for('auth.logout') }}" data-confirm="{{ 'Do you want to logout?'}}" data-title="{{ 'Logout?' }}"><i class="fa fa-sign-out"></i> {{ "Logout" }}</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="{{ url_for('settings') }}">{{ "Settings"}}</a></li>
+      <li><a href="{{ url_for('logout') }}" data-confirm="{{ 'Do you want to logout?'}}" data-title="{{ 'Logout?' }}"><i class="fa fa-sign-out"></i> {{ "Logout" }}</a></li>
       {% else %}
-      <li><a href="{{ url_for('auth.login') }}"> {{ "Login" }} </a></li>
+      <li><a href="{{ url_for('login') }}"> {{ "Login" }} </a></li>
       {% endif %}
 
     </ul>
