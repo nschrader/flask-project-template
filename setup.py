@@ -12,7 +12,6 @@ setup(
     install_requires=[
         'Flask==1.0.2',
         'Flask-Mail',
-        'Flask-Flatpages',
         'Flask-Login',
         'Flask-WTF',
         'PyMongo',

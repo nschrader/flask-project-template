@@ -14,7 +14,7 @@
       <li {% if url_for('index') == request.path %}class="active"{% endif %}><a href="{{ url_for('index') }}">{{ "Splash page" }}</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li {% if url_for('page') == request.path %}class="active"{% endif %}><a href="{{ url_for('page') }}"><i class="fa fa-book"></i> {{ "About site " }}</a></li>
+      <li><i class="fa fa-book"></i> {{ "About site " }}</a></li>
 
       {% if user.is_authenticated %}
       <li><a href="{{ url_for('settings') }}">{{ "Settings"}}</a></li>

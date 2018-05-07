@@ -3,19 +3,9 @@ from flask import (render_template, g, request, url_for,
 
 from flask_login import login_required, current_user
 
-from ..extensions import pages
-
 @app.route('/')
 def index():
     return render_template('frontend/index.html', user = current_user)
-
-
-@app.route('/docs/', defaults={'path': 'index'})
-@app.route('/docs/<path:path>/', endpoint='page')
-def page(path):
-    # Documentation views
-    _page = pages.get_or_404(path)
-    return render_template('page.html', page=_page)
 
 
 @app.route('/robots.txt')

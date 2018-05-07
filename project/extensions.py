@@ -1,9 +1,6 @@
 from flask_mail import Mail
 mail = Mail()
 
-from flask_flatpages import FlatPages
-pages = FlatPages()
-
 from pymongo import MongoClient
 mongo = MongoClient().projectWhiskey
 
