@@ -7,6 +7,7 @@ app = create_app(config='../local.cfg')
 with app.app_context():
     import project.frontend
     import project.mail
+    import project.markdown
 
 def makeRoot():
     root = app.config["ROOT"];
