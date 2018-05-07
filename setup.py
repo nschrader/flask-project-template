@@ -15,5 +15,6 @@ setup(
         'Flask-Login',
         'Flask-WTF',
         'PyMongo',
+        'Markdown',
     ],
 )
