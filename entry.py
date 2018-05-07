@@ -6,6 +6,7 @@ app = create_app(config='../local.cfg')
 #TODO: this shit shouldn't be here
 with app.app_context():
     import project.frontend
+    import project.mail
 
 def makeRoot():
     root = app.config["ROOT"];
