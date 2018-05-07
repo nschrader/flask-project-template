@@ -20,7 +20,7 @@ class Pays :
         self.tourisme = tourisme
         self.universites = universites
 
-    # Insère un pays dans la collection pays
+    # Insère le pays dans la collection pays
     def insererDansCollection(self) :
         if pays.find({"_id" : self.id}).count() > 0 :
             print("Le pays " + str(self.id) + " existe déjà.", file=sys.stderr)

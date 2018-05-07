@@ -19,7 +19,7 @@ class Utilisateur :
         self.mobilite = mobilite
         self.mail = mail
 
-    # Insère un utilisateur dans la collection utilisateurs
+    # Insère l'utilisateur dans la collection utilisateurs
     def insererDansCollection(self) :
         if utilisateurs.find({"_id" : self.id}).count() > 0 :
             print("L'utilisateur " + str(self.id) + " existe déjà.", file=sys.stderr)

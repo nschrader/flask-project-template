@@ -17,7 +17,7 @@ class Universite :
         self.nom = nom
         self.departements = departements
 
-    # Insère une université dans la collection universites
+    # Insère l'université dans la collection universites
     def insererDansCollection(self) :
         if universites.find({"_id" : self.id}).count() > 0 :
             print("L'université " + str(self.id) + " existe déjà.", file=sys.stderr)
