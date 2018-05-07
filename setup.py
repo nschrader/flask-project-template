@@ -10,7 +10,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Flask=1.0.2',
+        'Flask==1.0.2',
         'Flask-Mail',
         'Flask-Flatpages',
         'Flask-Login',
