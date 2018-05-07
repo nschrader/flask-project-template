@@ -2,6 +2,6 @@
 {% set page_title = 'Page not found' %}
 {% block content %}
 <h1>{{ "Error 404" }}</h1>
-<p class="lead">{{ "The page <code>%(url)s</code> you are looking for is not found." % {url:request.url} }}</p>
+<p class="lead">{{ "The page <code>%(url)s</code> you are looking for is not found." % {"url": request.url} }}</p>
 <p><a href="/">{{ "&larr; Back to front page" }}</a></p>
 {% endblock %}
