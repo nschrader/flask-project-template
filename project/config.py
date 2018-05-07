@@ -1,14 +1,16 @@
 import os
 
+# Security
 DEBUG = True
 SECRET_KEY = 'ngjqVmXKmqfKN46jKIzj'
+ROOT = "superuser"
+ROOT_PSWD = "yoMama"
 
-# flatpages
+# Flatpages
 FLATPAGES_EXTENSION = '.md'
 FLATPAGES_ROOT = os.path.join(os.path.dirname(__file__), 'docs')
 
-# make sure that you have started debug mail server using command
-# $ make mail
+# Mail
 MAIL_SERVER = 'smtp.yandex.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True

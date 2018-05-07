@@ -1,13 +1,13 @@
 from flask import (render_template, g, request, url_for,
     current_app, send_from_directory, json, redirect, make_response, abort, current_app as app)
 
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from ..extensions import pages
 
 @app.route('/')
 def index():
-    return render_template('frontend/index.html')
+    return render_template('frontend/index.html', user = current_user)
 
 
 @app.route('/docs/', defaults={'path': 'index'})
