@@ -1,16 +1,16 @@
-import os
+from os import path
 from flask import Flask, request, render_template, g
 from flask_login import current_user
-from .extensions import (mongo, login_manager, mail)
+from extensions import mongo, login_manager, mail
 
 
-def create_app(config=None, app_name='project'):
+def create_app(config=None, app_name='Project Whiskey'):
     app = Flask(app_name,
-        static_folder=os.path.join(os.path.dirname(__file__), '..', 'static'),
-        template_folder="templates"
+        static_folder=path.join(path.dirname(__file__), '..', 'static'),
+        template_folder="static/templates"
     )
 
-    app.config.from_object('project.config')
+    app.config.from_object('config')
     if config:
         app.config.from_pyfile(config, silent=True)
 

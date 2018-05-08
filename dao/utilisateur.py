@@ -1,8 +1,7 @@
-import sys
-import pymongo
-from pprint import pprint
-from bson.objectid import ObjectId
-import db
+from werkzeug.security import generate_password_hash
+from . import *
+
+from extensions import mongo
 
 class Utilisateur :
 
@@ -48,3 +47,9 @@ class Utilisateur :
                 "mail" : self.mail
             }
             db.utilisateurs.insert_one(utilisateur)
+
+#TODO: Put this into class
+def make_root(root, root_pswd):
+    if not mongo.users.find_one({"_id": root}):
+        hash = generate_password_hash(root_pswd, method='pbkdf2:sha256')
+        mongo.users.insert({"_id": root, "password": hash})

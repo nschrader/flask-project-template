@@ -1,8 +1,4 @@
-import sys
-import pymongo
-from pprint import pprint
-from bson.objectid import ObjectId
-import db
+from . import *
 
 class Universite :
 

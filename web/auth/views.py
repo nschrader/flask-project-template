@@ -1,7 +1,8 @@
-from flask import render_template, redirect, request, current_app, g, flash, url_for, current_app as app
+from flask import render_template, redirect, request, g, flash, url_for, current_app as app
 from flask_login import login_required, logout_user, login_user
+from extensions import mongo
+
 from .models import User
-from ..extensions import mongo
 from .forms import SettingsForm, LoginForm
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -17,18 +18,13 @@ def login():
         flash("Wrong username or password", category='error')
     return render_template('auth/login.html', title='login', form=form)
 
-
-@app.route('/loggedin')
-def loggedin():
-    return redirect(request.args.get('next') or url_for('index'))
-
-
+#TODO: Make this work
 @app.route('/profile')
 @login_required
 def profile():
     return render_template('auth/profile.html')
 
-
+#TODO: Make this work
 @app.route('/settings', methods=['GET', 'POST'])
 @login_required
 def settings():

@@ -5,7 +5,7 @@ from wtforms.fields import TextField, SelectField, StringField, PasswordField
 from wtforms.fields.html5 import URLField
 from wtforms.validators import url, length, regexp, optional, DataRequired
 
-
+#TODO: Make this usable
 class SettingsForm(FlaskForm):
     """docstring for SettingsForm"""
 

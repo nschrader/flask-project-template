@@ -1,6 +1,6 @@
 export PATH := /usr/sbin:$(PATH)
 
-run:
+run: dep-mongo
 	python3 setup.py develop --user
 	python3 entry.py
 
@@ -13,11 +13,14 @@ clean:
 
 dep-mongo:
 	which mongod
-	mkdir -p db
-	mkdir -p log
+	which mongo
+	mkdir -p .db
+	mkdir -p .log
 
 run-mongo: dep-mongo
-	mongod --fork --logpath log/mongo --dbpath db
+	mongo --eval "quit()" || mongod --fork --logpath .log/mongo --dbpath .db
+	echo "Mongo is up"
 
 kill-mongo: dep-mongo
-	mongod --shutdown --logpath log/mongo --dbpath db
+	! mongo --eval "quit()" || mongod --shutdown --logpath .log/mongo --dbpath .db
+	echo "Mongo is down"
