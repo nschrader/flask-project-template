@@ -1,21 +1,11 @@
 from flask import (render_template, g, request, url_for,
     current_app, send_from_directory, json, redirect, make_response, abort, current_app as app)
 
-from flask_login import login_required
-
-from ..extensions import pages
+from flask_login import login_required, current_user
 
 @app.route('/')
 def index():
-    return render_template('frontend/index.html')
-
-
-@app.route('/docs/', defaults={'path': 'index'})
-@app.route('/docs/<path:path>/', endpoint='page')
-def page(path):
-    # Documentation views
-    _page = pages.get_or_404(path)
-    return render_template('page.html', page=_page)
+    return render_template('frontend/index.html', user = current_user)
 
 
 @app.route('/robots.txt')

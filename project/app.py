@@ -56,11 +56,11 @@ def gvars(app):
         from .models import User
 
     @login_manager.user_loader
-    def load_user(userid):
-        try:
-            return User.query.get(int(userid))
-        except (TypeError, ValueError):
-            pass
+    def load_user(username):
+        u = mongo.users.find_one({"_id": username})
+        if not u:
+            return None
+        return User(u['_id'])
 
     @app.before_request
     def guser():

@@ -1,12 +1,12 @@
 import re
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 
-from wtforms.fields import TextField, SelectField
+from wtforms.fields import TextField, SelectField, StringField, PasswordField
 from wtforms.fields.html5 import URLField
-from wtforms.validators import url, length, regexp, optional
+from wtforms.validators import url, length, regexp, optional, DataRequired
 
 
-class SettingsForm(Form):
+class SettingsForm(FlaskForm):
     """docstring for SettingsForm"""
 
     ui_lang = SelectField(
@@ -33,3 +33,10 @@ class SettingsForm(Form):
                     "contains only latin [0-9a-zA-Z] chars")
         ]
     )
+
+
+class LoginForm(FlaskForm):
+    """Login form to access writing and settings pages"""
+
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])

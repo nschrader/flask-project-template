@@ -316,6 +316,9 @@
                                Area Chart
                             </div>
                             <div class="container">
+                              <p>You are {{ user.username if user.username else "Nobody" }} </p>
+                              <a href="login">Login</a>
+                              <a href="logout">Logout</a>
                               <p class="text-center">Demain, dès l'aube, à l'heure où blanchit la campagne,</p>
                               <p class="text-center">Je partirai. Vois-tu, je sais que tu m'attends.</p>
                               <p class="text-center">J'irai par la forêt, j'irai par la montagne.</p>
