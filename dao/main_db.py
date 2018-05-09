@@ -3,6 +3,7 @@ import utilisateur
 import pays
 import universite
 
+#TODO: TO be removed
 corentin = utilisateur.Utilisateur(69, "Corentin", "Leroy", "TC", 3, False, "corentin.leroy@insa-lyon.fr")
 print(corentin)
 corentin.insererDansCollection()

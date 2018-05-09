@@ -8,5 +8,7 @@ local.cfg
 *.egg-info
 build/
 dist/
-db/
-log/
+
+# Mongo
+.db/
+.log/

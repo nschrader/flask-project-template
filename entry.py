@@ -1,21 +1,14 @@
-from project import create_app, mongo
-from werkzeug.security import generate_password_hash
+from web import create_app
+from extensions import mongo
+from dao import make_root
 
 app = create_app(config='../local.cfg')
 
-#TODO: this shit shouldn't be here
 with app.app_context():
-    import project.frontend
-    import project.mail
-    import project.markdown
-
-def makeRoot():
-    root = app.config["ROOT"];
-    root_pswd = app.config["ROOT_PSWD"]
-    if not mongo.users.find_one({"_id": root}):
-        hash = generate_password_hash(root_pswd, method='pbkdf2:sha256')
-        mongo.users.insert({"_id": root, "password": hash})
+    import web.frontend
+    import web.mail
+    import web.markdown
 
 if __name__ == '__main__':
-    makeRoot()
+    make_root(app.config["ROOT"], app.config["ROOT_PSWD"])
     app.run()

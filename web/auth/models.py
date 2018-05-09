@@ -1,5 +1,6 @@
 from werkzeug.security import check_password_hash
 
+#TODO: Remove all this shit and use Utilisateur
 class User():
 
     def __init__(self, username):
