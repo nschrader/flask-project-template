@@ -1,0 +1,116 @@
+{% extends "frontend/base_layout.html" %}
+{% block content %}
+  <h1>Voeux d'échanges</h1>
+<!--Proposition au dessus--->
+
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+      <form class="form-inline">
+        <div class="form">
+
+      <div class="input-group-prepend">
+        <div class="input-group-text" id="btnGroupAddon">Stéphane Berne</div>
+      </div>
+      </div>
+
+      <div class="form-group ">
+        <label for="Année"></label>
+        <select class="custom-select my-1 mr-sm-2" id="Année">
+          <option selected>Année de départ</option>
+          <option>4A</option>
+          <option>5A</option>
+        </select>
+      </div>
+      <div class="form-group ">
+        <label class="my-1 mr-2" for="Semestre"></label>
+        <select class=" custom-select my-1 mr-sm-2" id="Semestre">
+          <option selected>Semestre</option>
+          <option>S1</option>
+          <option>S2</option>
+          <option>S1+S2</option>
+        </select>
+      </div>
+      <div class="form-group ">
+        <label for="Uni"></label>
+        <select class=" custom-select my-1 mr-sm-2" id="Uni">
+          <option selected>Université</option>
+          <option>KTH</option>
+          <option>SU</option>
+          <option>Chalmers</option>
+        </select>
+      </div>
+      <form>
+    </div>
+
+       <button type="button" class="btn btn-success ">Soumettre</button>
+
+  </div>
+
+
+  <!--Tableau-------------------------------------------------->
+
+  <table class="table table-bordered table-secondary">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">Pays</th>
+      <th scope="col">Université</th>
+      <th scope="col">Type</th>
+      <th scope="col">Nombre de places</th>
+      <th scope="col">Demandes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Suède</th>
+      <td>KTH</td>
+      <td>Echange</td>
+      <td>2x5</td>
+      <td><div class="btn-group ">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Demandes
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
+          <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
+          <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
+          </div>
+          </div>
+        </td>
+    </tr>
+    <tr>
+      <th scope="row">Suède</th>
+      <td>Chalmers</td>
+      <td>Double Diplôme</td>
+      <td>4x5</td>
+      <td><div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Demandes
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
+          <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
+          <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
+          </div>
+          </div>
+        </td>
+    </tr>
+    <tr>
+      <th scope="row">Suède</th>
+      <td>SU</td>
+      <td>Echange</td>
+      <td>5x5</td>
+      <td><div class="btn-group ">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Demandes
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
+          <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
+          <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
+          </div>
+          </div>
+        </td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

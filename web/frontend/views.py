@@ -4,7 +4,11 @@ from flask_login import login_required, current_user
 
 @app.route('/')
 def index():
-    return render_template('frontend/index.html')
+    return render_template('frontend/voeux.html')
+
+@app.route('/showLogin')
+def show_login():
+    return render_template('frontend/login_examples.html')
 
 
 @app.route('/robots.txt')

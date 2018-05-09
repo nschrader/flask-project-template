@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% set page_title = "Login example" %}
+
+{% block include_css %}
+{# <link rel="stylesheet" href="/static/libs/" type="text/css" media="screen"/> #}
+{% endblock %}
+
+{% block include_js %}
+{# <script src="/static/libs/"></script> #}
+{% endblock %}
+
+{% block content %}
+<p>You are {{ current_user.mail if current_user.mail else "Nobody" }} </p>
+<a href="login">Login</a>
+<a href="login?rememberMe">Login and Remember Me</a>
+<a href="logout">Logout</a>
+{% endblock %}
