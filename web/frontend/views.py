@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 
 @app.route('/')
 def index():
-    return render_template('frontend/index.html', user = current_user)
+    return render_template('frontend/voeux.html', user = current_user)
 
 
 @app.route('/robots.txt')
