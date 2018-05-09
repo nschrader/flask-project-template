@@ -1,18 +1,16 @@
 from flask import render_template, redirect, request, g, flash, url_for, current_app as app
 from flask_login import login_required, logout_user, login_user
-from extensions import mongo
 
-from .models import User
+from dao import Utilisateur
 from .forms import SettingsForm, LoginForm
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        user = mongo.users.find_one({"_id": form.username.data})
-        if user and User.validate_login(user['password'], form.password.data):
-            user_obj = User(user['_id'])
-            login_user(user_obj)
+        user = Utilisateur.get_mail(form.username.data)
+        if user and user.validate_login(form.password.data):
+            login_user(user, "rememberMe" in request.args)
             flash("Logged in successfully", category='success')
             return redirect(request.args.get("next") or url_for("index"))
         flash("Wrong username or password", category='error')

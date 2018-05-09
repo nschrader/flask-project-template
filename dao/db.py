@@ -30,12 +30,6 @@ def trouverDocument(collection, id) :
 def supprimerDocument(collection, id) :
     collection.remove({"_id":id})
 
-# Renvoie un objet Utilisateur correspondant au document d'_id id
-def getUtilisateur(id) :
-    liste = utilisateurs.find({'_id':id})
-    document = liste.__getitem__(0)
-    return Utilisateur(document['_id'], document['prenom'], document['nom'], document['departement'], document['niveau'], document['mobilite'], document['mail'])
-
 # Renvoie un objet Pays correspondant au document d'_id id
 def getPays(id) :
     liste = collection_pays.find({'_id':id})

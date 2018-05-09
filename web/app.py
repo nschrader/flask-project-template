@@ -1,7 +1,9 @@
 from os import path
 from flask import Flask, request, render_template, g
 from flask_login import current_user
+
 from extensions import mongo, login_manager, mail
+from dao import Utilisateur
 
 
 def create_app(config=None, app_name='Project Whiskey'):
@@ -52,15 +54,9 @@ def gvars(app):
         else:
             g.debug = False
 
-    with app.app_context():
-        from .models import User
-
     @login_manager.user_loader
-    def load_user(username):
-        u = mongo.users.find_one({"_id": username})
-        if not u:
-            return None
-        return User(u['_id'])
+    def load_user(id):
+        return Utilisateur.get(id)
 
     @app.before_request
     def guser():

@@ -1,11 +1,10 @@
-from flask import (render_template, g, request, url_for,
-    current_app, send_from_directory, json, redirect, make_response, abort, current_app as app)
+from flask import render_template, g, request, send_from_directory, redirect, current_app as app
 
 from flask_login import login_required, current_user
 
 @app.route('/')
 def index():
-    return render_template('frontend/index.html', user = current_user)
+    return render_template('frontend/index.html')
 
 
 @app.route('/robots.txt')
