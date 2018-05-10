@@ -1,14 +1,13 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from bson.objectid import ObjectId
 from overrides import overrides
 from flask_login import UserMixin
 
 from extensions import mongo
+from .entity import Entity
 
-class Utilisateur(UserMixin):
+class Utilisateur(UserMixin, Entity):
 
     def __init__(self, **entries):
-        self._id = None
         self.nom = None
         self.prenom = None
         self.departement = None
@@ -16,29 +15,13 @@ class Utilisateur(UserMixin):
         self.mobilite = None
         self.mail = None
         self.password = None
-        if entries:
-            self.__dict__.update(entries)
-
-    def update(self, **kwargs):
-        self.__dict__.update(**kwargs)
+        Entity.__init__(self, **entries)
 
 
-    def insert(self):
-        if mongo.utilisateurs.find({"_id" : self._id}).count() > 0:
-            raise FileExistsError
-        else :
-            document = self.__dict__
-            document.pop("_id", None)
-            self._id = mongo.utilisateurs.insert_one(document).inserted_id
-
-
-    @staticmethod
-    def get(id):
-        document = mongo.utilisateurs.find_one({'_id': ObjectId(id)})
-        if not document:
-            return None
-        else:
-            return Utilisateur(**document)
+    @classmethod
+    @overrides
+    def get_collection(cls):
+        return mongo.utilisateurs
 
 
     @staticmethod
@@ -50,7 +33,6 @@ class Utilisateur(UserMixin):
             return Utilisateur(**document)
 
 
-    # Flask-Login method, our identification is by mail
     @overrides
     def get_id(self):
         return str(self._id)

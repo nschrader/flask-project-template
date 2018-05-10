@@ -1,34 +1,17 @@
-from . import *
+from overrides import overrides
 
-class Universite :
+from extensions import mongo
+from .entity import Entity
 
-    def __init__(self, univId, nom, pays, departements) :
-        self.id = univId
-        self.nom = nom
-        self.pays = pays
-        self.departements = departements
+class Universite(Entity):
 
-    def __str__(self) :
-        return "Université " + str(self.id) + " : " + self.nom + "(" + self.pays + "), disponible pour les départements " + str(self.departements)
+    def __init__(self, **entries):
+        self.nom = None
+        self.pays = None
+        self.departements = None
+        Entity.__init__(self, **entries)
 
-    # Met à jour les variables
-    def update(self, **kwargs) :
-        if kwargs.get('nom') :
-            self.nom = kwargs.get('nom')
-        if kwargs.get('pays') :
-            self.pays = kwargs.get('pays')
-        if kwargs.get('departements') :
-            self.departements = kwargs.get('departements')
-
-    # Insère l'université dans la collection universites
-    def insererDansCollection(self) :
-        if db.universites.find({"_id" : self.id}).count() > 0 :
-            print("L'université " + str(self.id) + " existe déjà.", file=sys.stderr)
-        else :
-            univ = {
-                "_id" : self.id,
-                "nom" : self.nom,
-                "pays" : self.pays,
-                "departements" : self.departements,
-            }
-            db.universites.insert_one(univ)
+    @classmethod
+    @overrides
+    def get_collection(cls):
+        return mongo.universites
