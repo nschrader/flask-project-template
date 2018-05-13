@@ -4,6 +4,7 @@ from flask_login import UserMixin
 
 from extensions import mongo
 from .entity import Entity
+from .departement import Departement
 
 class Utilisateur(UserMixin, Entity):
 
