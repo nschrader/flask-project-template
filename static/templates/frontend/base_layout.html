@@ -19,7 +19,8 @@
 
       <!-- Custom Fonts -->
       <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+      {# <link rel="stylesheet" href="/static/libs/" type="text/css" media="screen"/> #}
+      {# <script src="/static/libs/"></script> #}
 
   </head>
 
@@ -44,13 +45,12 @@
                                 <a href="javascript:;">
                                     <div class="media">
                                         <span class="media-left">
-                                            <img class="media-object" src="static/assets/Dodo.svg" width="50" height="50" alt="">
+                                            <img class="media-object" src="static/assets/Nick.jpg" width="50" height="50" alt="">
                                         </span>
                                         <div class="media-body">
-                                            <h5 class="media-heading"><strong>J'ai vu un Poussin</strong>
+                                            <h5 class="media-heading"><strong>Nick Schrader</strong>
                                             </h5>
-                                            <p class="small text-muted"> Hier à 4h30 du matin</p>
-                                            <p>Pauline dormais dans son lit</p>
+                                            <p>Responsable Projet</p>
                                         </div>
                                     </div>
                                 </a>
@@ -59,13 +59,12 @@
                                 <a href="javascript:;">
                                     <div class="media">
                                         <span class="media-left">
-                                            <img class="media-object" src="static/assets/Logo_Dodo.png" width="50" height="50" alt="">
+                                            <img class="media-object" src="static/assets/Pauline.jpg" width="50" height="50" alt="">
                                         </span>
                                         <div class="media-body">
                                             <h5 class="media-heading"><strong>Pauline Schmitt</strong>
                                             </h5>
-                                            <p class="small text-muted">L'année dernière </p>
-                                            <p>Corentin était en GM</p>
+                                            <p>Responsable Technique</p>
                                         </div>
                                     </div>
                                 </a>
@@ -74,19 +73,29 @@
                                 <a href="javascript:;">
                                     <div class="media">
                                         <span class="media-left">
-                                            <img class="media-object" src="static/assets/Dodo1.png" width="50" height="50" alt="">
+                                            <img class="media-object" src="static/assets/Corentin.jpg" width="50" height="50" alt="">
                                         </span>
                                         <div class="media-body">
-                                            <h5 class="media-heading"><strong>La troisième va vous étonner</strong>
+                                            <h5 class="media-heading"><strong>Corentin Leroy</strong>
                                             </h5>
-                                            <p class="small text-muted"> Aujourd'hui à 8:00</p>
-                                            <p>Nick était dans son lit</p>
+                                            <p>Responsable Donées</p>
                                         </div>
                                     </div>
                                 </a>
                             </li>
-                            <li class="dropdown-item message-footer">
-                                <a href="javascript:;">Read All New Messages</a>
+                            <li class="dropdown-item message-preview">
+                                <a href="javascript:;">
+                                    <div class="media">
+                                        <span class="media-left">
+                                            <img class="media-object" src="static/assets/Greg.jpg" width="50" height="50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong>Grégoire Launay</strong>
+                                            </h5>
+                                            <p>Responsable Design</p>
+                                        </div>
+                                    </div>
+                                </a>
                             </li>
 
                         <!-- dropdown menu-->
@@ -96,20 +105,22 @@
                 </li>
 
                 <li class="dropdown nav-item">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  Jean-Baptiste Lanneluc <b class="caret"></b></a>
+                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.mail if current_user.mail else "Nobody" }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Profile</a>
+                          <button type="button" class="btn btn-link" >
+                            <a href="javascript:;"> Profile</a></button>
                         </li>
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Messagerie</a>
+                          <button type="button" class="btn btn-link" >  <a href="javascript:;"> Messagerie</a></button>
                         </li>
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Option</a>
+                            <button type="button" class="btn btn-link" ><a href="javascript:;"> Option</a></button></button>
                         </li>
                         <li class="divider"></li>
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Log out</a>
+                          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">Gérer les connexions</button>
+
                         </li>
                     </ul>
                 </li>
@@ -212,11 +223,28 @@
 
             <div class="container-fluid">
                 <div id="content">{% block content %}{% endblock %}</div>
-            <!-- /.container fluid -->
+                <!-- /.container fluid -->
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"><p>You are {{ current_user.mail if current_user.mail else "Nobody" }}</p></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                     </div>
+                     <div class="modal-body">
+                       <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                         <a href="login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
+                         <a href="login?rememberMe" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Login and Remember Me</a>
+                       </div>
+                     <a href="logout" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Logout</a>
+                    </div>
+                  </div>
+                </div>
+            <!-- /.page wrapper -->
             </div>
-
-        <!-- /.page wrapper -->
-        </div>
 
         <!-- /.container-fluid -->
         </div>
