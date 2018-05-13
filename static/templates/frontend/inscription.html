@@ -1,8 +1,12 @@
 {% extends "frontend/base_layout.html" %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="mx-auto" >
 
+
+<div class="container">
+<div class="mx-auto" >
+<div class="p-3 mb-2 bg-light text-dark">
     <form class="well form-horizontal" action=" " method="post"  id="contact_form">
       {{ form.hidden_tag() }}
       <fieldset>
@@ -40,14 +44,16 @@
           </div>
         </div>
 <!--Département INSA-->
-        <div class="form-group row">
+        <div class="container">
+          <div class="mx-auto" >
+          <div class="form-group row">
           <div class="col-10">
             <div class="btn-group dropright">
-              <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="Departement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="Departement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ form.departement.label }}<br>
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">{{ form.departement(size=3) }}<br></a>
+                <a class="dropdown-item" class="btn btn-link">{{ form.departement(size=3) }}<br></a>
                 {% for error in form.departement.errors %}
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
@@ -59,7 +65,7 @@
           <div class="form-group row">
             <div class="col-10">
               <div class="btn-group dropright">
-                <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" id="niveau" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="niveau" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ form.niveau.label }}<br>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -79,7 +85,8 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-
+      </div>
+      </div>
           <div class="form-group row">
             <div class="col-10">
               <label for="Prénom" class="col-2 col-form-label"> {{ form.mdp.label }}<br></label>
@@ -100,11 +107,12 @@
           </div>
         </div>
 
-        
+
         <p>{{ form.submit() }}</p>
         </div>
+</div>
     <fieldset>
   </form>
 </div>
-
+</div>
 {% endblock %}

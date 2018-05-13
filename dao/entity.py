@@ -28,18 +28,38 @@ class Entity():
 
     def override(self):
         document = self.__dict__
-        document.pop("_id", None)
+        if not self._id:
+            document.pop("_id", None)
         self._id = self.__class__.get_collection().insert_one(document).inserted_id
+
+
+    def remove(self):
+        if not self.__class__.get_collection().delete_one({"_id": self._id}).deleted_count:
+            raise FileNotFoundError
+
+
+    @classmethod
+    def make(cls, **args):
+        entity = object.__new__(cls)
+        entity.__init__(**args)
+        return entity
+
 
     @classmethod
     def get(cls, id):
-        document = cls.get_collection().find_one({'_id': ObjectId(id)})
+        _id = id if isinstance(id, ObjectId) else ObjectId(id)
+        document = cls.get_collection().find_one({'_id': _id})
         if not document:
             return None
         else:
-            entity = object.__new__(cls)
-            entity.__init__(**document)
-            return entity
+            return cls.make(**document)
+
+
+    @classmethod
+    def get_all(cls):
+        documents = cls.get_collection().find()
+        return [cls.make(**document) for document in documents]
+
 
     @classmethod
     def get_collection(cls):
