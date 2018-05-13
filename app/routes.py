@@ -34,7 +34,7 @@ def inscription():
         utilisateur = Utilisateur(nom = form.nom.data,
             prenom = form.prenom.data,
             mail = form.email.data,
-            departement = Departement(nom = form.departement.data),
+            departement = Departement(nom = str(form.departement.data)),
             niveau = form.niveau.data,
             mobilite = lambda n : True if form.mobilite.data == 'o' else False,
             password = form.mdp.data)
