@@ -1,5 +1,4 @@
 from dao import *
-from extensions import mongo
 
 #TODO: Find a better place to put test code
 tc = Departement(nom = "TC")
@@ -33,3 +32,10 @@ kth.insert()
 suede.universites = [kth._id]
 suede.update()
 print(suede.__dict__)
+
+bs.remove()
+print(Departement.get_all())
+print(Departement.get(str(bs._id)))
+
+lummerland = Pays(nom = "lummerland")
+lummerland.remove()
