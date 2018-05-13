@@ -1,12 +1,14 @@
 import os
 
-# Security
+
+
+    # Security
 DEBUG = True
 SECRET_KEY = 'ngjqVmXKmqfKN46jKIzj'
 ROOT = "superuser"
 ROOT_PSWD = "yoMama"
 
-# Mail
+    # Mail
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True

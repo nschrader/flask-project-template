@@ -1,9 +1,9 @@
 import re
 from flask_wtf import FlaskForm
 
-from wtforms.fields import TextField, SelectField, StringField, PasswordField
+from wtforms.fields import TextField, SelectField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.fields.html5 import URLField
-from wtforms.validators import url, length, regexp, optional, DataRequired
+from wtforms.validators import ValidationError, url, length, regexp, optional, DataRequired, Email, EqualTo
 
 #TODO: Make this usable
 class SettingsForm(FlaskForm):
@@ -33,7 +33,23 @@ class SettingsForm(FlaskForm):
                     "contains only latin [0-9a-zA-Z] chars")
         ]
     )
+'''
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    mdp = PasswordField('Mot de passe', validators=[DataRequired()])
+    remember_me = BooleanField('Se souvenir de moi')
+    submit = SubmitField('Se connecter')'''
 
+class RegistrationForm(FlaskForm):
+    prenom = StringField('Prénom', validators=[DataRequired()])
+    nom = StringField('Nom', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    departement = SelectField('Département INSA', choices=[('TC', 'TC'), ('BS', 'BS'), ('IF', 'IF')], validators=[DataRequired()])
+    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')], validators=[DataRequired()])
+    mdp = PasswordField('Mot de passe', validators=[DataRequired()])
+    mdp2 = PasswordField('Répétez le mot de passe', validators=[DataRequired(), EqualTo('mdp')])
+    submit = SubmitField('S\'inscrire')
 
 class LoginForm(FlaskForm):
     """Login form to access writing and settings pages"""

@@ -19,7 +19,8 @@
 
       <!-- Custom Fonts -->
       <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+      {# <link rel="stylesheet" href="/static/libs/" type="text/css" media="screen"/> #}
+      {# <script src="/static/libs/"></script> #}
 
   </head>
 
@@ -63,7 +64,7 @@
                                         <div class="media-body">
                                             <h5 class="media-heading"><strong>Pauline Schmitt</strong>
                                             </h5>
-                                            <p>Responsable Secrétaire</p>
+                                            <p>Responsable Technique</p>
                                         </div>
                                     </div>
                                 </a>
@@ -104,20 +105,22 @@
                 </li>
 
                 <li class="dropdown nav-item">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  Jean-Baptiste Lanneluc <b class="caret"></b></a>
+                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.mail if current_user.mail else "Nobody" }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Profile</a>
+                          <button type="button" class="btn btn-link" >
+                            <a href="javascript:;"> Profile</a></button>
                         </li>
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Messagerie</a>
+                          <button type="button" class="btn btn-link" >  <a href="javascript:;"> Messagerie</a></button>
                         </li>
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Option</a>
+                            <button type="button" class="btn btn-link" ><a href="javascript:;"> Option</a></button></button>
                         </li>
                         <li class="divider"></li>
                         <li class="dropdown-item">
-                            <a href="javascript:;"> Log out</a>
+                          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">Gérer les connexions</button>
+
                         </li>
                     </ul>
                 </li>
@@ -222,7 +225,24 @@
                 <div id="content">{% block content %}{% endblock %}</div>
                 <!-- /.container fluid -->
                 </div>
-
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel"><p>You are {{ current_user.mail if current_user.mail else "Nobody" }}</p></h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                     </div>
+                     <div class="modal-body">
+                       <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                         <a href="login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
+                         <a href="login?rememberMe" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Login and Remember Me</a>
+                       </div>
+                     <a href="logout" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Logout</a>
+                    </div>
+                  </div>
+                </div>
             <!-- /.page wrapper -->
             </div>
 
