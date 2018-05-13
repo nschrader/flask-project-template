@@ -19,8 +19,8 @@
 
       <!-- Custom Fonts -->
       <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-      {# <link rel="stylesheet" href="/static/libs/" type="text/css" media="screen"/> #}
-      {# <script src="/static/libs/"></script> #}
+      <link rel="stylesheet" href="/static/libs/" type="text/css" media="screen"/>
+      <script src="/static/libs/"></script>
 
   </head>
 
@@ -105,7 +105,7 @@
                 </li>
 
                 <li class="dropdown nav-item">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.mail if current_user.mail else "Nobody" }} <b class="caret"></b></a>
+                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.mail if current_user.mail else "Vous n'êtes pas connecté" }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item">
                           <button type="button" class="btn btn-link" >
