@@ -78,7 +78,7 @@
                                         <div class="media-body">
                                             <h5 class="media-heading"><strong>Corentin Leroy</strong>
                                             </h5>
-                                            <p>Responsable Donées</p>
+                                            <p>Responsable Données</p>
                                         </div>
                                     </div>
                                 </a>
@@ -105,22 +105,24 @@
                 </li>
 
                 <li class="dropdown nav-item">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.mail if current_user.mail else "Vous n'êtes pas connecté" }} <b class="caret"></b></a>
+                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-item">
-                          <button type="button" class="btn btn-link" >
-                            <a href="javascript:;"> Profile</a></button>
+                          <a href="javascript:;"> Profile</a>
                         </li>
                         <li class="dropdown-item">
-                          <button type="button" class="btn btn-link" >  <a href="javascript:;"> Messagerie</a></button>
+                          <a href="javascript:;"> Messagerie</a>
                         </li>
                         <li class="dropdown-item">
-                            <button type="button" class="btn btn-link" ><a href="javascript:;"> Option</a></button></button>
+                          <a href="javascript:;"> Option</a>
                         </li>
                         <li class="divider"></li>
                         <li class="dropdown-item">
-                          <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">Gérer les connexions</button>
-
+                          {% if (current_user.is_authenticated) %}
+                              <a href="logout">Se déconnecter</a>
+                          {% else %}
+                              <a href="login">Se connecter</a>
+                          {% endif %}
                         </li>
                     </ul>
                 </li>
@@ -229,17 +231,13 @@
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"><p>You are {{ current_user.mail if current_user.mail else "Nobody" }}</p></h5>
+                      <h5 class="modal-title" id="exampleModalLabel"><p>{{ current_user.get_nom() if current_user.is_authenticated else "Vous n'êtes pas connecté" }}</p></h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                      </div>
                      <div class="modal-body">
-                       <div class="btn-group-vertical" role="group" aria-label="Basic example">
-                         <a href="login" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
-                         <a href="login?rememberMe" class="btn btn-primary btn-lg active" role="button" aria-pressed="true"> Login and Remember Me</a>
-                       </div>
-                     <a href="logout" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Logout</a>
+
                     </div>
                   </div>
                 </div>

@@ -4,6 +4,26 @@ from flask_login import login_required, logout_user, login_user
 from dao import Utilisateur
 from .forms import SettingsForm, LoginForm
 
+from web.auth.forms import LoginForm, RegistrationForm
+from werkzeug.security import generate_password_hash
+
+@app.route('/inscription', methods=['GET', 'POST'])
+def inscription():
+    form = RegistrationForm()
+    if form.validate_on_submit() :
+        flash('Merci, votre inscription a été validée.')
+        utilisateur = Utilisateur(
+            nom = form.nom.data,
+            prenom = form.prenom.data,
+            mail = form.email.data,
+            departement = form.departement.data,
+            niveau = form.niveau.data,
+            mobilite = True if form.mobilite.data == 'o' else False,
+            password = generate_password_hash(form.mdp.data))
+        utilisateur.insert()
+        return redirect(url_for('login'))
+    return render_template('auth/inscription.html', title='S\'inscrire', form=form)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
