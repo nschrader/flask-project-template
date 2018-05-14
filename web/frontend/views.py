@@ -5,8 +5,8 @@ from web.auth.forms import LoginForm, RegistrationForm
 from dao import *
 
 @app.route('/')
-def index():
-    return render_template('frontend/voeux.html')
+def accueil():
+    return render_template('frontend/accueil.html')
 
 @app.route('/showLogin')
 def show_login():
@@ -15,6 +15,14 @@ def show_login():
 @app.route('/pays')
 def pays():
     return render_template('frontend/pays.html')
+    
+@app.route('/universite')
+def universite():
+    return render_template('frontend/universite.html')
+    
+@app.route('/voeux')
+def voeux():
+    return render_template('frontend/voeux.html')
 
 @app.route('/robots.txt')
 def static_from_root():
@@ -25,10 +33,6 @@ def static_from_root():
 @app.route('/favicon.ico')
 def favicon():
     return redirect('/static/favicon.png')
-
-@app.route('/voeux.html')
-def voeux():
-        return render_template('frontend/voeux.html')
 
 @app.route('/inscription', methods=['GET', 'POST'])
 def inscription():
