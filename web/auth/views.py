@@ -8,13 +8,16 @@ from .forms import SettingsForm, LoginForm
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        user = Utilisateur.get_mail(form.username.data)
-        if user and user.validate_login(form.password.data):
-            login_user(user, "rememberMe" in request.args)
-            flash("Logged in successfully", category='success')
+        user = Utilisateur.get_mail(form.email.data)
+        if user and user.validate_login(form.mdp.data):
+            if form.remember_me.data:
+                login_user(user, "rememberMe" in request.args)
+            else :
+                login_user(user)
+            flash("Vous êtes connecté", category='success')
             return redirect(request.args.get("next") or url_for("index"))
-        flash("Wrong username or password", category='error')
-    return render_template('auth/login.html', title='login', form=form)
+        flash("Email ou mot de passe erroné", category='error')
+    return render_template('auth/login.html', title='Se connecter', form=form)
 
 #TODO: Make this work
 @app.route('/profile')

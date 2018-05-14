@@ -39,7 +39,8 @@ def inscription():
     form = RegistrationForm()
     if form.validate_on_submit() :
         flash('Merci, votre inscription a été validée.')
-        utilisateur = Utilisateur(nom = form.nom.data,
+        utilisateur = Utilisateur(
+            nom = form.nom.data,
             prenom = form.prenom.data,
             mail = form.email.data,
             departement = form.departement.data,
