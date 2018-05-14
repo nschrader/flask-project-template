@@ -8,7 +8,7 @@
         <div class="form">
 
       <div class="input-group-prepend">
-        <div class="input-group-text" id="btnGroupAddon">{{ current_user.mail if current_user.mail else "Nobody" }}</div>
+        <div class="input-group-text" id="btnGroupAddon">{{ current_user.get_nom() }}</div>
       </div>
       </div>
 
