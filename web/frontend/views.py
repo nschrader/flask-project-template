@@ -1,8 +1,6 @@
 from flask import render_template, g, request, send_from_directory, redirect, current_app as app
 from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
-from web.auth.forms import LoginForm, RegistrationForm
-from werkzeug.security import generate_password_hash
 from dao import *
 
 @app.route('/')
@@ -34,20 +32,3 @@ def static_from_root():
 @app.route('/favicon.ico')
 def favicon():
     return redirect('/static/favicon.png')
-
-@app.route('/inscription', methods=['GET', 'POST'])
-def inscription():
-    form = RegistrationForm()
-    if form.validate_on_submit() :
-        flash('Merci, votre inscription a été validée.')
-        utilisateur = Utilisateur(
-            nom = form.nom.data,
-            prenom = form.prenom.data,
-            mail = form.email.data,
-            departement = form.departement.data,
-            niveau = form.niveau.data,
-            mobilite = True if form.mobilite.data == 'o' else False,
-            password = generate_password_hash(form.mdp.data))
-        utilisateur.insert()
-        return redirect(url_for('login'))
-    return render_template('frontend/inscription.html', title='S\'inscrire', form=form)

@@ -19,6 +19,10 @@ class Utilisateur(UserMixin, Entity):
         Entity.__init__(self, **entries)
 
 
+    def get_nom(self):
+        return "{} {}".format(self.prenom, self.nom)
+
+
     @classmethod
     @overrides
     def get_collection(cls):
