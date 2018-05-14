@@ -14,6 +14,10 @@ def show_login():
 @app.route('/pays')
 def pays():
     return render_template('frontend/pays.html')
+    
+@app.route('/editer')
+def editer():
+    return render_template('frontend/edit.html')
 
 @app.route('/universite')
 def universite():

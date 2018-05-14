@@ -12,8 +12,7 @@
         <!-- TITRE -->
         <div class="col-sm">
             <!-- TODO : dynamic university name -->
-            <h1 class="page-header"><a href ='http://www.uni-stuttgart.de'>Universität Stuttgart</a></h1> 
-            
+            <h1 class="page-header"><a href ='http://www.uni-stuttgart.de'>{% block title %}Universität Stuttgart{% endblock %}</a></h1>
         </div>
         <!-- FIN TITRE -->
         <!-- INFOS PLACES -->
@@ -60,7 +59,7 @@
             <p class="card-text">La majorité sont en allemand, mieux vaut avoir au moins le B2. Quelques cours disponibles en anglais pour les plus chanceux. Le niveau est assez élevé, surtout en traitement du signal.</p>
         </div>
         <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
+            <a href="/editer" class="card-link">Modifier/Ajouter</a> <!-- TODO : raccourci pour les href : ne pas les réécrire à chaque fois -->
         </div>
     </div>
     <div class="card border-warning">
