@@ -30,22 +30,30 @@
             <div class="col-md-4 col-md-offset-4">
                 {{ form.hidden_tag() }}
                       <legend><h1>Connexion</h1></legend>
-                <ul class="nav justify-content-center">
-                <li class="nav-item">
+
                 <div class="form-group">
                     <label class="control-label" for="email">Adresse E-Mail</label>
+                    <div class="col-10">
                     {{ form.email }}
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="mdp">Mot de passe</label>
+                    <div class="col-10">
                     {{ form.mdp }}
                 </div>
+                </div>
                 {{ form.remember_me() }} {{ form.remember_me.label }}
-                <button class="btn btn-default" type="submit">Se connecter</button>
-                <a href="inscription">Nouvel utilisateur ? Cliquez pour vous inscrire</a>
-            </div>
-          </li>
-        </ul>
+                <div class="col-10">
+                <button class="btn btn-default btn-sm" type="submit">Se connecter</button>
+                </div>
+                <div class="col-10">
+                    <label class="control-label" for="espace"> </label>
+                    <label class="control-label" for="espace1"> </label>
+                <a href="inscription" class="btn btn-light btn-sm" role="button" aria-pressed="true">Nouvel utilisateur ? Cliquez ici pour vous inscrire</a>
+              </div>
+          </div>
+
         </form>
         {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
         <div class="alert alert-dismissable alert-danger" align="center">
