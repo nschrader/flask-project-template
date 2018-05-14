@@ -2,6 +2,7 @@ from flask import render_template, g, request, send_from_directory, redirect, cu
 from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
 from web.auth.forms import LoginForm, RegistrationForm
+from werkzeug.security import generate_password_hash
 from dao import *
 
 @app.route('/')
@@ -46,7 +47,7 @@ def inscription():
             departement = form.departement.data,
             niveau = form.niveau.data,
             mobilite = True if form.mobilite.data == 'o' else False,
-            password = form.mdp.data)
+            password = generate_password_hash(form.mdp.data))
         utilisateur.insert()
-        return redirect(url_for('connexion'))
+        return redirect(url_for('login'))
     return render_template('frontend/inscription.html', title='S\'inscrire', form=form)
