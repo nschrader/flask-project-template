@@ -4,6 +4,7 @@ from flask_login import UserMixin
 
 from extensions import mongo
 from .entity import Entity
+from .departement import Departement
 
 class Utilisateur(UserMixin, Entity):
 
@@ -28,6 +29,10 @@ class Utilisateur(UserMixin, Entity):
         if self.__class__.get_collection().find({"mail" : self.mail}).count() > 0:
             raise FileExistsError
         return Entity.insert(self)
+
+
+    def get_nom(self):
+        return "{} {}".format(self.prenom, self.nom)
 
 
     @classmethod

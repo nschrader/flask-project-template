@@ -1,0 +1,104 @@
+{% extends "frontend/base_layout.html" %}
+
+{% block content %}
+
+<!-- TEMPLATE PAGE PAYS -->
+
+<div class="container-fluid">
+
+    <!-- header -->
+    <div class="row">
+        
+        <!-- TITRE -->
+        <div class="col-sm">
+            <!-- TODO : dynamic university name -->
+            <h1 class="page-header"><a href ='http://www.uni-stuttgart.de'>Universität Stuttgart</a></h1> 
+            
+        </div>
+        <!-- FIN TITRE -->
+        <!-- INFOS PLACES -->
+        <!-- TODO : dynamic infos -->
+        <div class="container-fluid">
+            <ol class="breadcrumb" >
+                
+                <div class="media col">
+                    <img src="static/assets/de.png" class="rounded align-self-center mr-3" width="50" height = "50" alt="Generic placeholder image">
+                    <div class="media-body align-self-center">
+                        <h2 class="page-header"><a href='/pays'>Allemagne</a></h2>
+                    </div>
+                </div>
+                <div class = "col-md-auto align-self-center">
+                    <h5>Echange uniquement</h5>
+                    <h5>Départements concernés : TC, GE, IF</h5>
+                </div>
+                <div class = "col-md-auto align-self-center">
+                    <h5>Nombre de places : 5x5</h5>
+                    <div class="btn-group ">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
+                        <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
+                        <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
+                        </div>
+                    </div>
+                </div>  
+                
+            </ol>
+        </div>
+        <!-- FIN INFOS PLACES -->
+
+    </div>
+    <!-- FIN header -->
+    
+    
+    <!-- INFOS -->
+    <h2 class="font-weight-bold">Informations pratiques</h2>
+    <div class="card border-success">
+        <div class="card-body">
+            <h3 class="card-title card-green text-success">Cours</h3>
+            <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
+            <p class="card-text">La majorité sont en allemand, mieux vaut avoir au moins le B2. Quelques cours disponibles en anglais pour les plus chanceux. Le niveau est assez élevé, surtout en traitement du signal.</p>
+        </div>
+        <div class="card-body">
+            <a href="#" class="card-link">Modifier/Ajouter</a>
+        </div>
+    </div>
+    <div class="card border-warning">
+        <div class="card-body">
+            <h3 class="card-title card-yellow text-warning">Accessibilité</h3>
+             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
+            <p class="card-text">Le déplacement en bus est très facile autour de l'université, mais attention dès qu'on s'éloigne du centre ça devient compliqué, les horaires sont espacés et pas toujours respectées. Mieux vaut éviter de se rendre en périphérie le soir.</p>
+            <p class="card-text">Le déplacement à pied est très sympa, surtout au printemps. Les oiseaux chantent.</p>
+        </div>
+        <div class="card-body">
+            <a href="#" class="card-link">Modifier/Ajouter</a>
+        </div>
+    </div>
+    <div class="card border-danger">
+        <div class="card-body">
+            <h3 class="card-title card-red text-danger">Logement</h3>
+             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
+            <p class="card-text">Sur le campus : des logements sont proposés par l'université. Attention aux deadlines pour la demande !</p>
+            <p class="card-text">En dehors du campus : ce n'est pas très compliqué de trouver des colocations sympa pas trop loin du campus, avec d'autres étudiants erasmus. Utilisez les plateformes comme Air BNB ou le groupe Facebook des Erasmus de Stuttgart.</p>
+        </div>
+        <div class="card-body">
+            <a href="#" class="card-link">Modifier/Ajouter</a>
+        </div>
+    </div>
+    <div class="card border-secondary">
+        <div class="card-body">
+            <h3 class="card-title card-blue text-secondary">Sorties et Ambiance</h3>
+             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
+            <p class="card-text">Les allemands sont fêtards, et la bière n'est pas chère !</p>
+            <p class="card-text">Tard le soir mieux vaut rester dans le centre.</p>
+        </div>
+        <div class="card-body">
+            <a href="#" class="card-link">Modifier/Ajouter</a>
+        </div>
+    </div>
+    <!-- FIN INFOS -->
+    
+    
+</div>
+
+{% endblock %}

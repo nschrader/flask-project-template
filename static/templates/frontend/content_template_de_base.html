@@ -1,0 +1,147 @@
+{% extends "frontend/base_layout.html" %}
+
+{% block content %}
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Notre Page Web <small>Echange Universitaire</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                 Allemagne
+                            </li>
+                        </ol>
+                    </div>
+                    
+                <!-- /.row -->  
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-primary card-inverse">
+                            <div class="card-header card-primary">
+                                <div class="row">
+                                    <div class="col-xs-9 text-xs-right">
+                                        <div class="huge">Incroyable!</div>
+                                        <div>Vous êtes reçus</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer card-default">
+                                <a href="javascript:;">
+                                    <span class="pull-xs-left">View Details</span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-green card-inverse">
+                            <div class="card-header card-green">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                    </div>
+                                    <div class="col-xs-9 text-xs-right">
+                                        <div class="huge">12</div>
+                                        <div>New Tasks!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer card-green">
+                                <a href="javascript:;">
+                                    <span class="pull-xs-left">View Details</span>
+                                    <span class="pull-xs-right"></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-yellow card-inverse">
+                            <div class="card-header card-yellow">
+                                <div class="row">
+                                    <div class="col-xs-3">
+
+                                    </div>
+                                    <div class="col-xs-9 text-xs-right">
+                                        <div class="huge">124</div>
+                                        <div>New Orders!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer card-yellow">
+                                <a href="javascript:;">
+                                    <span class="pull-xs-left">View Details</span>
+                                    <span class="pull-xs-right"></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-red card-inverse">
+                            <div class="card-header card-red">
+                                <div class="row">
+                                    <div class="col-xs-3">
+
+                                    </div>
+                                    <div class="col-xs-9 text-xs-right">
+                                        <div class="huge">13</div>
+                                        <div>Support Tickets!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer card-red">
+                                <a href="javascript:;">
+                                    <span class="pull-xs-left">View Details</span>
+                                    <span class="pull-xs-right"></span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <!-- /.row -->
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header card-default">
+                               Area Chart
+                            </div>
+                            <div class="container">
+                              <p>You are {{ user.username if user.username else "Nobody" }} </p>
+                              <a href="login">Login</a>
+                              <a href="logout">Logout</a>
+                              <p class="text-center">Demain, dès l'aube, à l'heure où blanchit la campagne,</p>
+                              <p class="text-center">Je partirai. Vois-tu, je sais que tu m'attends.</p>
+                              <p class="text-center">J'irai par la forêt, j'irai par la montagne.</p>
+                              <p class="text-center">Je ne puis demeurer loin de toi plus longtemps.</p>
+                              <p class="text-center">
+                              <p class="text-center">Je marcherai les yeux fixés sur mes pensées,</p>
+                              <p class="text-center">Sans rien voir au dehors, sans entendre aucun bruit,</p>
+                              <p class="text-center">Seul, inconnu, le dos courbé, les mains croisées,</p>
+                              <p class="text-center">Triste, et le jour pour moi sera comme la nuit.</p>
+
+                              <p class="text-center">Je ne regarderai ni l'or du soir qui tombe,</p>
+                              <p class="text-center">Ni les voiles au loin descendant vers Harfleur,</p>
+                              <p class="text-center">Et quand j'arriverai, je mettrai sur ta tombe</p>
+                              <p class="text-center">Un bouquet de houx vert et de bruyère en fleur</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                <!-- row -->
+                </div>
+
+                <!-- /.container fluid -->
+                </div>
+
+{% endblock %}

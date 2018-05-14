@@ -4,17 +4,40 @@ from flask_login import login_required, logout_user, login_user
 from dao import Utilisateur
 from .forms import SettingsForm, LoginForm
 
+from web.auth.forms import LoginForm, RegistrationForm
+from werkzeug.security import generate_password_hash
+
+@app.route('/inscription', methods=['GET', 'POST'])
+def inscription():
+    form = RegistrationForm()
+    if form.validate_on_submit() :
+        flash('Merci, votre inscription a été validée.')
+        utilisateur = Utilisateur(
+            nom = form.nom.data,
+            prenom = form.prenom.data,
+            mail = form.email.data,
+            departement = form.departement.data,
+            niveau = form.niveau.data,
+            mobilite = True if form.mobilite.data == 'o' else False,
+            password = generate_password_hash(form.mdp.data))
+        utilisateur.insert()
+        return redirect(url_for('login'))
+    return render_template('auth/inscription.html', title='S\'inscrire', form=form)
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        user = Utilisateur.get_mail(form.username.data)
-        if user and user.validate_login(form.password.data):
-            login_user(user, "rememberMe" in request.args)
-            flash("Logged in successfully", category='success')
+        user = Utilisateur.get_mail(form.email.data)
+        if user and user.validate_login(form.mdp.data):
+            if form.remember_me.data:
+                login_user(user, "rememberMe" in request.args)
+            else :
+                login_user(user)
+            flash("Vous êtes connecté", category='success')
             return redirect(request.args.get("next") or url_for("index"))
-        flash("Wrong username or password", category='error')
-    return render_template('auth/login.html', title='login', form=form)
+        flash("Email ou mot de passe erroné", category='error')
+    return render_template('auth/login.html', title='Se connecter', form=form)
 
 #TODO: Make this work
 @app.route('/profile')
