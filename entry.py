@@ -11,5 +11,9 @@ with app.app_context():
     import web.markdown
 
 if __name__ == '__main__':
-    Utilisateur.make_root(app.config["ROOT"], app.config["ROOT_PSWD"])
+    try:
+        Utilisateur.make_root(app.config["ROOT"], app.config["ROOT_PSWD"])
+    except FileExistsError:
+        pass
+    
     app.run()

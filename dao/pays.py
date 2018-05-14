@@ -1,19 +1,18 @@
 from overrides import overrides
 
 from extensions import mongo
-from .entity import Entity
+from .enumeration import Enumeration
 
-class Pays(Entity):
+class Pays(Enumeration):
 
-    def __init__(self, **entries):
-        self.nom = None
-        self.continent = None
+    def __init__(self, *__weak__, **entries):
         self.climat = None
         self.culture = None
         self.vie_pratique = None
         self.tourisme = None
-        self.universites = None
-        Entity.__init__(self, **entries)
+        self.continent = None
+        super().__init__(*__weak__, **entries)
+
 
     @classmethod
     @overrides
