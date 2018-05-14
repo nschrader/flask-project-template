@@ -35,12 +35,6 @@ class SettingsForm(FlaskForm):
                     "contains only latin [0-9a-zA-Z] chars")
         ]
     )
-'''
-class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    mdp = PasswordField('Mot de passe', validators=[DataRequired()])
-    remember_me = BooleanField('Se souvenir de moi')
-    submit = SubmitField('Se connecter')'''
 
 class RegistrationForm(FlaskForm):
     prenom = StringField('Prénom', validators=[DataRequired()])
@@ -57,5 +51,6 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     """Login form to access writing and settings pages"""
 
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    mdp = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Se souvenir de moi')
