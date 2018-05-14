@@ -5,7 +5,7 @@ from web.auth.forms import LoginForm, RegistrationForm
 from dao import *
 
 @app.route('/')
-def accueil():
+def index():
     return render_template('frontend/accueil.html')
 
 @app.route('/showLogin')
@@ -15,11 +15,11 @@ def show_login():
 @app.route('/pays')
 def pays():
     return render_template('frontend/pays.html')
-    
+
 @app.route('/universite')
 def universite():
     return render_template('frontend/universite.html')
-    
+
 @app.route('/voeux')
 def voeux():
     return render_template('frontend/voeux.html')
