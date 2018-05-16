@@ -6,17 +6,18 @@ class Entity():
     another object (aka document), put its ObjectId into the corresponding field.
     If you need multiple references, use an array for the ObjectIds. """
 
-    def __init__(self, **entries):
+    def __init__(self, *__weak__, **entries):
         self._id = None
+        self.update(*__weak__, **entries)
+
+
+    def update(self, *__weak__, **entries):
         for k, v in entries.items():
             if k in self.__dict__:
                 self.__dict__[k] = v
-            else:
-                raise AttributeError
-
-
-    def update(self, **kwargs):
-        self.__dict__.update(**kwargs)
+            elif not True in __weak__:
+                raise AttributeError(k)
+        return self
 
 
     def insert(self):
@@ -24,6 +25,7 @@ class Entity():
             raise FileExistsError
         else:
             self.override()
+        return self
 
 
     def override(self):
@@ -31,6 +33,7 @@ class Entity():
         if not self._id:
             document.pop("_id", None)
         self._id = self.__class__.get_collection().insert_one(document).inserted_id
+        return self
 
 
     def remove(self):
@@ -39,9 +42,9 @@ class Entity():
 
 
     @classmethod
-    def make(cls, **args):
+    def make(cls, *__weak__, **entries):
         entity = object.__new__(cls)
-        entity.__init__(**args)
+        entity.__init__(*__weak__, **entries)
         return entity
 
 
@@ -52,15 +55,20 @@ class Entity():
         if not document:
             return None
         else:
-            return cls.make(**document)
+            return cls.make(True, **document)
 
 
     @classmethod
     def get_all(cls):
         documents = cls.get_collection().find()
-        return [cls.make(**document) for document in documents]
+        return [cls.make(True, **document) for document in documents]
 
 
     @classmethod
     def get_collection(cls):
         raise NotImplementedError
+
+    @staticmethod
+    def require_list(lst):
+        if not isinstance(lst, list):
+            raise AttributeError(lst)

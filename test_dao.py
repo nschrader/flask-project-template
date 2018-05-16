@@ -10,7 +10,7 @@ bs.insert()
 print(bs.__dict__)
 
 corentin = Utilisateur(prenom = "Corentin", nom = "Leroy", departement = tc._id,
-niveau = 3, mobilite = False, mail = "corentin.leroy@insa-lyon.fr")
+niveau = 3, mobilites = [False], mail = "corentin.leroy@insa-lyon.fr")
 print(corentin.__dict__)
 corentin.insert()
 
