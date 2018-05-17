@@ -40,7 +40,7 @@
 </div>
 </div>
 
-<p>{{ form.submit() }}</p>
+<p><span class="badge badge-light">{{ form.submit() }}</span></p>
 
 {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
 <div class="alert alert-dismissable alert-danger" align="center">

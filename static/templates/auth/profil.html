@@ -5,11 +5,31 @@
 <div class="container">
 <div class="mx-auto" >
 <div class="p-3 mb-2 bg-secondary text-dark">
-    
+
+
       <fieldset>
       <legend><h1>Mes informations personnelles</h1></legend>
 
-<a href="modif-profil" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
+  <div class="form-group row">
+    <label for="Prénom" class="col-4 col-form-label"> Votre Nom   : <span class="badge badge-light"> {{ current_user.get_nom() }}  </span></label>
+  </div>
+  <div class="form-group row">
+    <label for="E_mail" class="col-4 col-form-label"> Votre E-mail : <span class="badge badge-light"> {{ current_user.mail }}  </span></label>
+  </div>
+  <div class="form-group row">
+    <label for="depart" class="col-4 col-form-label"> Votre Département : <span class="badge badge-light"> {{ current_user.departement }}  </span></label>
+  </div>
+  <div class="form-group row">
+    <label for="niv" class="col-4 col-form-label"> Votre Niveau d'étude : <span class="badge badge-light"> {{ current_user.niveau }}  </span></label>
+  </div>
+  <div class="form-group row">
+    {% if (current_user.mobilites==[]) %}
+    <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous n'avez pas fait de mobilité internationnal  </span></label>
+    {% else %}
+    <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous avez déjà fait une mobilité internationnal  </span></label>
+    {% endif %}
+  </div>
+  <a href="modif-profil" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
 
 
   {% for success in get_flashed_messages(with_categories=true, category_filter=["success"]) %}
