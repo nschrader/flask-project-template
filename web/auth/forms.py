@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import TextField, SelectField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.fields.html5 import URLField
 from wtforms.validators import ValidationError, url, length, regexp, optional, DataRequired, Email, EqualTo
-from dao import Departement
+from dao import Departement, Utilisateur
 from bson.objectid import ObjectId
 
 #TODO: Make this usable
@@ -50,7 +50,21 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """Login form to access writing and settings pages"""
-
     email = StringField('Email', validators=[DataRequired(), Email()])
     mdp = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Se souvenir de moi')
+
+class EditUserProfileForm(FlaskForm):
+    prenom = StringField('Prénom')
+    nom = StringField('Nom')
+    email = StringField('Email')
+    departement = SelectField('Département INSA', choices=[(d._id, d.nom) for d in Departement.get_all()], coerce=ObjectId)
+    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')])
+    submit = SubmitField('Valider les changements')
+
+class ChangePasswordForm(FlaskForm):
+    mdp = PasswordField('Mot de passe actuel', validators=[DataRequired()])
+    nouveau_mdp = PasswordField('Nouveau mot de passe', validators=[DataRequired()])
+    nouveau_mdp2 = PasswordField('Répétez le nouveau mot de passe', validators=[EqualTo('nouveau_mdp')])
+    submit = SubmitField('Valider le changement de mot de passe')

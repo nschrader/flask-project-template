@@ -104,28 +104,26 @@
                 <!-- dropdown nav item-->
                 </li>
 
-                <li class="dropdown nav-item">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">
-                          <a href="javascript:;"> Profile</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="javascript:;"> Messagerie</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="javascript:;"> Option</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li class="dropdown-item">
-                          {% if (current_user.is_authenticated) %}
+                {% if (current_user.is_authenticated) %}
+                  <li class="dropdown nav-item">
+                      <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li class="dropdown-item">
+                            <a href="profil">Profil</a>
+                          </li>
+                          <li class="dropdown-item">
+                            <a href="javascript:;">Messagerie</a>
+                          </li>
+                          <li class="divider"></li>
+                          <li class="dropdown-item">
                               <a href="logout">Se déconnecter</a>
-                          {% else %}
-                              <a href="login">Se connecter</a>
-                          {% endif %}
-                        </li>
-                    </ul>
-                </li>
+                          </li>
+                      </ul>
+                  </li>
+
+                {% else %}
+                  <a class="nav-link" href="login">Se connecter</a>
+                {% endif %}
 
             <!-- nave bar -->
             </ul>
