@@ -8,15 +8,27 @@ from .departement import Departement
 
 class Utilisateur(UserMixin, Entity):
 
-    def __init__(self, **entries):
+    def __init__(self, *__weak__, **entries):
         self.nom = None
         self.prenom = None
         self.departement = None
         self.niveau = None
-        self.mobilite = None
+        self.mobilites = []
         self.mail = None
         self.password = None
-        Entity.__init__(self, **entries)
+        UserMixin.__init__(self)
+        Entity.__init__(self, *__weak__, **entries)
+
+    @overrides
+    def update(self, *__weak__, **entries):
+        super().update(**entries)
+        super().require_list(self.mobilites)
+
+    @overrides
+    def insert(self):
+        if self.__class__.get_collection().find({"mail" : self.mail}).count() > 0:
+            raise FileExistsError
+        return Entity.insert(self)
 
 
     def get_nom(self):
@@ -51,5 +63,5 @@ class Utilisateur(UserMixin, Entity):
     def make_root(root, root_pswd):
         if not Utilisateur.get_mail(root):
             password = generate_password_hash(root_pswd)
-            root_user = Utilisateur(mail = root, password = password)
+            root_user = Utilisateur(mail=root, password=password, nom=root, prenom="")
             root_user.insert()
