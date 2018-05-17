@@ -4,7 +4,6 @@ from flask_login import UserMixin
 
 from extensions import mongo
 from .entity import Entity
-from .departement import Departement
 
 class Utilisateur(UserMixin, Entity):
 
@@ -16,6 +15,7 @@ class Utilisateur(UserMixin, Entity):
         self.mobilites = []
         self.mail = None
         self.password = None
+        self.admin = None
         UserMixin.__init__(self)
         Entity.__init__(self, *__weak__, **entries)
 
@@ -27,12 +27,17 @@ class Utilisateur(UserMixin, Entity):
     @overrides
     def insert(self):
         if self.__class__.get_collection().find({"mail" : self.mail}).count() > 0:
-            raise FileExistsError
+            raise FileExistsError(self.mail)
         return Entity.insert(self)
 
 
     def get_nom(self):
         return "{} {}".format(self.prenom, self.nom)
+
+
+    @overrides
+    def get_user(self, **entries):
+        return
 
 
     @classmethod
@@ -61,7 +66,15 @@ class Utilisateur(UserMixin, Entity):
 
     @staticmethod
     def make_root(root, root_pswd):
-        if not Utilisateur.get_mail(root):
+        root_user = Utilisateur.get_mail(root)
+        if not root_user:
             password = generate_password_hash(root_pswd)
-            root_user = Utilisateur(mail=root, password=password, nom=root, prenom="")
+            root_user = Utilisateur(
+                mail=root,
+                password=password,
+                nom=root,
+                prenom="",
+                admin=True
+            )
             root_user.insert()
+        return root_user
