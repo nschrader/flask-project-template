@@ -46,7 +46,7 @@
           <div class="form-group row">
           <div class="col-10">
             <div class="btn-group dropright">
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="Departement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="Departement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ form.departement.label }}<br>
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -62,7 +62,7 @@
           <div class="form-group row">
             <div class="col-10">
               <div class="btn-group dropright">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="niveau" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="niveau" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ form.niveau.label }}<br>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -84,10 +84,11 @@
         </p>
       </div>
 
-      <a href="modif-mdp" class="btn btn-light btn-sm" role="button" aria-pressed="true">Changer mon mot de passe</a>
-
-        <p>{{ form.submit() }}</p>
+          <p><a href="modif-mdp" class="btn btn-light btn-sm" role="button" aria-pressed="true">Changer mon mot de passe</a>  </p>
+          <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
         </div>
+
+
 </div>
     <fieldset>
   </form>
