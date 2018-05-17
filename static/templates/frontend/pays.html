@@ -8,7 +8,7 @@
 
     <!-- header -->
     <div class="row">
-        
+
         <!-- NOM DU PAYS -->
         <div class="col-sm">
             <!-- TODO : dynamic country name -->
@@ -19,6 +19,7 @@
         <div class="container-fluid">
             <ol class="breadcrumb" >
                 <li class="active">
+                  <form action="" method="POST" name="form">
                     <!-- TODO : link filters to real actions -->
                     Filtres :
                     <div class="form-check form-check-inline">
@@ -37,7 +38,7 @@
                     </div>
                     <!-- menu déroulant pour le choix du département-->
                     <div class="form-check form-check-inline">
-                        <select class="form-control form-control-sm">  
+                        <select class="form-control form-control-sm">
                         <option selected>Sélectionner le département...</option>
                         <option>GM</option>
                         <option>GI</option>
@@ -50,6 +51,7 @@
                         <option>GE</option>
                         </select>
                     </div>
+                  </form>
                 </li>
             </ol>
         </div>
@@ -57,7 +59,7 @@
 
     </div>
     <!-- FIN header -->
-    
+
     <!-- LISTE UNIVERSITES -->
     <h2 class="font-weight-bold text-light">Universités partenaires</h2>
     <!-- TODO : all data should be dynamic -->
@@ -123,7 +125,7 @@
         </tbody>
     </table>
     <!-- FIN UNIVERSITES -->
-    
+
     <!-- INFOS -->
     <h2 class="font-weight-bold text-light">Informations pratiques</h2>
     <div class="card card-green">
@@ -161,8 +163,8 @@
         </div>
     </div>
     <!-- FIN INFOS -->
-    
-    
+
+
 </div>
 
 {% endblock %}
