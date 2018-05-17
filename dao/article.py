@@ -5,9 +5,9 @@ from .entity import Entity
 
 class Article(Entity):
 
-    def __init__(self, *__weak__, **entries):
+    def __init__(self, **entries):
         self.text = None
-        super().__init__(*__weak__, **entries)
+        super().__init__(**entries)
 
 
     @overrides

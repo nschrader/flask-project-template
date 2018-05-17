@@ -5,13 +5,13 @@ from .enumeration import Enumeration
 
 class Pays(Enumeration):
 
-    def __init__(self, *__weak__, **entries):
+    def __init__(self, **entries):
         self.climat = None
         self.culture = None
         self.vie_pratique = None
         self.tourisme = None
         self.continent = None
-        super().__init__(*__weak__, **entries)
+        super().__init__(**entries)
 
 
     @classmethod

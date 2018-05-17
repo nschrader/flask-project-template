@@ -5,10 +5,10 @@ from .entity import Entity
 
 class Accord(Entity):
 
-    def __init__(self, *__weak__, **entries):
+    def __init__(self, **entries):
         self.type = None
         self.departements = []
-        super().__init__(*__weak__, **entries)
+        super().__init__(**entries)
 
 
     @overrides

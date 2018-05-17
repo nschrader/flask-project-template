@@ -7,20 +7,21 @@ class Entity():
     another object (aka document), put its ObjectId into the corresponding field.
     If you need multiple references, use an array for the ObjectIds. """
 
-    def __init__(self, *__weak__, **entries):
+    def __init__(self, **entries):
         self._id = None
         self.modify = None
-        self.get_user(**entries)
-        self.update(*__weak__, **entries)
+        self.user = self.__get_user__(**entries)
+        self.update(**entries)
 
 
-    def update(self, *__weak__, **entries):
+    def update(self, **entries):
+        weak = entries.get("__weak__", False)
         for k, v in entries.items():
             if k in self.__dict__:
                 self.__dict__[k] = v
-            elif not True in __weak__:
+            elif not weak:
                 raise AttributeError(k)
-        if not True in __weak__:
+        if not weak:
             self.modify = datetime.now()
         return self
 
@@ -29,8 +30,7 @@ class Entity():
         if self.__class__.get_collection().find({"_id" : self._id}).count() > 0:
             raise FileExistsError(self._id)
         else:
-            self.override()
-        return self
+            return self.override()
 
 
     def override(self):
@@ -44,28 +44,26 @@ class Entity():
     def remove(self):
         if not self.__class__.get_collection().delete_one({"_id": self._id}).deleted_count:
             raise FileNotFoundError(self._id)
+        else:
+            del self
+
 
     std_user = None
-    def get_user(self, **entries):
+    def __get_user__(self, **entries):
         if "user" in entries:
-            self.user = entries["user"]
+            return entries["user"]
         elif self.__class__.std_user:
-            self.user = self.__class__.std_user
+            return self.__class__.std_user
         else:
             raise AttributeError("Neither defined \"std_user\" nor passed \"user\"")
 
 
     @classmethod
-    def make(cls, *__weak__, **entries):
-        entity = object.__new__(cls)
-        entity.__init__(*__weak__, **entries)
-        return entity
-
-
-    @classmethod
     def make_from_document(cls, document):
         if document:
-            return cls.make(True, **document)
+            entity = object.__new__(cls)
+            entity.__init__(__weak__=True, **document)
+            return entity
         else:
             return None
 
@@ -79,16 +77,13 @@ class Entity():
     def get(cls, id):
         _id = id if isinstance(id, ObjectId) else ObjectId(id)
         document = cls.get_collection().find_one({'_id': _id})
-        if not document:
-            return None
-        else:
-            return cls.make(True, **document)
+        return cls.make_from_document(document)
 
 
     @classmethod
     def get_all(cls):
         documents = cls.get_collection().find()
-        return [cls.make(True, **document) for document in documents]
+        return cls.make_from_documents(documents)
 
 
     @classmethod

@@ -4,9 +4,9 @@ from .entity import Entity
 
 class Enumeration(Entity):
 
-    def __init__(self, *__weak__, **entries):
+    def __init__(self, **entries):
         self.nom = None
-        super().__init__(*__weak__, **entries)
+        super().__init__(**entries)
 
 
     @overrides

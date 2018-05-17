@@ -7,7 +7,7 @@ from .entity import Entity
 
 class Utilisateur(UserMixin, Entity):
 
-    def __init__(self, *__weak__, **entries):
+    def __init__(self, **entries):
         self.nom = None
         self.prenom = None
         self.departement = None
@@ -17,10 +17,11 @@ class Utilisateur(UserMixin, Entity):
         self.password = None
         self.admin = None
         UserMixin.__init__(self)
-        Entity.__init__(self, *__weak__, **entries)
+        Entity.__init__(self, **entries)
+        del self.user
 
     @overrides
-    def update(self, *__weak__, **entries):
+    def update(self, **entries):
         super().update(**entries)
         super().require_list(self.mobilites)
 
@@ -36,7 +37,7 @@ class Utilisateur(UserMixin, Entity):
 
 
     @overrides
-    def get_user(self, **entries):
+    def __get_user__(self, **entries):
         return
 
 
