@@ -1,0 +1,96 @@
+{% extends "frontend/base_layout.html" %}
+
+{% block content %}
+<div class="mx-auto" >
+<div class="container">
+<div class="mx-auto" >
+<div class="p-3 mb-2 bg-secondary text-dark">
+    <form class="well form-horizontal" action=" " method="post">
+      {{ form.hidden_tag() }}
+      <fieldset>
+      <legend><h1>Modifier mes informations</h1></legend>
+
+<!--Prénom-->
+      <div class="form-group row">
+        <div class="col-10">
+        <label for="Prénom" class="col-2 col-form-label">{{ form.prenom.label }}<br></label>
+            {{ form.prenom(size=32, value=current_user.prenom) }}<br>
+            {% for error in form.prenom.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+      </div>
+<!--Nom-->
+      <div class="form-group row">
+        <div class="col-10">
+        <label for="Nom" class="col-2 col-form-label">{{ form.nom.label }}<br></label>
+            {{ form.nom(size=32, value=current_user.nom) }}<br>
+            {% for error in form.nom.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+        </div>
+<!--E-Mail-->
+        <div class="form-group row">
+          <div class="col-10">
+            <label for="email" class="col-2 col-form-label">{{ form.email.label }}<br></label>
+            {{ form.email(size=32, value=current_user.mail) }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+        </div>
+<!--Département INSA-->
+        <div class="container">
+          <div class="mx-auto" >
+          <div class="form-group row">
+          <div class="col-10">
+            <div class="btn-group dropright">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="Departement" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ form.departement.label }}<br>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" class="btn btn-link">{{ form.departement(size=3) }}<br></a>
+                {% for error in form.departement.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+<!--Niveau dans lequel partir-->
+          <div class="form-group row">
+            <div class="col-10">
+              <div class="btn-group dropright">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="niveau" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ form.niveau.label }}<br>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">{{ form.niveau(size=2) }}<br></a>
+            {% for error in form.niveau.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <p>
+            {{ form.mobilite.label }}<br>
+            {{ form.mobilite(size=2) }}<br>
+            {% for error in form.mobilite.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+      </div>
+
+      <a href="modif-mdp" class="btn btn-light btn-sm" role="button" aria-pressed="true">Changer mon mot de passe</a>
+
+        <p>{{ form.submit() }}</p>
+        </div>
+</div>
+    <fieldset>
+  </form>
+</div>
+</div>
+{% endblock %}

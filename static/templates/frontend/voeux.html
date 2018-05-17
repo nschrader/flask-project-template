@@ -1,49 +1,49 @@
 {% extends "frontend/base_layout.html" %}
 {% block content %}
-  <h1>Voeux d'échanges</h1>
 <!--Proposition au dessus--->
+<div class="container-fluid">
+    <h1 class="text-light">Voeux d'échanges</h1>
+    <ol class="breadcrumb" >
+        <li class="active">
+              <form class="form-inline">
+                <div class="form-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text" id="btnGroupAddon">{{ current_user.get_nom() }}</div>
+                  </div>
+                </div>
 
-    <div class="btn-group mr-2" role="group" aria-label="First group">
-      <form class="form-inline">
-        <div class="form">
-
-      <div class="input-group-prepend">
-        <div class="input-group-text" id="btnGroupAddon">{{ current_user.get_nom() }}</div>
-      </div>
-      </div>
-
-      <div class="form-group ">
-        <label for="Année"></label>
-        <select class="custom-select my-1 mr-sm-2" id="Année">
-          <option selected>Année de départ</option>
-          <option>4A</option>
-          <option>5A</option>
-        </select>
-      </div>
-      <div class="form-group ">
-        <label class="my-1 mr-2" for="Semestre"></label>
-        <select class=" custom-select my-1 mr-sm-2" id="Semestre">
-          <option selected>Semestre</option>
-          <option>S1</option>
-          <option>S2</option>
-          <option>S1+S2</option>
-        </select>
-      </div>
-      <div class="form-group ">
-        <label for="Uni"></label>
-        <select class=" custom-select my-1 mr-sm-2" id="Uni">
-          <option selected>Université</option>
-          <option>KTH</option>
-          <option>SU</option>
-          <option>Chalmers</option>
-        </select>
-      </div>
-      <form>
-    </div>
-
-       <button type="button" class="btn btn-success ">Soumettre</button>
-
-  </div>
+              <div class="form-group ">
+                <label for="Année"></label>
+                <select class="custom-select my-1 mr-sm-2" id="Année">
+                  <option selected>Année de départ</option>
+                  <option>4A</option>
+                  <option>5A</option>
+                </select>
+              </div>
+              <div class="form-group ">
+                <label class="my-1 mr-2" for="Semestre"></label>
+                <select class=" custom-select my-1 mr-sm-2" id="Semestre">
+                  <option selected>Semestre</option>
+                  <option>S1</option>
+                  <option>S2</option>
+                  <option>S1+S2</option>
+                </select>
+              </div>
+              <div class="form-group ">
+                <label for="Uni"></label>
+                <select class=" custom-select my-1 mr-sm-2" id="Uni">
+                  <option selected>Université</option>
+                  <option>KTH</option>
+                  <option>SU</option>
+                  <option>Chalmers</option>
+                </select>
+              </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-success ">Soumettre</button>
+                  </div>
+            </form>
+        </li>
+    </ol>
 
 
   <!--Tableau-------------------------------------------------->
@@ -113,4 +113,6 @@
   </tbody>
 </table>
 
+</div>
+    
 {% endblock %}

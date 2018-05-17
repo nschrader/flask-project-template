@@ -1,0 +1,26 @@
+{% extends "frontend/base_layout.html" %}
+
+{% block content %}
+<div class="mx-auto" >
+<div class="container">
+<div class="mx-auto" >
+<div class="p-3 mb-2 bg-secondary text-dark">
+    
+      <fieldset>
+      <legend><h1>Mes informations personnelles</h1></legend>
+
+<a href="modif-profil" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
+
+
+  {% for success in get_flashed_messages(with_categories=true, category_filter=["success"]) %}
+  <div class="alert alert-dismissable alert-success" align="center">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ success[1] }}
+  </div>
+  {% endfor %}
+
+</div>
+    <fieldset>
+</div>
+</div>
+{% endblock %}

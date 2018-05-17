@@ -12,8 +12,7 @@
         <!-- TITRE -->
         <div class="col-sm">
             <!-- TODO : dynamic university name -->
-            <h1 class="page-header"><a href ='http://www.uni-stuttgart.de'>Universität Stuttgart</a></h1> 
-            
+            <h1 class="page-header"><a href ='http://www.uni-stuttgart.de' class="text-light">{% block title %}Universität Stuttgart{% endblock %}</a></h1>
         </div>
         <!-- FIN TITRE -->
         <!-- INFOS PLACES -->
@@ -24,7 +23,7 @@
                 <div class="media col">
                     <img src="static/assets/de.png" class="rounded align-self-center mr-3" width="50" height = "50" alt="Generic placeholder image">
                     <div class="media-body align-self-center">
-                        <h2 class="page-header"><a href='/pays'>Allemagne</a></h2>
+                        <h2 class="page-header text-light"><a href='/pays'>Allemagne</a></h2>
                     </div>
                 </div>
                 <div class = "col-md-auto align-self-center">
@@ -52,7 +51,7 @@
     
     
     <!-- INFOS -->
-    <h2 class="font-weight-bold">Informations pratiques</h2>
+    <h2 class="font-weight-bold text-white">Informations pratiques</h2>
     <div class="card border-success">
         <div class="card-body">
             <h3 class="card-title card-green text-success">Cours</h3>
@@ -60,7 +59,7 @@
             <p class="card-text">La majorité sont en allemand, mieux vaut avoir au moins le B2. Quelques cours disponibles en anglais pour les plus chanceux. Le niveau est assez élevé, surtout en traitement du signal.</p>
         </div>
         <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
+            <a href="/editer" class="card-link">Modifier/Ajouter</a> <!-- TODO : raccourci pour les href : ne pas les réécrire à chaque fois -->
         </div>
     </div>
     <div class="card border-warning">

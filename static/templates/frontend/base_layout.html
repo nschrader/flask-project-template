@@ -104,28 +104,26 @@
                 <!-- dropdown nav item-->
                 </li>
 
-                <li class="dropdown nav-item">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item">
-                          <a href="javascript:;"> Profile</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="javascript:;"> Messagerie</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="javascript:;"> Option</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li class="dropdown-item">
-                          {% if (current_user.is_authenticated) %}
+                {% if (current_user.is_authenticated) %}
+                  <li class="dropdown nav-item">
+                      <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li class="dropdown-item">
+                            <a href="profil">Profil</a>
+                          </li>
+                          <li class="dropdown-item">
+                            <a href="javascript:;">Messagerie</a>
+                          </li>
+                          <li class="divider"></li>
+                          <li class="dropdown-item">
                               <a href="logout">Se déconnecter</a>
-                          {% else %}
-                              <a href="login">Se connecter</a>
-                          {% endif %}
-                        </li>
-                    </ul>
-                </li>
+                          </li>
+                      </ul>
+                  </li>
+
+                {% else %}
+                  <a class="nav-link" href="login">Se connecter</a>
+                {% endif %}
 
             <!-- nave bar -->
             </ul>
@@ -216,17 +214,15 @@
 
                 <!-- navbar -->
                 </ul>
+            
 
 
         <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="content">{% block content %}{% endblock %}</div>
+            
 
-            <div class="container-fluid">
-                <div id="content">{% block content %}{% endblock %}</div>
-                <!-- /.container fluid -->
-                </div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -236,18 +232,14 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                      </div>
-                     <div class="modal-body">
-
-                    </div>
                   </div>
                 </div>
-            <!-- /.page wrapper -->
-            </div>
+           
+                </div>
 
-        <!-- /.container-fluid -->
-        </div>
 
     <!-- /#wrapper -->
+    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
