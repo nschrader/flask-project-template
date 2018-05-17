@@ -46,13 +46,10 @@ class Utilisateur(UserMixin, Entity):
         return mongo.utilisateurs
 
 
-    @staticmethod
-    def get_mail(mail):
-        document = mongo.utilisateurs.find_one({'mail': mail})
-        if not document:
-            return None
-        else:
-            return Utilisateur(**document)
+    @classmethod
+    def get_mail(cls, mail):
+        document = cls.get_collection().find_one({'mail': mail})
+        return cls.make_from_document(document)
 
 
     @overrides

@@ -12,10 +12,18 @@ class Universite(Enumeration):
         self.accords = []
         super().__init__(*__weak__, **entries)
 
+
     @overrides
     def update(self, *__weak__, **entries):
         super().update(**entries)
         super().require_list(self.accords)
+
+
+    @classmethod
+    def get_from_pays(cls, pays):
+        documents = cls.get_collection().find({'pays': pays})
+        return cls.make_from_documents(documents)
+
 
     @classmethod
     @overrides

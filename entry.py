@@ -1,6 +1,6 @@
 from web import create_app
 from extensions import mongo
-from dao import Utilisateur
+from dao import Utilisateur, set_std_user
 
 app = create_app(config='../local.cfg')
 
@@ -12,8 +12,11 @@ with app.app_context():
 
 if __name__ == '__main__':
     try:
-        Utilisateur.make_root(app.config["ROOT"], app.config["ROOT_PSWD"])
+        root = Utilisateur.make_root(app.config["ROOT"], app.config["ROOT_PSWD"])
+        set_std_user(root)
     except FileExistsError:
-        pass
-    
+        root = Utilisateur.get_mail(app.config["ROOT"])
+    finally:
+        set_std_user(root)
+
     app.run()

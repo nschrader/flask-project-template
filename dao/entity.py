@@ -63,6 +63,19 @@ class Entity():
 
 
     @classmethod
+    def make_from_document(cls, document):
+        if document:
+            return cls.make(True, **document)
+        else:
+            return None
+
+
+    @classmethod
+    def make_from_documents(cls, documents):
+        return [cls.make_from_document(document) for document in documents]
+
+
+    @classmethod
     def get(cls, id):
         _id = id if isinstance(id, ObjectId) else ObjectId(id)
         document = cls.get_collection().find_one({'_id': _id})

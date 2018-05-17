@@ -18,6 +18,12 @@ class Accord(Entity):
 
 
     @classmethod
+    def get_from_departement(cls, dpt):
+        documents = cls.get_collection().find({"departements": dpt})
+        return cls.make_from_documents(documents)
+
+
+    @classmethod
     @overrides
     def get_collection(cls):
         return mongo.accords

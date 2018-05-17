@@ -1,4 +1,4 @@
-from dao import Utilisateur, Departement, Universite, Pays, Continent, Accord, Article
+from dao import *
 import config
 
 try:
@@ -6,8 +6,7 @@ try:
 except FileExistsError:
     su = Utilisateur.get_mail(config.ROOT)
 finally:
-    for entity in [Departement, Universite, Pays, Continent, Accord, Article]:
-        entity.std_user = su._id
+    set_std_user(su._id)
 
 tc = Departement(nom="TC").insert()._id
 pc = Departement(nom="PC").insert()._id

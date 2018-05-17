@@ -15,6 +15,12 @@ class Pays(Enumeration):
 
 
     @classmethod
+    def get_from_continent(cls, continent):
+        documents = cls.get_collection().find({'continent': continent})
+        return cls.make_from_documents(documents)
+
+
+    @classmethod
     @overrides
     def get_collection(cls):
         return mongo.pays
