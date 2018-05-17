@@ -12,5 +12,5 @@ class Enumeration(Entity):
     @overrides
     def insert(self):
         if self.__class__.get_collection().find({"nom" : self.nom}).count() > 0:
-            raise FileExistsError
+            raise FileExistsError(self.nom)
         return Entity.insert(self)

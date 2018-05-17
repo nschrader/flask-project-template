@@ -4,7 +4,7 @@ from flask_login import login_required, logout_user, login_user
 from dao import Utilisateur
 from .forms import SettingsForm, LoginForm
 
-from web.auth.forms import LoginForm, RegistrationForm
+from web.auth.forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm
 from werkzeug.security import generate_password_hash
 
 @app.route('/inscription', methods=['GET', 'POST'])
@@ -18,7 +18,7 @@ def inscription():
             mail = form.email.data,
             departement = form.departement.data,
             niveau = form.niveau.data,
-            mobilite = True if form.mobilite.data == 'o' else False,
+            mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else [],
             password = generate_password_hash(form.mdp.data))
         utilisateur.insert()
         return redirect(url_for('login'))
@@ -39,11 +39,41 @@ def login():
         flash("Email ou mot de passe erroné", category='error')
     return render_template('auth/login.html', title='Se connecter', form=form)
 
-#TODO: Make this work
-@app.route('/profile')
+@app.route('/profil', methods=['GET', 'POST'])
 @login_required
-def profile():
-    return render_template('auth/profile.html')
+def profil() :
+    return render_template('auth/profil.html', title='Mon profil')
+
+@app.route('/modif-profil', methods=['GET', 'POST'])
+@login_required
+def modif_profil() :
+    utilisateur = g.user
+    form = EditUserProfileForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        utilisateur.prenom = form.prenom.data
+        utilisateur.prenom = form.prenom.data
+        utilisateur.mail = form.email.data
+        utilisateur.departement = form.departement.data
+        utilisateur.niveau = form.niveau.data
+        utilisateur.mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else []
+        #form.niveau.process_data('3A')
+        flash("Vos modifications ont été enregistrées", category='success')
+        return render_template('auth/profil.html', title='Mon profil')
+    return render_template('auth/modif_profil.html', title='Modifier mes informations', form=form)
+
+@app.route('/modif-mdp', methods=['GET', 'POST'])
+@login_required
+def modif_mdp() :
+    utilisateur = g.user
+    form = ChangePasswordForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        if not utilisateur.validate_login(form.mdp.data) :
+            flash("Mot de passe erroné", category='error')
+            return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
+        utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
+        flash("Vos modifications ont été enregistrées", category='success')
+        return render_template('auth/profil.html', title='Mon profil')
+    return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
 
 #TODO: Make this work
 @app.route('/settings', methods=['GET', 'POST'])

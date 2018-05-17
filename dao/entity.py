@@ -1,4 +1,5 @@
 from bson.objectid import ObjectId
+from datetime import datetime
 
 class Entity():
     """All entities are flat, i.e. they do not contain any sub objects just as
@@ -8,6 +9,8 @@ class Entity():
 
     def __init__(self, *__weak__, **entries):
         self._id = None
+        self.modify = None
+        self.get_user(**entries)
         self.update(*__weak__, **entries)
 
 
@@ -17,12 +20,14 @@ class Entity():
                 self.__dict__[k] = v
             elif not True in __weak__:
                 raise AttributeError(k)
+        if not True in __weak__:
+            self.modify = datetime.now()
         return self
 
 
     def insert(self):
         if self.__class__.get_collection().find({"_id" : self._id}).count() > 0:
-            raise FileExistsError
+            raise FileExistsError(self._id)
         else:
             self.override()
         return self
@@ -38,7 +43,16 @@ class Entity():
 
     def remove(self):
         if not self.__class__.get_collection().delete_one({"_id": self._id}).deleted_count:
-            raise FileNotFoundError
+            raise FileNotFoundError(self._id)
+
+    std_user = None
+    def get_user(self, **entries):
+        if "user" in entries:
+            self.user = entries["user"]
+        elif self.__class__.std_user:
+            self.user = self.__class__.std_user
+        else:
+            raise AttributeError("Neither defined \"std_user\" nor passed \"user\"")
 
 
     @classmethod
