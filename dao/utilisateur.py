@@ -28,8 +28,7 @@ class Utilisateur(UserMixin, Entity):
     @overrides
     def insert(self):
         if self.__class__.get_collection().find({"mail" : self.mail}).count() > 0:
-            #raise FileExistsError(self.mail)
-            self.__class__.get_collection().remove({"mail" : self.mail})
+            raise FileExistsError(self.mail)
         return Entity.insert(self)
 
 
