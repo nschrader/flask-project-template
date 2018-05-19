@@ -59,8 +59,8 @@ class EditUserProfileForm(FlaskForm):
     nom = StringField('Nom')
     email = StringField('Email')
     departement = SelectField('Département INSA', choices=[(d._id, d.nom) for d in Departement.get_all()], coerce=ObjectId)
-    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
-    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')])
+    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')])
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')], validators=None)
     submit = SubmitField('Valider les changements')
 
 class ChangePasswordForm(FlaskForm):

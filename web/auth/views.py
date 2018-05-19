@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, g, flash, url_for, current_app as app
-from flask_login import login_required, logout_user, login_user
+from flask_login import current_user, login_required, logout_user, login_user
 
 from dao import Utilisateur
 from .forms import SettingsForm, LoginForm
@@ -47,30 +47,33 @@ def profil() :
 @app.route('/modif-profil', methods=['GET', 'POST'])
 @login_required
 def modif_profil() :
-    utilisateur = g.user
+    utilisateur = current_user
     form = EditUserProfileForm()
     if request.method == 'POST' and form.validate_on_submit():
-        utilisateur.prenom = form.prenom.data
-        utilisateur.prenom = form.prenom.data
-        utilisateur.mail = form.email.data
-        utilisateur.departement = form.departement.data
-        utilisateur.niveau = form.niveau.data
-        utilisateur.mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else []
-        #form.niveau.process_data('3A')
+        prenom = form.prenom.data
+        nom = form.nom.data
+        mail = form.email.data
+        departement = form.departement.data if form.departement.data else utilisateur.departement
+        niveau = form.niveau.data if form.niveau.data else utilisateur.niveau
+        mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else utilisateur.mobilites # à modifier
+        utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
+        utilisateur.insert()
+        flash(current_user.prenom, category='success')
         flash("Vos modifications ont été enregistrées", category='success')
-        return render_template('auth/profil.html', title='Mon profil')
+        return redirect(url_for('profil'))
     return render_template('auth/modif_profil.html', title='Modifier mes informations', form=form)
 
 @app.route('/modif-mdp', methods=['GET', 'POST'])
 @login_required
 def modif_mdp() :
-    utilisateur = g.user
+    utilisateur = current_user
     form = ChangePasswordForm()
     if request.method == 'POST' and form.validate_on_submit():
         if not utilisateur.validate_login(form.mdp.data) :
             flash("Mot de passe erroné", category='error')
             return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
         utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
+        utilisateur.insert()
         flash("Vos modifications ont été enregistrées", category='success')
         return render_template('auth/profil.html', title='Mon profil')
     return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
