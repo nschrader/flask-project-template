@@ -2,9 +2,8 @@ from flask import render_template, redirect, request, g, flash, url_for, current
 from flask_login import current_user, login_required, logout_user, login_user
 
 from dao import Utilisateur
-from .forms import SettingsForm, LoginForm
 
-from web.auth.forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm
+from web.auth.forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, DeleteUserForm, SettingsForm
 from werkzeug.security import generate_password_hash
 
 @app.route('/inscription', methods=['GET', 'POST'])
@@ -77,6 +76,21 @@ def modif_mdp() :
         flash("Vos modifications ont été enregistrées", category='success')
         return render_template('auth/profil.html', title='Mon profil')
     return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
+
+@app.route('/suppr-compte', methods=['GET', 'POST'])
+@login_required
+def suppr_profil() :
+    utilisateur = current_user
+    form = DeleteUserForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        if not utilisateur.validate_login(form.mdp.data) :
+            flash("Mot de passe erroné", category='error')
+            return render_template('auth/suppr_profil.html', title='Supprimer mon compte', form=form)
+        utilisateur.remove()
+        logout_user()
+        flash("Votre compte a bien été supprimé", category='success')
+        return render_template('frontend/accueil.html')
+    return render_template('auth/suppr_profil.html', title='Supprimer mon compte', form=form)
 
 #TODO: Make this work
 @app.route('/settings', methods=['GET', 'POST'])
