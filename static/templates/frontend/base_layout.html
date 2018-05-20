@@ -30,208 +30,206 @@
     <div id="wrapper">
         <!-- Navigation -->
         <div class= "container-fluid">
-        <nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-inverted">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Echanges et DD</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="dropdown nav-item">
-                    <!-- <div class="dropdown"> -->
-                        <a class="nav-link dropdown-toggle" href="javascript:;" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Credits</a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="dropdown-item message-preview">
-                                    <div class="media">
-                                        <span class="media-left">
-                                            <img class="media-object" src="static/assets/Nick.jpg" width="50" height="50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>Nick Schrader</strong>
-                                            </h5>
-                                            <p>Responsable Projet</p>
+            <nav class="navbar navbar-expand-sm fixed-top navbar-dark bg-inverted">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Echanges et DD</a>
+                </div>
+                <!-- Top Menu Items -->
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="dropdown nav-item">
+                        <!-- <div class="dropdown"> -->
+                            <a class="nav-link dropdown-toggle" href="javascript:;" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Credits</a>
+                            <ul class="dropdown-menu message-dropdown">
+                                <li class="dropdown-item message-preview">
+                                        <div class="media">
+                                            <span class="media-left">
+                                                <img class="media-object" src="static/assets/Nick.jpg" width="50" height="50" alt="">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong>Nick Schrader</strong>
+                                                </h5>
+                                                <p>Responsable Projet</p>
+                                            </div>
                                         </div>
-                                    </div>
-                            </li>
-                            <li class="dropdown-item message-preview">
-                                    <div class="media">
-                                        <span class="media-left">
-                                            <img class="media-object" src="static/assets/Pauline.jpg" width="50" height="50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>Pauline Schmitt</strong>
-                                            </h5>
-                                            <p>Responsable Technique</p>
+                                </li>
+                                <li class="dropdown-item message-preview">
+                                        <div class="media">
+                                            <span class="media-left">
+                                                <img class="media-object" src="static/assets/Pauline.jpg" width="50" height="50" alt="">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong>Pauline Schmitt</strong>
+                                                </h5>
+                                                <p>Responsable Technique</p>
+                                            </div>
                                         </div>
-                                    </div>
-                            </li>
-                            <li class="dropdown-item message-preview">
-                                    <div class="media">
-                                        <span class="media-left">
-                                            <img class="media-object" src="static/assets/Corentin.jpg" width="50" height="50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>Corentin Leroy</strong>
-                                            </h5>
-                                            <p>Responsable Données</p>
+                                </li>
+                                <li class="dropdown-item message-preview">
+                                        <div class="media">
+                                            <span class="media-left">
+                                                <img class="media-object" src="static/assets/Corentin.jpg" width="50" height="50" alt="">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong>Corentin Leroy</strong>
+                                                </h5>
+                                                <p>Responsable Données</p>
+                                            </div>
                                         </div>
-                                    </div>
-                            </li>
-                            <li class="dropdown-item message-preview">
-                                    <div class="media">
-                                        <span class="media-left">
-                                            <img class="media-object" src="static/assets/Greg.jpg" width="50" height="50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>Grégoire Launay</strong>
-                                            </h5>
-                                            <p>Responsable Design</p>
+                                </li>
+                                <li class="dropdown-item message-preview">
+                                        <div class="media">
+                                            <span class="media-left">
+                                                <img class="media-object" src="static/assets/Greg.jpg" width="50" height="50" alt="">
+                                            </span>
+                                            <div class="media-body">
+                                                <h5 class="media-heading"><strong>Grégoire Launay</strong>
+                                                </h5>
+                                                <p>Responsable Design</p>
+                                            </div>
                                         </div>
-                                    </div>
-                            </li>
+                                </li>
 
-                        <!-- dropdown menu-->
-                        </ul>
+                            <!-- dropdown menu-->
+                            </ul>
 
-                <!-- dropdown nav item-->
-                </li>
+                    <!-- dropdown nav item-->
+                    </li>
 
-                {% if (current_user.is_authenticated) %}
-                  <li class="dropdown nav-item">
-                      <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
-                      <ul class="dropdown-menu">
-                          <li class="dropdown-item">
-                            <a href="profil">Profil</a>
-                          </li>
-                          <li class="dropdown-item">
-                            <a href="javascript:;">Messagerie</a>
-                          </li>
-                          <li class="divider"></li>
-                          <li class="dropdown-item">
-                              <a href="logout">Se déconnecter</a>
-                          </li>
-                      </ul>
-                  </li>
+                    {% if (current_user.is_authenticated) %}
+                      <li class="dropdown nav-item">
+                          <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                              <li class="dropdown-item">
+                                <a href="profil">Profil</a>
+                              </li>
+                              <li class="dropdown-item">
+                                <a href="javascript:;">Messagerie</a>
+                              </li>
+                              <li class="divider"></li>
+                              <li class="dropdown-item">
+                                  <a href="logout">Se déconnecter</a>
+                              </li>
+                          </ul>
+                      </li>
 
-                {% else %}
-                  <a class="nav-link" href="login">Se connecter</a>
-                {% endif %}
+                    {% else %}
+                      <a class="nav-link" href="login">Se connecter</a>
+                    {% endif %}
 
-            <!-- nave bar -->
-            </ul>
+                <!-- nave bar -->
+                </ul>
 
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 
                 <ul class="nav navbar-nav side-nav list-group">
-                      <li class="list-group ">
-                        <a href="javascript:;" data-toggle="collapse" data-target="#Info">Informations</a>
-                        <ul id="Info" class="list-group collapse list-group-item-dark">
-                            <li class="list-group-item list-group-item-dark" >
-                                <a href="javascript:;" data-toggle="collapse" data-target="#Euro">Europe</a>
-                                  <ul id="Euro" class="list-group collapse list-group-item-dark">
-                                    <li class="list-group-item list-group-item-dark">
-                                        <a href="javascript:;" data-toggle="collapse" data-target="#Al"><p class="text-dark">ALLEMAGNE</p></a>
-                                        <ul id="Al" class="list-group collapse list-group-item-dark">
-                                          <li class="list-group-item list-group-item-dark">
-                                            <!--TODO Liaison de bases de données via python pour remplir les données-->
-                                            <a href="javascript:;"> <p class="text-dark">RWTH</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Technische Universität Berlin</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Bochum Universität</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Bremerhaven University of Applied Sciences</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Brandenburgische Technische Universität</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Technische Universität Dresde</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Universität Dortmun</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Karlsruhe Institute of Technology</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  TU Kaiserslautern</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Ludwig Maximilians Universität Munchen</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Technische Universität Münche</p></a>
-                                            <a href="javascript:;"><p class="text-dark">  Universität Passau</p></a>
-                                            <a href="/universite"><p class="text-dark">  Universität Stuttgart</p></a>
-                                          </li>
-                                        </ul>
-                                        <a href="javascript:;" data-toggle="collapse" data-target="#Aut"><p class="text-dark">AUTRICHE</p></a>
-                                          <ul id="Aut" class="list-group collapse list-group-item-dark">
-                                            <li class="list-group-item list-group-item-dark">
-                                              <a href="javascript:;"><p class="text-dark"> Technische Universität Wien</p></a>
-                                              <a href="javascript:;"><p class="text-dark"> Montan Universität</p></a>
-                                              <a href="javascript:;"><p class="text-dark"> Graz University of Technology</p></a>
-                                            </li>
-                                          </ul>
-                                    </li>
-                                  </ul>
+                          <li class="list-group ">
+                            <a href="javascript:;" data-toggle="collapse" data-target="#Info">Informations</a>
+                            <ul id="Info" class="list-group collapse list-group-item-dark">
+                                <li class="list-group-item list-group-item-dark" >
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#Euro">Europe</a>
+                                      <ul id="Euro" class="list-group collapse list-group-item-dark">
+                                        <li class="list-group-item list-group-item-dark">
+                                            <a href="javascript:;" data-toggle="collapse" data-target="#Al"><p class="text-dark">ALLEMAGNE</p></a>
+                                            <ul id="Al" class="list-group collapse list-group-item-dark">
+                                              <li class="list-group-item list-group-item-dark">
+                                                <!--TODO Liaison de bases de données via python pour remplir les données-->
+                                                <a href="javascript:;"> <p class="text-dark">RWTH</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Technische Universität Berlin</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Bochum Universität</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Bremerhaven University of Applied Sciences</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Brandenburgische Technische Universität</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Technische Universität Dresde</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Universität Dortmun</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Karlsruhe Institute of Technology</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  TU Kaiserslautern</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Ludwig Maximilians Universität Munchen</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Technische Universität Münche</p></a>
+                                                <a href="javascript:;"><p class="text-dark">  Universität Passau</p></a>
+                                                <a href="/universite"><p class="text-dark">  Universität Stuttgart</p></a>
+                                              </li>
+                                            </ul>
+                                            <a href="javascript:;" data-toggle="collapse" data-target="#Aut"><p class="text-dark">AUTRICHE</p></a>
+                                              <ul id="Aut" class="list-group collapse list-group-item-dark">
+                                                <li class="list-group-item list-group-item-dark">
+                                                  <a href="javascript:;"><p class="text-dark"> Technische Universität Wien</p></a>
+                                                  <a href="javascript:;"><p class="text-dark"> Montan Universität</p></a>
+                                                  <a href="javascript:;"><p class="text-dark"> Graz University of Technology</p></a>
+                                                </li>
+                                              </ul>
+                                        </li>
+                                      </ul>
+                                </li>
 
 
-
-                            <li class="list-group-item">
-                                <a href="javascript:;" data-toggle="collapse" data-target="#AmdS">Amérique du Sud</a>
-                                  <ul id="AmdS" class="list-group list-group collapse list-group-item-dark">
-                                    <li class="list-group-item list-group-item-dark">
-                                        <a href="javascript:;" data-toggle="collapse" data-target="#Arg"><p class="text-dark">ARGENTINE</p></a>
-                                    </li>
-                                  </ul>
-                            </li>
-
-
-                            <li class="list-group-item">
-                                <a href="javascript:;" data-toggle="collapse" data-target="#Info">Amérique du Nord</a>
-                                  <ul id="Info" class="list-group collapse">
-                                  </ul>
-                            </li>
+                                <li class="list-group-item">
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#AmdS">Amérique du Sud</a>
+                                      <ul id="AmdS" class="list-group list-group collapse list-group-item-dark">
+                                        <li class="list-group-item list-group-item-dark">
+                                            <a href="javascript:;" data-toggle="collapse" data-target="#Arg"><p class="text-dark">ARGENTINE</p></a>
+                                        </li>
+                                      </ul>
+                                </li>
 
 
-                            <li class="list-group-item">
-                                <a href="javascript:;" data-toggle="collapse" data-target="#Info">Afrique</a>
-                                  <ul id="Info" class="list-group collapse">
-                                  </ul>
-                            </li>
+                                <li class="list-group-item">
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#Info">Amérique du Nord</a>
+                                      <ul id="Info" class="list-group collapse">
+                                      </ul>
+                                </li>
 
 
-                            <li class="list-group-item">
-                              <a href="javascript:;" data-toggle="collapse" data-target="#Info">Asie</a>
-                                <ul id="Info" class="list-group collapse">
-                                </ul>
-                            </li>
+                                <li class="list-group-item">
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#Info">Afrique</a>
+                                      <ul id="Info" class="list-group collapse">
+                                      </ul>
+                                </li>
 
 
-                            <li class="list-group-item">
-                                <a href="javascript:;" data-toggle="collapse" data-target="#Info">Océanie</a>
-                                  <ul id="Info" class="list-group collapse">
-                                  </ul>
-                            </li>
+                                <li class="list-group-item">
+                                  <a href="javascript:;" data-toggle="collapse" data-target="#Info">Asie</a>
+                                    <ul id="Info" class="list-group collapse">
+                                    </ul>
+                                </li>
 
-                        <!-- infos -->
-                        </ul>
-                        <a href="/voeux" >Voeux</a>
-                      </li>
+
+                                <li class="list-group-item">
+                                    <a href="javascript:;" data-toggle="collapse" data-target="#Info">Océanie</a>
+                                      <ul id="Info" class="list-group collapse">
+                                      </ul>
+                                </li>
+
+                            </ul>
+
+                            <a href="/voeux" >Voeux</a>
+                            <a href="/projet">Projet WEB</a>
+                          </li>
 
                 <!-- navbar -->
                 </ul>
 
+            <!-- /.navbar-collapse -->
+            </nav>
+
+            <div id="content">{% block content %}{% endblock %}</div>
 
 
-        <!-- /.navbar-collapse -->
-        </nav>
-
-        <div id="content">{% block content %}{% endblock %}</div>
-
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel"><p>{{ current_user.get_nom() if current_user.is_authenticated else "Vous n'êtes pas connecté" }}</p></h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                     </div>
-                  </div>
-                </div>
-
-                </div>
-
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel"><p>{{ current_user.get_nom() if current_user.is_authenticated else "Vous n'êtes pas connecté" }}</p></h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                         </div>
+                      </div>
+                    </div>
+            </div>
+        <!-- container fluid-->
+        </div>
 
     <!-- /#wrapper -->
-    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

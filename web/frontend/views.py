@@ -20,6 +20,10 @@ def pays():
 @app.route('/editer')
 def editer():
     return render_template('frontend/edit.html')
+    
+@app.route('/projet')
+def projet():
+    return render_template('frontend/projet.html')
 
 @app.route('/universite')
 def universite():
