@@ -1,3 +1,5 @@
+from werkzeug.security import generate_password_hash
+
 from dao import *
 import extensions
 
@@ -14,7 +16,6 @@ yf = Departement(nom="IF").saveAndGet()
 sgm = Departement(nom="SGM").saveAndGet()
 bio = Departement(nom="BB/BIM").saveAndGet()
 tous = Departement.objects.all()
-#[tc, pc, gcu, ge, gen, gi, gm, yf, sgm, bio]
 
 eu = Continent(nom="Europe").saveAndGet()
 na = Continent(nom="Amérique du Nord").saveAndGet()
@@ -284,4 +285,19 @@ udg = Universite(
     echanges=[
         Echange(accord="SPE-T", departements=[tc], places="6x18")
     ]
+).saveAndGet()
+
+mm = Utilisateur(
+    prenom="Max",
+    nom="Mustermann",
+    mail="oma123@opa456.com",
+    departement=tc,
+    niveau=5,
+    password=generate_password_hash("hallo")
+)
+mm.save()
+
+v1 = Voeu(
+    utilisateur=mm,
+    universite=uj
 ).saveAndGet()

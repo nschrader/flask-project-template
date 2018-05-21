@@ -8,11 +8,11 @@ import config
 class Utilisateur(UserMixin, Document):
     nom = StringField(required = True)
     prenom = StringField(required = True)
-    departement = StringField()
+    departement = ReferenceField("Departement")
     niveau = IntField()
     mobilites = ListField(ReferenceField("Universite"))
-    mail = EmailField(required = True, domain_whitelist=["insa-lyon.fr"], unique=True)
-    password = StringField()
+    mail = EmailField(required = True, domain_whitelist = ["insa-lyon.fr"], unique = True)
+    password = StringField(required = True)
     admin = BooleanField(default = False)
 
 
