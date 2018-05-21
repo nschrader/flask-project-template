@@ -1,15 +1,8 @@
 from web import create_app
-from dao import Utilisateur, set_std_user
+from dao import Utilisateur, StdUserProxy
 
 app = create_app(config='../local.cfg')
-
-try:
-    root = Utilisateur.make_root(app.config["ROOT"], app.config["ROOT_PSWD"])
-    set_std_user(root)
-except FileExistsError:
-    root = Utilisateur.get_mail(app.config["ROOT"])
-finally:
-    set_std_user(root)
+StdUserProxy.set(Utilisateur.get_root())
 
 with app.app_context():
     import web.auth
