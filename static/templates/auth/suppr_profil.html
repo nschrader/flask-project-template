@@ -1,0 +1,36 @@
+{% extends "frontend/base_layout.html" %}
+
+{% block content %}
+<div class="mx-auto" >
+<div class="container">
+<div class="mx-auto" >
+<div class="p-3 mb-2 bg-secondary text-dark">
+    <form class="well form-horizontal" action=" " method="post">
+      {{ form.hidden_tag() }}
+      <fieldset>
+      <legend><h1>Supprimer mon compte</h1></legend>
+      <p>Votre compte sera définitivement supprimé, mais les informations que vous avez ajoutées sur les différents pays ou accords seront conservées.</p>
+
+      <div class="form-group">
+          <label class="control-label" for="mdp">Mot de passe requis</label>
+          <div class="col-10">
+          {{ form.mdp }}
+      </div>
+      </div>
+
+
+          <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
+</div>
+      {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
+      <div class="alert alert-dismissable alert-danger" align="center">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ error[1] }}
+      </div>
+      {% endfor %}
+
+</div>
+    <fieldset>
+  </form>
+</div>
+</div>
+{% endblock %}
