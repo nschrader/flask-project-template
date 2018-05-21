@@ -1,6 +1,7 @@
 # Security
 DEBUG = True
 SECRET_KEY = 'ngjqVmXKmqfKN46jKIzj'
+DB = "projectWhiskey"
 ROOT = "superuser@superuser.com"
 ROOT_PSWD = "yoMama"
 

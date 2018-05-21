@@ -2,7 +2,7 @@ from os import path
 from flask import Flask, request, render_template, g
 from flask_login import current_user
 
-from extensions import mongo, login_manager, mail
+from extensions import login_manager, mail
 from dao import Utilisateur
 
 
@@ -56,7 +56,7 @@ def gvars(app):
 
     @login_manager.user_loader
     def load_user(id):
-        return Utilisateur.get(id)
+        return Utilisateur.objects.with_id(id)
 
     @app.before_request
     def guser():

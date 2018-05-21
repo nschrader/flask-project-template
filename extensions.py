@@ -1,8 +1,10 @@
+import config
+
 from flask_mail import Mail
 mail = Mail()
 
-from pymongo import MongoClient
-mongo = MongoClient().projectWhiskey
+from mongoengine import connect
+connect(config.DB)
 
 from flask_login import LoginManager
 login_manager = LoginManager()

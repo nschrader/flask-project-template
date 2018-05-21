@@ -18,7 +18,7 @@ setup(
         "Flask-Mail",
         "Flask-Login",
         "Flask-WTF",
-        "PyMongo",
+        "MongoEngine",
         "Markdown",
         "overrides",
     ],

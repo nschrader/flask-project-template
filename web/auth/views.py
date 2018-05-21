@@ -19,15 +19,15 @@ def inscription():
             niveau = form.niveau.data,
             mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else [],
             password = generate_password_hash(form.mdp.data))
-        utilisateur.insert()
+        utilisateur.save()
         return redirect(url_for('login'))
-    return render_template('auth/inscription.html', title='S\'inscrire', form=form)
+    return render_template('auth/inscription.html', title = 'S\'inscrire', form = form)
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        user = Utilisateur.get_mail(form.email.data)
+        user = Utilisateur.objects.get(mail = form.email.data)
         if user and user.validate_login(form.mdp.data):
             if form.remember_me.data:
                 login_user(user, "rememberMe" in request.args)
@@ -56,7 +56,7 @@ def modif_profil() :
         niveau = form.niveau.data if form.niveau.data else utilisateur.niveau
         mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else utilisateur.mobilites # à modifier
         utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
-        utilisateur.insert()
+        utilisateur.save()
         flash(current_user.prenom, category='success')
         flash("Vos modifications ont été enregistrées", category='success')
         return redirect(url_for('profil'))
@@ -72,7 +72,7 @@ def modif_mdp() :
             flash("Mot de passe erroné", category='error')
             return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
         utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
-        utilisateur.insert()
+        utilisateur.save()
         flash("Vos modifications ont été enregistrées", category='success')
         return render_template('auth/profil.html', title='Mon profil')
     return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
