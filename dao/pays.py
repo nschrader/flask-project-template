@@ -1,26 +1,12 @@
-from overrides import overrides
+from mongoengine import *
 
-from extensions import mongo
-from .enumeration import Enumeration
+import dao.article
+from .audit import Audit
 
-class Pays(Enumeration):
-
-    def __init__(self, **entries):
-        self.climat = None
-        self.culture = None
-        self.vie_pratique = None
-        self.tourisme = None
-        self.continent = None
-        super().__init__(**entries)
-
-
-    @classmethod
-    def get_from_continent(cls, continent):
-        documents = cls.get_collection().find({'continent': continent})
-        return cls.make_from_documents(documents)
-
-
-    @classmethod
-    @overrides
-    def get_collection(cls):
-        return mongo.pays
+class Pays(Audit, Document):
+    nom = StringField(unique = True)
+    climat = EmbeddedDocumentField("Article")
+    culture = EmbeddedDocumentField("Article")
+    vie_pratique = EmbeddedDocumentField("Article")
+    tourisme = EmbeddedDocumentField("Article")
+    continent = ReferenceField("Continent")

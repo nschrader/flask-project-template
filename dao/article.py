@@ -1,21 +1,7 @@
-from overrides import overrides
+from datetime import datetime
+from mongoengine import *
 
-from extensions import mongo
-from .entity import Entity
+from .audit import Audit
 
-class Article(Entity):
-
-    def __init__(self, **entries):
-        self.text = None
-        super().__init__(**entries)
-
-
-    @overrides
-    def update(self, *__weak__, **entries):
-        super().update(**entries)
-
-
-    @classmethod
-    @overrides
-    def get_collection(cls):
-        return mongo.articles
+class Article(Audit, EmbeddedDocument):
+    text = StringField(required = True)

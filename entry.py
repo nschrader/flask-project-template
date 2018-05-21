@@ -1,5 +1,4 @@
 from web import create_app
-from extensions import mongo
 from dao import Utilisateur, set_std_user
 
 app = create_app(config='../local.cfg')
