@@ -1,7 +1,6 @@
 from flask import render_template, g, request, send_from_directory, redirect, current_app as app
 from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
-from dao import *
 
 @app.route('/')
 def index():
