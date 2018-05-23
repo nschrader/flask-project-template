@@ -2,7 +2,7 @@ from flask_mail import Message
 
 from extensions import mail
 
-def send_to(recipients, title, content):
-    msg = Message(title, recipients=recipients)
+def send_to(recipient, title, content):
+    msg = Message(title, recipients=[recipient])
     msg.body = content
     mail.send(msg)

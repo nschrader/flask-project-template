@@ -4,6 +4,7 @@ SECRET_KEY = 'ngjqVmXKmqfKN46jKIzj'
 DB = "projectWhiskey"
 ROOT = "superuser@superuser.com"
 ROOT_PSWD = "yoMama"
+TOKEN_TIMEOUT = 600
 
 # Mail
 MAIL_SERVER = 'smtp.gmail.com'
