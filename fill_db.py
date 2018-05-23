@@ -30,6 +30,11 @@ spet = Accord(nom="SPE-T").saveAndGet()
 mxftc = Accord(nom="MEXFITEC").saveAndGet()
 brftc = Accord(nom="BRAFITEC").saveAndGet()
 arftc = Accord(nom="ARFITEC").saveAndGet()
+bltrl = Accord(nom="Bilatéral").saveAndGet()
+bci = Accord(nom="BCI").saveAndGet()
+ora = Accord(nom="ORA").saveAndGet()
+isep = Accord(nom="ISEP").saveAndGet()
+ge3 = Accord(nom="Global E3").saveAndGet()
 
 de = Pays(
     nom="Allemagne",
@@ -172,7 +177,7 @@ tcd = Universite(
     echanges=[
         Echange(accord=ersms, departements=[gi, tc], places="8x4"),
         Echange(accord=dd, departements=[gm], places="12x3"),
-        Echange(accord="UNITECH", departements=[yf], places="12x1")
+        Echange(accord=untch, departements=[yf], places="12x1")
     ]
 ).saveAndGet()
 ucd = Universite(
@@ -186,29 +191,29 @@ epm = Universite(
     nom="Ecole Polytechnique de Montréal",
     pays=ca,
     echanges=[
-        Echange(accord="Bilatéral", departements=[gcu, sgm], places="12x2")
+        Echange(accord=bltrl, departements=[gcu, sgm], places="12x2")
     ]
 ).saveAndGet()
 ets = Universite(
     nom="École de Technologie Supérieure",
     pays=ca,
     echanges=[
-        Echange(accord="Bilatéral", departements=[bio], places="6x6")
+        Echange(accord=bltrl, departements=[bio], places="6x6")
     ]
 ).saveAndGet()
 iit = Universite(
     nom="Illinois Institute of Technology",
     pays=us,
     echanges=[
-        Echange(accord="Bilatéral", departements=[gm], places="12x2"),
-        Echange(accord="Bilatéral", departements=[gm, ge, gi], places="12x1")
+        Echange(accord=bltrl, departements=[gm], places="12x2"),
+        Echange(accord=bltrl, departements=[gm, ge, gi], places="12x1")
     ]
 ).saveAndGet()
 git = Universite(
     nom="Georgia Institute of Technology",
     pays=us,
     echanges=[
-        Echange(accord="Bilatéral", departements=[yf], places="5x4"),
+        Echange(accord=bltrl, departements=[yf], places="5x4"),
         Echange(accord=dd, departements=[ge, gm, sgm, yf, tc], places="6x6"),
     ],
     infos=Article(text="Payant. Se trouve à Atlanta")
@@ -217,7 +222,7 @@ iie = Universite(
     nom="Institut International d’Ingénierie de l’Eau et de l’Environnement",
     pays=bf,
     echanges=[
-        Echange(accord="Bilatéral", departements=tous, places="12x2")
+        Echange(accord=bltrl, departements=tous, places="12x2")
     ],
     infos=Article(text="Se trouve à Ouagadougou")
 ).saveAndGet()
@@ -225,29 +230,29 @@ ul = Universite(
     nom="Université Laval",
     pays=ca,
     echanges=[
-        Echange(accord="BCI", departements=[ge, gi], places="6x4")
-        ],
+        Echange(accord=bci, departements=[ge, gi], places="6x4")
+    ],
     infos=Article(text="Se trouve à Québec")
 ).saveAndGet()
 ush = Universite(
     nom="Université de Sherbrooke",
     pays=ca,
     echanges=[
-        Echange(accord="BCI", departements=[yf], places="6x2")
+        Echange(accord=bci, departements=[yf], places="6x2")
     ]
 ).saveAndGet()
 ryu = Universite(
     nom="Ryerson University",
     pays=ca,
     echanges=[
-        Echange(accord="ORA", departements=[gcu, sgm], places="12x1")
+        Echange(accord=ora, departements=[gcu, sgm], places="12x1")
     ]
 ).saveAndGet()
 udp = Universite(
     nom="Universidad de Palermo",
     pays=ar,
     echanges=[
-        Echange(accord="ISEP", departements=[gm], places="6x6")
+        Echange(accord=isep, departements=[gm], places="6x6")
     ],
     infos=Article(text="Se trouve à Buenos Aires")
 ).saveAndGet()
@@ -255,35 +260,35 @@ hkpu = Universite(
     nom="Hong Kong Polytechnic University",
     pays=hk,
     echanges=[
-        Echange(accord="Global E3", departements=[gm], places="3x6")
+        Echange(accord=ge3, departements=[gm], places="3x6")
     ]
 ).saveAndGet()
 ur = Universite(
     nom="Universidad de Rosario",
     pays=ar,
     echanges=[
-        Echange(accord="ARFITEC", departements=[tc, pc, gm], places="6x2")
+        Echange(accord=arftc, departements=[tc, pc, gm], places="6x2")
     ]
 ).saveAndGet()
 unicamp = Universite(
     nom="Universidade Estadual de Campina",
     pays=br,
     echanges=[
-        Echange(accord="BRAFITEC", departements=[bio], places="6x3")
+        Echange(accord=brftc, departements=[bio], places="6x3")
     ]
 ).saveAndGet()
 udg = Universite(
     nom="Universidad de Guadalajar",
     pays=mex,
     echanges=[
-        Echange(accord="MEXFITEC", departements=[yf, ge], places="12x1")
+        Echange(accord=mxftc, departements=[yf, ge], places="12x1")
     ]
 ).saveAndGet()
 udg = Universite(
     nom="Shanghai Jiaotong University",
     pays=ch,
     echanges=[
-        Echange(accord="SPE-T", departements=[tc], places="6x18")
+        Echange(accord=spet, departements=[tc], places="6x18")
     ]
 ).saveAndGet()
 

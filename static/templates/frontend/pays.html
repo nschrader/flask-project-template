@@ -11,8 +11,7 @@
 
         <!-- NOM DU PAYS -->
         <div class="col-sm">
-            <!-- TODO : dynamic country name -->
-            <h1 class="page-header text-light">Allemagne</h1>
+            <h1 class="page-header text-light">{{ pays.nom }} ({{ pays.continent.nom }})</h1>
         </div>
         <!-- FIN NOM DU PAYS -->
         <!-- FILTRES -->
@@ -20,7 +19,7 @@
             <ol class="breadcrumb" >
                 <li class="active">
                   <form action="" method="POST" name="form">
-                    <!-- TODO : link filters to real actions -->
+                    <!-- TODO : link filters to real actions, use a nice flask form -->
                     Filtres :
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
@@ -62,108 +61,79 @@
 
     <!-- LISTE UNIVERSITES -->
     <h2 class="font-weight-bold text-light">Universités partenaires</h2>
-    <!-- TODO : all data should be dynamic -->
     <table class="table table-bordered table-secondary">
         <thead class="thead-dark">
-            <tr>
-              <th scope="col">Université</th>
-              <th scope="col">Type</th>
-              <th scope="col">Nombre de places</th>
-              <th scope="col">Département(s) concerné(s)</th>
-              <th scope="col">Demandes</th>
-            </tr>
+          <tr>
+            <th scope="col">Université</th>
+            <th scope="col">Type</th>
+            <th scope="col">Nombre de places</th>
+            <th scope="col">Département(s) concerné(s)</th>
+            <th scope="col">Demandes</th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><a href='/universite'>Universität Stuttgart</a></td>
-              <td>Echange</td>
-              <td>2x5</td>
-              <td>TC, GE, IF</td>
-              <td>
-                  <div class="btn-group ">
-                  <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-                    <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-                    <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-                  </div>
-                  </div>
-              </td>
-            </tr>
-            <tr>
-                <td><a href='#'>Universität Passau</a></td>
-              <td>Double Diplôme</td>
-              <td>4x5</td>
-              <td>SGM, GM, GEN</td>
-              <td>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-                      <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-                      <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-                    </div>
-                  </div>
-              </td>
-            </tr>
-            <tr>
-                <td><a href='#'>Duisburg-Essen</a></td>
-                <td>Echange</td>
-                <td>5x5</td>
-                <td>Tous</td>
-                <td>
-                <div class="btn-group ">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-                        <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-                        <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-                    </div>
-                </div>
-                </td>
-            </tr>
+          {% for uni, echng in Universite.get_with_echanges_for_pays(pays) %}
+          <tr>
+            <td><a href="{{ url_for("universite", id=uni.pk) }}">{{ uni.nom }}</a></td>
+            <td>{{ echng.accord.nom }}</td>
+            <td>{{ echng.places }}</td>
+            <td>{{ echng.get_departments_str() }}</td>
+            <td>
+              <div class="btn-group ">
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
+              <!-- TODO : all data should be dynamic -->
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
+                <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
+                <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
+              </div>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
     </table>
     <!-- FIN UNIVERSITES -->
 
     <!-- INFOS -->
-    <h2 class="font-weight-bold text-light">Informations pratiques</h2>
+    <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
+    <!-- TODO : Il faut aussi que le style standard s'applique aussi sur le Markdown -->
+    <h2 class="font-weight-bold text-light">Wiki</h2>
     <div class="card card-green">
-        <div class="card-body">
-            <h3 class="card-title card-green text-success">Coût de la vie</h3>
-            <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">Environ le même qu'en France. La bière est meilleure et moins chère.</p>
-        </div>
-        <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
-        </div>
+      <div class="card-body">
+        <h3 class="card-title card-green text-success">Vie pratique</h3>
+        <p class="card-text">{{ pays.get_vie_pratique_html() }}</p>
+      </div>
+      <div class="card-body">
+        <a href="#" class="card-link">Modifier/Ajouter</a>
+      </div>
     </div>
     <div class="card card-yellow">
-        <div class="card-body">
-            <h3 class="card-title card-yellow text-warning">Lieux à visiter</h3>
-             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">De sa mode jusqu'à son architecture en passant par sa riche histoire politique, Berlin est une ville d'avant-garde. Le mur de Berlin est un triste rappel de l'atmosphère pesante qui planait sur la ville après la guerre. Malgré tout, les graffitis qui recouvrent désormais ce qu'il en reste sont devenus le symbole du progrès social. Partez découvrir le Weltzeituhr, horloge universelle surmontée d'une reproduction du système solaire, puis remontez le temps à l'occasion d'un dîner au Zur Letzten Instanz, restaurant dont l'origine remonte au XVIe siècle et qui a compté Napoléon et Beethoven parmi ses clients.</p>
-            <p class="card-text">Véritable carrefour d'échanges, Francfort est avant tout un lieu de passage. Mais si vous avez envie d'y séjourner, vous ne serez pas déçu : on trouve énormément de choses à faire et à voir dans cette ville allemande fondée il y a plus de 2000 ans. Vous pouvez, par exemple, commencer par visiter la cathédrale gothique Saint-Barthélemy. Détruite et rebâtie deux fois depuis qu'elle a vu le jour au XIVe siècle, cette construction a demandé beaucoup de persévérance. Puis tentez d'assister à une projection au Musée allemand du Cinéma et de visiter l'une des nombreuses galeries d'art qui parsèment la ville. Et ne quittez pas Francfort sans avoir grimpé au sommet de la Main Tower pour profiter d'une vue à 360 degrés sur la ville.</p>
-        </div>
-        <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
-        </div>
+      <div class="card-body">
+        <h3 class="card-title card-yellow text-warning">Tourisme</h3>
+        <p class="card-text">{{ pays.get_tourisme_html() }}</p>
+      <div class="card-body">
+        <a href="#" class="card-link">Modifier/Ajouter</a>
+      </div>
     </div>
     <div class="card card-red">
-        <div class="card-body">
-            <h3 class="card-title card-red text-danger">Autres informations</h3>
-             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">Monnaie : euros</p>
-            <p class="card-text">Langue(s) : Allemand</p>
-            <p class="card-text">Transports : le train est pratique</p>
-            <p class="card-text">Climat : similaire à la France. Couvrez-vous en hiver.</p>
-        </div>
-        <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
-        </div>
+      <div class="card-body">
+          <h3 class="card-title card-red text-danger">Culture</h3>
+          <p class="card-text">{{ pays.get_culture_html() }}</p>
+      <div class="card-body">
+          <a href="#" class="card-link">Modifier/Ajouter</a>
+      </div>
+    </div>
+    <!-- TODO: Make card-blue work -->
+    <div class="card card-blue">
+      <div class="card-body">
+          <h3 class="card-title card-blue text-info">Climat</h3>
+          <p class="card-text">{{ pays.get_climat_html() }}</p>
+      <div class="card-body">
+          <a href="#" class="card-link">Modifier/Ajouter</a>
+      </div>
     </div>
     <!-- FIN INFOS -->
-
 
 </div>
 

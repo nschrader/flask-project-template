@@ -2,6 +2,8 @@ from flask import render_template, g, request, send_from_directory, redirect, cu
 from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
 
+from dao import *
+
 @app.route('/')
 def index():
     return render_template('frontend/accueil.html')
@@ -10,23 +12,24 @@ def index():
 def show_login():
     return render_template('frontend/login_examples.html')
 
-@app.route('/pays')
-def pays():
-    if request.method == 'POST':
-        pass
-    return render_template('frontend/pays.html')
+@app.route('/pays/<id>')
+def pays(id):
+    # TODO: What is this doing ?
+    # if request.method == 'POST':
+    #    pass
+    return render_template('frontend/pays.html', pays=Pays.objects.id_or_404(id))
 
 @app.route('/editer')
 def editer():
     return render_template('frontend/edit.html')
-    
+
 @app.route('/projet')
 def projet():
     return render_template('frontend/projet.html')
 
-@app.route('/universite')
-def universite():
-    return render_template('frontend/universite.html')
+@app.route('/universite/<id>')
+def universite(id):
+    return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id))
 
 @app.route('/voeux')
 def voeux():
