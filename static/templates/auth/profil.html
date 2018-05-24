@@ -29,8 +29,8 @@
     <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous avez déjà fait une mobilité internationnal  </span></label>
     {% endif %}
   </div>
-  <a href="modif-profil" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
-  <p><a href="suppr-compte" class="btn btn-light btn-sm" role="button" aria-pressed="true">Supprimer mon compte</a>  </p>
+  <a href="{{ url_for('modif-profil') }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
+  <p><a href="{{ url_for('suppr-compte') }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Supprimer mon compte</a>  </p>
 
   {% for success in get_flashed_messages(with_categories=true, category_filter=["success"]) %}
   <div class="alert alert-dismissable alert-success" align="center">
@@ -39,8 +39,10 @@
   </div>
   {% endfor %}
 
+
+    </fieldset>
 </div>
-    <fieldset>
+</div>
 </div>
 </div>
 {% endblock %}

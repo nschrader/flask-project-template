@@ -37,7 +37,7 @@
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="dropdown nav-item">
                         <!-- <div class="dropdown"> -->
-                            <a class="nav-link dropdown-toggle" href="javascript:;" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Credits</a>
+                            <a class="nav-link dropdown-toggle" id="dropdownMenu4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Credits</a>
                             <ul class="dropdown-menu message-dropdown">
                                 <li class="dropdown-item message-preview">
                                         <div class="media">
@@ -106,14 +106,14 @@
                               </li>
                               <li class="divider"></li>
                               <li class="dropdown-item">
-                                  <a href="logout">Se déconnecter</a>
+                                  <a href="{{ url_for( 'logout' ) }}">Se déconnecter</a>
                               </li>
                           </ul>
                       </li>
 
                     {% else %}
                       <!-- TODO: Use url_for insted of hard coded links -->
-                      <a class="nav-link" href="login">Se connecter</a>
+                      <a class="nav-link" href="{{ url_for( 'login' ) }}">Se connecter</a>
                     {% endif %}
 
                 <!-- nave bar -->
@@ -131,11 +131,11 @@
                         <ul id="{{ continent.pk }}" class="list-group collapse list-group-item-dark">
                           <li class="list-group-item list-group-item-dark">
                           {% for pays in Pays.objects(continent=continent) %}
-                          <a href="{{ url_for("pays", id=pays.pk) }}" data-toggle="collapse" data-target="#{{ pays.pk }}"><p class="text-dark">{{ pays.nom }}</p></a>
+                          <a href="{{ url_for('pays', id=pays.pk) }}" data-toggle="collapse" data-target="#{{ pays.pk }}"><p class="text-dark">{{ pays.nom }}</p></a>
                           <ul id="{{ pays.pk }}" class="list-group collapse list-group-item-dark">
                             <li class="list-group-item list-group-item-dark">
                               {% for uni in Universite.objects(pays=pays) %}
-                              <a href="{{ url_for("universite", id=uni.pk) }}"><p class="text-dark">{{ uni.nom }}</p></a>
+                              <a href="{{ url_for('universite', id=uni.pk) }}"><p class="text-dark">{{ uni.nom }}</p></a>
                               {% endfor %}
                             </li>
                           </ul>
@@ -145,8 +145,8 @@
                       </li>
                       {% endfor %}
                     </ul>
-                    <a href="{{ url_for("voeux") }}" >Voeux</a>
-                    <a href="{{ url_for("projet") }}">Projet WEB</a>
+                    <a href="{{ url_for('voeux') }}" >Voeux</a>
+                    <a href="{{ url_for('projet') }}">Projet WEB</a>
                   </li>
 
                 <!-- navbar -->
