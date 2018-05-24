@@ -1,7 +1,14 @@
-{% extends "misc/base.html" %}
-{% set page_title = 'Method not allowed' %}
-{% block content %}
-<h1>{{ "Error 405" }}</h1>
-<p class="lead">{{"You are trying to access page by methods that is not allowed.")}}</p>
-<p><a href="/">{{ "&larr; Back to front page") }}</a></p>
+{% extends "base_layout_slim.html" %}
+{% block display %}
+
+<div id="wrapper">
+  <div id="content">
+    <div class="container-fluid sol-sm">
+      <h1 class="page-header text-light">Erreur 405</h1>
+      <p class="font-weight-bold text-white">Vous avez essayé d'accéder la page <code>{{ request.url }}</code> par une méthode non permise.</p>
+      <p><a href="/">&larr; Vers la page d'acceuil</a></p>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
