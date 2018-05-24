@@ -40,7 +40,7 @@ class RegistrationForm(FlaskForm):
     prenom = StringField('Prénom', validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    departement = SelectField('Département INSA', choices=[(d._id, d.nom) for d in Departement.get_all()], coerce=ObjectId, validators=[DataRequired()])
+    departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
     niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
     mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')], validators=[DataRequired()])
     mdp = PasswordField('Mot de passe', validators=[DataRequired()])
@@ -58,7 +58,7 @@ class EditUserProfileForm(FlaskForm):
     prenom = StringField('Prénom')
     nom = StringField('Nom')
     email = StringField('Email')
-    departement = SelectField('Département INSA', choices=[(d._id, d.nom) for d in Departement.get_all()], coerce=ObjectId)
+    departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId)
     niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')])
     mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')], validators=None)
     submit = SubmitField('Valider les changements')
@@ -71,4 +71,4 @@ class ChangePasswordForm(FlaskForm):
 
 class DeleteUserForm(FlaskForm):
     mdp = PasswordField('Mot de passe requis', validators=[DataRequired()])
-    submit = SubmitField('Supprimer mon compte (cette opération est irréversible)')    
+    submit = SubmitField('Supprimer mon compte (cette opération est irréversible)')

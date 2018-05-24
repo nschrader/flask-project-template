@@ -8,30 +8,28 @@
 
     <!-- header -->
     <div class="row">
-        
+
         <!-- TITRE -->
         <div class="col-sm">
-            <!-- TODO : dynamic university name -->
-            <h1 class="page-header"><a href ='http://www.uni-stuttgart.de' class="text-light">{% block title %}Universität Stuttgart{% endblock %}</a></h1>
+            <h1 class="page-header text-light">{% block title %} {{ universite.nom }} {% endblock %}</h1>
         </div>
         <!-- FIN TITRE -->
         <!-- INFOS PLACES -->
         <!-- TODO : dynamic infos -->
         <div class="container-fluid">
             <ol class="breadcrumb" >
-                
+
                 <div class="media col">
-                    <img src="static/assets/de.png" class="rounded align-self-center mr-3" width="50" height = "50" alt="Generic placeholder image">
                     <div class="media-body align-self-center">
-                        <h2 class="page-header text-light"><a href='/pays'>Allemagne</a></h2>
+                        <h2 class="page-header"><a href="{{ url_for("pays", id=universite.pays.pk) }}">{{ universite.pays.nom }}</a></h2>
                     </div>
                 </div>
                 <div class = "col-md-auto align-self-center">
-                    <h5>Echange uniquement</h5>
-                    <h5>Départements concernés : TC, GE, IF</h5>
+                    {% for echange in universite.echanges %}
+                    <h5>{{ echange.get_summary_str() }}</h5>
+                    {% endfor %}
                 </div>
                 <div class = "col-md-auto align-self-center">
-                    <h5>Nombre de places : 5x5</h5>
                     <div class="btn-group ">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
                         <div class="dropdown-menu">
@@ -40,16 +38,16 @@
                         <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
                         </div>
                     </div>
-                </div>  
-                
+                </div>
+
             </ol>
         </div>
         <!-- FIN INFOS PLACES -->
 
     </div>
     <!-- FIN header -->
-    
-    
+
+
     <!-- INFOS -->
     <h2 class="font-weight-bold text-white">Informations pratiques</h2>
     <div class="card border-success">
@@ -97,8 +95,8 @@
         </div>
     </div>
     <!-- FIN INFOS -->
-    
-    
+
+
 </div>
 
 {% endblock %}

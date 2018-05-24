@@ -1,79 +1,74 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from overrides import overrides
 from flask_login import UserMixin
+from uuid import uuid4 as uuid
+from datetime import datetime
+from mongoengine import *
 
-from extensions import mongo
-from .entity import Entity
+import config
 
-class Utilisateur(UserMixin, Entity):
-
-    def __init__(self, **entries):
-        self.nom = None
-        self.prenom = None
-        self.departement = None
-        self.niveau = None
-        self.mobilites = []
-        self.mail = None
-        self.password = None
-        self.admin = None
-        UserMixin.__init__(self)
-        Entity.__init__(self, **entries)
-        del self.user
-
-    @overrides
-    def update(self, **entries):
-        super().update(**entries)
-        super().require_list(self.mobilites)
-
-    @overrides
-    def insert(self):
-        if self.__class__.get_collection().find({"mail" : self.mail}).count() > 0:
-            #raise FileExistsError(self.mail)
-            self.__class__.get_collection().remove({"mail" : self.mail})
-        return Entity.insert(self)
+class Utilisateur(UserMixin, Document):
+    nom = StringField(required = True)
+    prenom = StringField(required = True)
+    departement = ReferenceField("Departement")
+    niveau = IntField()
+    mobilites = ListField(ReferenceField("Universite"))
+    mail = EmailField(required = True, domain_whitelist = ["insa-lyon.fr"], unique = True)
+    password = StringField(required = True)
+    token = StringField()
+    token_timestamp = DateTimeField()
+    active = BooleanField(default = False)
+    admin = BooleanField(default = False)
 
 
     def get_nom(self):
         return "{} {}".format(self.prenom, self.nom)
 
 
-    @overrides
-    def __get_user__(self, **entries):
-        return
-
-
-    @classmethod
-    @overrides
-    def get_collection(cls):
-        return mongo.utilisateurs
-
-
-    @classmethod
-    def get_mail(cls, mail):
-        document = cls.get_collection().find_one({'mail': mail})
-        return cls.make_from_document(document)
+    def make_token(self):
+        self.token = uuid().hex
+        self.token_timestamp = datetime.now()
 
 
     @overrides
     def get_id(self):
-        return str(self._id)
+        return str(self.pk)
+
+
+    @property
+    @overrides
+    def is_active(self):
+        return self.active
 
 
     def validate_login(self, password):
         return check_password_hash(self.password, password)
 
 
-    @staticmethod
-    def make_root(root, root_pswd):
-        root_user = Utilisateur.get_mail(root)
+    @classmethod
+    def verifify_token(cls, token):
+        user = cls.objects(token = token).first()
+        if user:
+            timediff = datetime.now() - user.token_timestamp
+            if timediff.total_seconds() < config.TOKEN_TIMEOUT:
+                user.active = True
+                user.save()
+                return True
+        return False
+
+
+
+    @classmethod
+    def get_root(cls):
+        root_user = cls.objects(mail = config.ROOT).first()
         if not root_user:
-            password = generate_password_hash(root_pswd)
+            password = generate_password_hash(config.ROOT_PSWD)
             root_user = Utilisateur(
-                mail=root,
-                password=password,
-                nom=root,
-                prenom="",
-                admin=True
+                mail = config.ROOT,
+                password = config.ROOT_PSWD,
+                nom = config.ROOT,
+                prenom = "",
+                admin = True
             )
-            root_user.insert()
+            root_user.save()
         return root_user

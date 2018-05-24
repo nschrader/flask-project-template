@@ -1,11 +1,6 @@
-from overrides import overrides
+from mongoengine import *
 
-from extensions import mongo
-from .enumeration import Enumeration
+from .audit import Audit
 
-class Departement(Enumeration):
-
-    @classmethod
-    @overrides
-    def get_collection(cls):
-        return mongo.departements
+class Departement(Audit, Document):
+    nom = StringField(unique = True)

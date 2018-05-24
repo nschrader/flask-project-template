@@ -1,31 +1,19 @@
-from overrides import overrides
+from mongoengine import *
 
-from extensions import mongo
-from .enumeration import Enumeration
+from .audit import Audit
 
-class Universite(Enumeration):
-
-    def __init__(self, **entries):
-        self.pays = None
-        self.infos = None
-        self.departements = None
-        self.accords = []
-        super().__init__(**entries)
+class Universite(Audit, Document):
+    nom = StringField(required = True, unique = True)
+    pays = ReferenceField("Pays", required = True)
+    infos = EmbeddedDocumentField("Article")
+    echanges = EmbeddedDocumentListField("Echange")
 
 
-    @overrides
-    def update(self, **entries):
-        super().update(**entries)
-        super().require_list(self.accords)
+    def get_infos_html(self):
+        return Markup(markdown(self.infos.text))
 
 
     @classmethod
-    def get_from_pays(cls, pays):
-        documents = cls.get_collection().find({'pays': pays})
-        return cls.make_from_documents(documents)
-
-
-    @classmethod
-    @overrides
-    def get_collection(cls):
-        return mongo.universites
+    def get_with_echanges_for_pays(cls, pays):
+        us = cls.objects(pays=pays)
+        return [(u, e) for u in us for e in u.echanges]
