@@ -89,11 +89,13 @@
         </div>
         <p><span class="badge badge-light">{{ form.submit() }}</span></p>
 
-        <a href="login" class="btn btn-light btn-sm" role="button" aria-pressed="true">Vous avez déjà un compte ? Cliquez pour vous connecter</a>
-        </div>
-</div>
-    <fieldset>
+        <a href="{{ url_for( 'login' ) }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Vous avez déjà un compte ? Cliquez pour vous connecter</a>
+       
+
+    </fieldset>
   </form>
+ </div>
+</div>
 </div>
 </div>
 {% endblock %}

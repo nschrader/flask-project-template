@@ -20,7 +20,7 @@
 
 
           <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
-</div>
+
       {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
       <div class="alert alert-dismissable alert-danger" align="center">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -28,9 +28,11 @@
       </div>
       {% endfor %}
 
-</div>
-    <fieldset>
+
+    </fieldset>
   </form>
+</div>
+</div>
 </div>
 </div>
 {% endblock %}
