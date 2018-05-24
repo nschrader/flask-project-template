@@ -1,28 +1,6 @@
+{% extends "base_layout_slim.html" %}
 
-<html>
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>INSA - International</title>
-
-    <!-- Bootstrap Core CSS -->
-   <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-     <link href="{{ url_for('static', filename='css/sb-admin.css') }}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='libs/') }}" type="text/css" media="screen"/>
-    <script src="{{ url_for('static', filename='libs/') }}"></script>
-
-</head>
-<body>
+{% block display %}
   <div class="container">
   <div class="mx-auto" >
     <div class="p-3 mb-2 bg-secondary text-dark">
@@ -73,9 +51,8 @@
                 {{ success[1] }}
         </div>
         {% endfor %}
-      
+
 </div>
 </div>
 </div>
-  </body>
-</html>
+{% endblock %}
