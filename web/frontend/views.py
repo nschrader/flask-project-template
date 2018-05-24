@@ -7,14 +7,12 @@ from web.frontend.forms import DeleteAgreementForm
 from dao import *
 
 @app.route('/')
+@login_required
 def index():
     return render_template('frontend/accueil.html')
 
-@app.route('/showLogin')
-def show_login():
-    return render_template('frontend/login_examples.html')
-
 @app.route('/pays/<id>')
+@login_required
 def pays(id):
     # TODO: What is this doing ?
     # if request.method == 'POST':
@@ -22,6 +20,7 @@ def pays(id):
     return render_template('frontend/pays.html', pays=Pays.objects.id_or_404(id))
 
 @app.route('/editer')
+@login_required
 def editer():
     return render_template('frontend/edit.html')
 
@@ -30,6 +29,7 @@ def projet():
     return render_template('frontend/projet.html')
 
 @app.route('/universite/<id>')
+@login_required
 def universite(id):
     # TODO : faire marcher la suppression
     deleteForm = DeleteAgreementForm()
@@ -42,14 +42,13 @@ def suppr_accord(id):
     return render_template('frontend/suppr_accord.html', universite=Universite.objects.id_or_404(id))
 
 @app.route('/voeux')
+@login_required
 def voeux():
     return render_template('frontend/voeux.html')
 
 @app.route('/robots.txt')
 def static_from_root():
-    # Static items
     return send_from_directory(current_app.static_folder, request.path[1:])
-
 
 @app.route('/favicon.ico')
 def favicon():
