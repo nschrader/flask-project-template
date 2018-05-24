@@ -1,4 +1,4 @@
-{% extends "base_layout.html" %}
+{% extends "frontend/base_layout.html" %}
 
 {% block content %}
 <div class="mx-auto" >
@@ -8,8 +8,8 @@
     <form class="well form-horizontal" action=" " method="post">
       {{ form.hidden_tag() }}
       <fieldset>
-      <legend><h1>Supprimer mon compte</h1></legend>
-      <p>Votre compte sera définitivement supprimé, mais les informations que vous avez ajoutées sur les différents pays ou accords seront conservées.</p>
+      <legend><h1>Supprimer un accord</h1></legend>
+      <p>Vous souhaitez supprimer l'accord avec {{ universite.nom }} des bases de données du site. Assurez-vous que cet accord n'est plus en vigueur avant de le supprimer.</p>
 
       <div class="form-group">
           <label class="control-label" for="mdp">Mot de passe requis</label>
@@ -20,7 +20,7 @@
 
 
           <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
-
+</div>
       {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
       <div class="alert alert-dismissable alert-danger" align="center">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -28,11 +28,9 @@
       </div>
       {% endfor %}
 
-
-    </fieldset>
+</div>
+    <fieldset>
   </form>
-</div>
-</div>
 </div>
 </div>
 {% endblock %}

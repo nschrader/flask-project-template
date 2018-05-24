@@ -1,4 +1,4 @@
-{% extends "frontend/base_layout.html" %}
+{% extends "base_layout.html" %}
 
 {% block content %}
 
@@ -95,6 +95,12 @@
       </div>
     </div>
     <!-- FIN INFOS -->
+
+    <!-- Supprimer l'accord -->
+    <form class="well form-horizontal" action=" " method="post">
+      {{ form.hidden_tag() }}
+      <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
+    </form>
 
 
 </div>

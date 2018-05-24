@@ -1,4 +1,4 @@
-{% extends "frontend/base_layout.html" %}
+{% extends "base_layout.html" %}
 
 {% block content %}
 <div class="mx-auto" >
@@ -24,13 +24,13 @@
   </div>
   <div class="form-group row">
     {% if (current_user.mobilites==[]) %}
-    <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous n'avez pas fait de mobilité internationnal  </span></label>
+    <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous n'avez pas effectué de mobilité internationnale  </span></label>
     {% else %}
-    <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous avez déjà fait une mobilité internationnal  </span></label>
+    <label for="mob" class="col-4 col-form-label">  <span class="badge badge-light">Vous avez effectué une mobilité internationnale à {{ current_user.mobilites[0].nom }}  </span></label>
     {% endif %}
   </div>
-  <a href="{{ url_for('modif-profil') }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
-  <p><a href="{{ url_for('suppr-compte') }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Supprimer mon compte</a>  </p>
+  <a href="{{ url_for('modif_profil') }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Modifier mes informations</a>
+  <p><a href="{{ url_for('suppr_profil') }}" class="btn btn-light btn-sm" role="button" aria-pressed="true">Supprimer mon compte</a>  </p>
 
   {% for success in get_flashed_messages(with_categories=true, category_filter=["success"]) %}
   <div class="alert alert-dismissable alert-success" align="center">
