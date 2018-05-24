@@ -9,7 +9,7 @@ class Echange(Audit, EmbeddedDocument):
 
 
     def get_departments_str(self):
-        return " ".join(d.nom for d in self.departements)
+        return ", ".join(d.nom for d in self.departements)
 
 
     def get_summary_str(self):
