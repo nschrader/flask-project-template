@@ -16,6 +16,7 @@
         <!-- FIN NOM DU PAYS -->
         <!-- FILTRES -->
         <div class="container-fluid">
+            <h2 class="font-weight-bold text-light">Universités partenaires</h2>
             <ol class="breadcrumb" >
                 <li class="active">
                   <form action="" method="POST" name="form">
@@ -52,7 +53,6 @@
     <!-- FIN header -->
 
     <!-- LISTE UNIVERSITES -->
-    <h2 class="font-weight-bold text-light">Universités partenaires</h2>
     <table class="table table-bordered table-secondary">
         <thead class="thead-dark">
           <tr>
@@ -90,39 +90,49 @@
     <!-- INFOS -->
     <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
     <!-- TODO : Il faut aussi que le style standard s'applique aussi sur le Markdown -->
-    <h2 class="font-weight-bold text-light">Wiki</h2>
+    <h2 class="font-weight-bold text-light">Informations</h2>
     <div class="card card-green">
-      <div class="card-body">
-        <h3 class="card-title card-green text-success">Vie pratique</h3>
-        <p class="card-text">{{ pays.get_vie_pratique_html() }}</p>
-      </div>
-      <div class="card-body">
-        <a href="#" class="card-link">Modifier/Ajouter</a>
-      </div>
+        <div class="card-body" id="viePratique">
+            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#viePratiqueCollapse" aria-expanded="true" aria-controls="viePratiqueCollapse">
+                <h3 class="card-title card-green">Vie pratique</h3>
+            </button>
+            <div id="viePratiqueCollapse" class="card-body" aria-labelledby="viePratique">
+                {{ pays.get_vie_pratique_html() }}
+                <a href="#" class="card-link">Modifier/Ajouter</a>
+            </div>
+        </div>
     </div>
     <div class="card card-yellow">
-      <div class="card-body">
-        <h3 class="card-title card-yellow text-warning">Tourisme</h3>
-        <p class="card-text">{{ pays.get_tourisme_html() }}</p>
-      <div class="card-body">
-        <a href="#" class="card-link">Modifier/Ajouter</a>
-      </div>
+      <div class="card-body" id="tourisme">
+        <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#tourismeCollapse" aria-expanded="true" aria-controls="tourismeCollapse">
+            <h3 class="card-title card-yellow text-warning">Tourisme</h3>
+        </button>
+        <div id="tourismeCollapse" class="collapse card-body" aria-labelledby="tourisme">
+          {{ pays.get_tourisme_html() }}
+          <a href="#" class="card-link">Modifier/Ajouter</a>
+        </div>
+      </div> 
     </div>
     <div class="card card-red">
-      <div class="card-body">
-          <h3 class="card-title card-red text-danger">Culture</h3>
-          <p class="card-text">{{ pays.get_culture_html() }}</p>
-      <div class="card-body">
-          <a href="#" class="card-link">Modifier/Ajouter</a>
+      <div class="card-body" id="culture">
+          <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#cultureCollapse" aria-expanded="true" aria-controls="cultureCollapse">
+            <h3 class="card-title card-red text-danger">Culture</h3>
+          </button>
+          <div id="cultureCollapse" class="collapse card-body" aria-labelledby="culture">
+              {{ pays.get_culture_html() }}
+              <a href="#" class="card-link">Modifier/Ajouter</a>
+          </div>
       </div>
     </div>
-    <!-- TODO: Make card-blue work -->
-    <div class="card card-blue">
-      <div class="card-body">
-          <h3 class="card-title card-blue text-info">Climat</h3>
-          <p class="card-text">{{ pays.get_climat_html() }}</p>
-      <div class="card-body">
-          <a href="#" class="card-link">Modifier/Ajouter</a>
+    <div class="card border-primary">
+      <div class="card-body" id="climat">
+          <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#climatCollapse" aria-expanded="true" aria-controls="climatCollapse">
+            <h3 class="card-title card-blue text-primary">Climat</h3>
+          </button>
+          <div id="climatCollapse" class="collapse card-body" aria-labelledby="climat">
+              {{ pays.get_climat_html() }}
+              <a href="#" class="card-link">Modifier/Ajouter</a>
+          </div>
       </div>
     </div>
     <!-- FIN INFOS -->
