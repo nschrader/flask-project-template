@@ -2,6 +2,8 @@ from flask import render_template, g, request, send_from_directory, redirect, cu
 from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
 
+from web.frontend.forms import DeleteAgreementForm
+
 from dao import *
 
 @app.route('/')
@@ -29,7 +31,15 @@ def projet():
 
 @app.route('/universite/<id>')
 def universite(id):
-    return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id))
+    # TODO : faire marcher la suppression
+    deleteForm = DeleteAgreementForm()
+    if deleteForm.validate_on_submit():
+        return redirect(url_for('suppr-accord'))
+    return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id), form=deleteForm)
+
+@app.route('/suppr-accord/<id>')
+def suppr_accord(id):
+    return render_template('frontend/suppr_accord.html', universite=Universite.objects.id_or_404(id))
 
 @app.route('/voeux')
 def voeux():

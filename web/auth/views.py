@@ -10,14 +10,14 @@ from web.auth.forms import LoginForm, RegistrationForm, EditUserProfileForm, Cha
 def inscription():
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash('Un mail vous était envoyé.')
+        flash('Un mail vous a été envoyé.')
         utilisateur = Utilisateur(
             nom = form.nom.data,
             prenom = form.prenom.data,
             mail = form.email.data,
             departement = form.departement.data,
             niveau = form.niveau.data,
-            mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else [],
+            mobilites = [form.mobilite.data],
             password = generate_password_hash(form.mdp.data)
         )
         utilisateur.make_token()
@@ -47,16 +47,11 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
         user = Utilisateur.objects.get(mail = form.email.data)
         if user and user.validate_login(form.mdp.data):
-            #TODO: Looks broken
-            #if form.remember_me.data:
-            #    login_user(user, "rememberMe" in request.args)
-            #else :
-            #    login_user(user)
-            if login_user(user):
+            if login_user(user, form.remember_me.data):
                 flash("Vous êtes connecté", category='success')
                 return redirect(request.args.get("next") or url_for("index"))
             else:
-                flash("Votre inscription n'est pas confirmé", category='error')
+                flash("Votre inscription n'est pas confirmée", category='error')
                 return redirect(url_for("reset"))
         flash("Email ou mot de passe erroné", category='error')
     return render_template('auth/login.html', title='Se connecter', form=form)
@@ -79,13 +74,15 @@ def modif_profil() :
         mail = form.email.data
         departement = form.departement.data if form.departement.data else utilisateur.departement
         niveau = form.niveau.data if form.niveau.data else utilisateur.niveau
-        mobilites = [form.mobilite.data] if form.mobilite.data == 'o' else utilisateur.mobilites # à modifier
+        mobilites = utilisateur.mobilites
+        if form.mobilite.data is not utilisateur.mobilites[0] :
+            mobilites =  [form.mobilite.data]
         utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
         utilisateur.save()
         flash(current_user.prenom, category='success')
         flash("Vos modifications ont été enregistrées", category='success')
         return redirect(url_for('profil'))
-    return render_template('auth/modif_profil.html', title='Modifier mes informations', form=form)
+    return render_template('auth/modif_profil.html', form=form)
 
 
 @app.route('/modif-mdp', methods=['GET', 'POST'])
@@ -96,12 +93,12 @@ def modif_mdp() :
     if request.method == 'POST' and form.validate_on_submit():
         if not utilisateur.validate_login(form.mdp.data) :
             flash("Mot de passe erroné", category='error')
-            return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
+            return render_template('auth/modif_mdp.html', form=form)
         utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
         utilisateur.save()
         flash("Vos modifications ont été enregistrées", category='success')
         return render_template('auth/profil.html', title='Mon profil')
-    return render_template('auth/modif_mdp.html', title='Modifier mon mot de passe', form=form)
+    return render_template('auth/modif_mdp.html', form=form)
 
 
 @app.route('/suppr-compte', methods=['GET', 'POST'])
@@ -112,12 +109,12 @@ def suppr_profil() :
     if request.method == 'POST' and form.validate_on_submit():
         if not utilisateur.validate_login(form.mdp.data) :
             flash("Mot de passe erroné", category='error')
-            return render_template('auth/suppr_profil.html', title='Supprimer mon compte', form=form)
+            return render_template('auth/suppr_profil.html', form=form)
         utilisateur.remove()
         logout_user()
         flash("Votre compte a bien été supprimé", category='success')
         return render_template('frontend/accueil.html')
-    return render_template('auth/suppr_profil.html', title='Supprimer mon compte', form=form)
+    return render_template('auth/suppr_profil.html', form=form)
 
 
 @app.route('/logout')
