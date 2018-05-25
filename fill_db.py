@@ -118,13 +118,16 @@ ch = Pays(
 
 rwth = Universite(
     nom="RWTH",
-    infos=Article(text="Se trouve à Aachen"),
     pays=de,
     echanges=[
         Echange(accord=ersms, departements=[tc], places="5x4"),
         Echange(accord=ersms, departements=[ge, gm], places="12x1"),
         Echange(accord=untch, departements=tous, places="12x2"),
-    ]
+    ],
+    cours=Article(text="Se trouve à Aachen"),
+    logement=Article(text="Facile à trouver"),
+    accessibilite=Article(text="Pas mal en train"),
+    ambiance=Article(text="C'est la fête tous les soirs")
 ).saveAndGet()
 tu_b = Universite(
     nom="Technische Universität Berlin",
@@ -136,7 +139,7 @@ tu_b = Universite(
 ).saveAndGet()
 kit = Universite(
     nom="KIT",
-    infos=Article(text="Se trouve à Karlsruhe"),
+    cours=Article(text="Se trouve à Karlsruhe"),
     pays=de,
     echanges=[
         Echange(accord=ersms, departements=[tc, ge, gm], places="3x10"),
@@ -162,7 +165,8 @@ uj = Universite(
     pays=fi,
     echanges=[
         Echange(accord=ersms, departements=[bio, sgm, pc], places="6x10")
-    ]
+    ],
+    accessibilite=Article(text="L'université est au cul du monde!!!")
 ).saveAndGet()
 dcu = Universite(
     nom="Dublin City Universiy",
@@ -216,7 +220,7 @@ git = Universite(
         Echange(accord=bltrl, departements=[yf], places="5x4"),
         Echange(accord=dd, departements=[ge, gm, sgm, yf, tc], places="6x6"),
     ],
-    infos=Article(text="Payant. Se trouve à Atlanta")
+    cours=Article(text="Payant. Se trouve à Atlanta")
 ).saveAndGet()
 iie = Universite(
     nom="Institut International d’Ingénierie de l’Eau et de l’Environnement",
@@ -224,7 +228,7 @@ iie = Universite(
     echanges=[
         Echange(accord=bltrl, departements=tous, places="12x2")
     ],
-    infos=Article(text="Se trouve à Ouagadougou")
+    cours=Article(text="Se trouve à Ouagadougou")
 ).saveAndGet()
 ul = Universite(
     nom="Université Laval",
@@ -232,7 +236,7 @@ ul = Universite(
     echanges=[
         Echange(accord=bci, departements=[ge, gi], places="6x4")
     ],
-    infos=Article(text="Se trouve à Québec")
+    cours=Article(text="Se trouve à Québec")
 ).saveAndGet()
 ush = Universite(
     nom="Université de Sherbrooke",
@@ -254,7 +258,7 @@ udp = Universite(
     echanges=[
         Echange(accord=isep, departements=[gm], places="6x6")
     ],
-    infos=Article(text="Se trouve à Buenos Aires")
+    cours=Article(text="Se trouve à Buenos Aires")
 ).saveAndGet()
 hkpu = Universite(
     nom="Hong Kong Polytechnic University",

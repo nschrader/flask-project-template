@@ -5,12 +5,11 @@ from .audit import Audit
 class Universite(Audit, Document):
     nom = StringField(required = True, unique = True)
     pays = ReferenceField("Pays", required = True)
-    infos = EmbeddedDocumentField("Article")
+    cours = EmbeddedDocumentField("Article")
+    accessibilite = EmbeddedDocumentField("Article")
+    logement = EmbeddedDocumentField("Article")
+    ambiance = EmbeddedDocumentField("Article")
     echanges = EmbeddedDocumentListField("Echange")
-
-
-    def get_infos_html(self):
-        return Markup(markdown(self.infos.text))
 
 
     @classmethod
