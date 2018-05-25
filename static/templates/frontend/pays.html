@@ -22,7 +22,7 @@
                   <form action="" method="POST" name="form">
                     {{ form.hidden_tag() }}
                     <!-- TODO : link filters to real actions, use a nice flask form -->
-                    <h4>Filtres :</h4>
+                    <strong>Filtres :</strong>
                     
                     &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }} 
                     {% for error in form.doublediplome.errors %}
