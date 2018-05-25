@@ -2,13 +2,13 @@ from flask import render_template, redirect, request, g, flash, url_for, current
 from flask_login import current_user, login_required, fresh_login_required, logout_user, login_user
 from werkzeug.security import generate_password_hash
 
-from dao import Utilisateur
+from dao import Utilisateur, Universite
 from mail import send_to
 from .forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, DeleteUserForm
 
 @app.route('/inscription', methods=['GET', 'POST'])
 def inscription():
-    form = RegistrationForm(mobilite='n')
+    form = RegistrationForm()
     if form.validate_on_submit():
         flash('Un mail vous a été envoyé.')
         utilisateur = Utilisateur(
@@ -17,14 +17,13 @@ def inscription():
             mail = form.email.data,
             departement = form.departement.data,
             niveau = form.niveau.data,
-            mobilites = [form.mobilite.data],
+            mobilites = [] if form.mobilite_is_non() else [form.mobilite.data] ,
             password = generate_password_hash(form.mdp.data))
         if Utilisateur.objects(mail = form.email.data).first() :
             flash("Il y a déjà un compte associé à cette adresse email", category='error')
         else :
             utilisateur.make_token()
             utilisateur.save()
-            print("USEEEEEEEER : " + str(utilisateur.token))
             debut_url = request.host_url
             debut_url = debut_url[:-1]
             send_to(utilisateur.mail, "Bli", debut_url + url_for("inscription_token", token=utilisateur.token))
@@ -81,10 +80,10 @@ def modif_profil() :
     form = EditUserProfileForm(
         prenom = utilisateur.prenom,
         nom = utilisateur.nom,
-        mail = utilisateur.mail,
+        email = utilisateur.mail,
         departement = utilisateur.departement.pk,
         niveau = str(utilisateur.niveau),
-        mobilite = utilisateur.mobilites[0].pk if utilisateur.mobilites != [''] else '')
+        mobilite = utilisateur.mobilites[0].pk if utilisateur.mobilites else [])
     if request.method == 'POST' and form.validate_on_submit():
         prenom = form.prenom.data
         nom = form.nom.data
@@ -125,7 +124,7 @@ def suppr_profil() :
         if not utilisateur.validate_login(form.mdp.data) :
             flash("Mot de passe erroné", category='error')
             return render_template('auth/suppr_profil.html', form=form)
-        utilisateur.remove()
+        utilisateur.delete()
         logout_user()
         flash("Votre compte a bien été supprimé", category='success')
         return render_template('frontend/accueil.html')

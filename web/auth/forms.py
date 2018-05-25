@@ -5,15 +5,20 @@ from dao import Departement,Universite
 from bson.objectid import ObjectId
 
 class ProfileForm(FlaskForm):
+    non = ObjectId('666f6f2d6261722d71757578')
     prenom = StringField('Prénom', validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
     niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
-    choix_mobilite = [('', 'Non')]
+    # TODO : ordonner par ordre alphabétique
+    choix_mobilite = [(non, 'Non')]
     for univ in Universite.objects.all() :
         choix_mobilite.append((univ.pk, univ.nom))
-    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=choix_mobilite, validators=None)
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=choix_mobilite, coerce=ObjectId, validators=[DataRequired()])
+
+    def mobilite_is_non(self):
+        return self.mobilite.data == self.__class__.non
 
 class RegistrationForm(ProfileForm):
     mdp = PasswordField('Mot de passe', validators=[DataRequired()])
