@@ -20,29 +20,30 @@
             <ol class="breadcrumb" >
                 <li class="active">
                   <form action="" method="POST" name="form">
+                    {{ form.hidden_tag() }}
                     <!-- TODO : link filters to real actions, use a nice flask form -->
-                    Filtres :
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" checked>
-                        <label class="form-check-label" for="inlineCheckbox2">Doubles Diplômes</label>
-                    </div>
+                    <strong>Filtres :</strong>
+                    
+                    &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }} 
+                    {% for error in form.doublediplome.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                      
+                    &emsp;{{ form.F_echange.label }} {{ form.F_echange() }} 
+                    {% for error in form.F_echange.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                      
                     <!-- menu déroulant pour le choix du département-->
-                    <div class="form-check form-check-inline">
-                        <select class="form-control form-control-sm">
-                        <option selected>Sélectionner le département...</option>
-                        <option>GM</option>
-                        <option>GI</option>
-                        <option>GEN</option>
-                        <option>GCU</option>
-                        <option>IF</option>
-                        <option>TC</option>
-                        <option>BB/BIM</option>
-                        <option>SGM</option>
-                        <option>GE</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-success " type="submit">Filtrer</button>
+                  
+                    &emsp; {{ form.departement.label }}
+                    {{ form.departement }}
+                    {% for error in form.departement.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ form.submit() }}
+                      
                   </form>
                 </li>
             </ol>
@@ -64,7 +65,9 @@
           </tr>
         </thead>
         <tbody>
-          {% for uni, echng in Universite.get_with_echanges_for_pays(pays) %}
+
+          {% for uni, echng in univ_echng %}
+           
           <tr>
             <td><a href="{{ url_for('universite', id=uni.pk) }}">{{ uni.nom }}</a></td>
             <td>{{ echng.accord.nom }}</td>
