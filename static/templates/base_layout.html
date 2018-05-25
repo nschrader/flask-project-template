@@ -104,14 +104,7 @@
                         <ul id="{{ continent.pk }}" class="list-group collapse list-group-item-dark">
                           <li class="list-group-item list-group-item-dark">
                           {% for pays in Pays.objects(continent=continent) %}
-                          <a href="{{ url_for('pays', id=pays.pk) }}" data-toggle="collapse" data-target="#{{ pays.pk }}"><p class="text-dark">{{ pays.nom }}</p></a>
-                          <ul id="{{ pays.pk }}" class="list-group collapse list-group-item-dark">
-                            <li class="list-group-item list-group-item-dark">
-                              {% for uni in Universite.objects(pays=pays) %}
-                              <a href="{{ url_for('universite', id=uni.pk) }}"><p class="text-dark">{{ uni.nom }}</p></a>
-                              {% endfor %}
-                            </li>
-                          </ul>
+                          <a href="{{ url_for('pays', id=pays.pk) }}"><p class="text-dark">{{ pays.nom }}</p></a>
                           {% endfor %}
                           </li>
                         </ul>

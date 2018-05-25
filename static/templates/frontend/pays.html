@@ -24,26 +24,26 @@
                     <!-- TODO : link filters to real actions, use a nice flask form -->
                     <h4>Filtres :</h4>
                     
-                    {{ form.doublediplome.label }} {{ form.doublediplome() }} 
+                    &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }} 
                     {% for error in form.doublediplome.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                       
-                    {{ form.F_echange.label }} {{ form.F_echange() }} 
+                    &emsp;{{ form.F_echange.label }} {{ form.F_echange() }} 
                     {% for error in form.F_echange.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                       
                     <!-- menu déroulant pour le choix du département-->
-                    <p>
-                        {{ form.departement.label }}
-                        {{ form.departement }}
-                        {% for error in form.departement.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                   
-                        {{ form.submit() }}
-                      </p>
+                  
+                    &emsp; {{ form.departement.label }}
+                    {{ form.departement }}
+                    {% for error in form.departement.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ form.submit() }}
+                      
                   </form>
                 </li>
             </ol>
