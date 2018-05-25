@@ -47,7 +47,9 @@ class Utilisateur(UserMixin, Document):
 
     @classmethod
     def verifify_token(cls, token):
+        print("TOKEN : " + str(token))
         user = cls.objects(token = token).first()
+        print("USEEEEEEEER SELF : " + user.token)
         if user:
             timediff = datetime.now() - user.token_timestamp
             if timediff.total_seconds() < config.TOKEN_TIMEOUT:
@@ -66,8 +68,8 @@ class Utilisateur(UserMixin, Document):
             root_user = Utilisateur(
                 mail = config.ROOT,
                 password = password,
-                nom = config.ROOT,
-                prenom = "",
+                nom = "Root",
+                prenom = "Admin",
                 admin = True,
                 active = True
             )
