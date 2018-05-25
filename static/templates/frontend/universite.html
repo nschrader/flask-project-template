@@ -1,4 +1,4 @@
-{% extends "frontend/base_layout.html" %}
+{% extends "base_layout.html" %}
 
 {% block content %}
 
@@ -50,50 +50,57 @@
 
     <!-- INFOS -->
     <h2 class="font-weight-bold text-white">Informations pratiques</h2>
-    <div class="card border-success">
-        <div class="card-body">
-            <h3 class="card-title card-green text-success">Cours</h3>
-            <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">La majorité sont en allemand, mieux vaut avoir au moins le B2. Quelques cours disponibles en anglais pour les plus chanceux. Le niveau est assez élevé, surtout en traitement du signal.</p>
-        </div>
-        <div class="card-body">
-            <a href="/editer" class="card-link">Modifier/Ajouter</a> <!-- TODO : raccourci pour les href : ne pas les réécrire à chaque fois -->
+    <div class="card card-green">
+        <div class="card-body" id="cours">
+            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#coursCollapse" aria-expanded="true" aria-controls="coursCollapse">
+                <h3 class="card-title card-green">Cours</h3>
+            </button>
+            <div id="coursCollapse" class="card-body" aria-labelledby="cours">
+                <!-- universite.get_cours_html() -->
+                <a href="#" class="card-link">Modifier/Ajouter</a>
+            </div>
         </div>
     </div>
-    <div class="card border-warning">
-        <div class="card-body">
+    <div class="card card-yellow">
+      <div class="card-body" id="accessibilite">
+        <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#accessibiliteCollapse" aria-expanded="true" aria-controls="accessibiliteCollapse">
             <h3 class="card-title card-yellow text-warning">Accessibilité</h3>
-             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">Le déplacement en bus est très facile autour de l'université, mais attention dès qu'on s'éloigne du centre ça devient compliqué, les horaires sont espacés et pas toujours respectées. Mieux vaut éviter de se rendre en périphérie le soir.</p>
-            <p class="card-text">Le déplacement à pied est très sympa, surtout au printemps. Les oiseaux chantent.</p>
+        </button>
+        <div id="accessibiliteCollapse" class="collapse card-body" aria-labelledby="accessibilite">
+          <!-- universite.get_accessibilite_html() -->
+          <a href="#" class="card-link">Modifier/Ajouter</a>
         </div>
-        <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
-        </div>
+      </div> 
     </div>
-    <div class="card border-danger">
-        <div class="card-body">
+    <div class="card card-red">
+      <div class="card-body" id="logement">
+          <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#logementCollapse" aria-expanded="true" aria-controls="logementCollapse">
             <h3 class="card-title card-red text-danger">Logement</h3>
-             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">Sur le campus : des logements sont proposés par l'université. Attention aux deadlines pour la demande !</p>
-            <p class="card-text">En dehors du campus : ce n'est pas très compliqué de trouver des colocations sympa pas trop loin du campus, avec d'autres étudiants erasmus. Utilisez les plateformes comme Air BNB ou le groupe Facebook des Erasmus de Stuttgart.</p>
-        </div>
-        <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
-        </div>
+          </button>
+          <div id="logementCollapse" class="collapse card-body" aria-labelledby="logement">
+              <!-- universite.get_logement_html() -->
+              <a href="#" class="card-link">Modifier/Ajouter</a>
+          </div>
+      </div>
     </div>
-    <div class="card border-secondary">
-        <div class="card-body">
-            <h3 class="card-title card-blue text-secondary">Sorties et Ambiance</h3>
-             <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-            <p class="card-text">Les allemands sont fêtards, et la bière n'est pas chère !</p>
-            <p class="card-text">Tard le soir mieux vaut rester dans le centre.</p>
-        </div>
-        <div class="card-body">
-            <a href="#" class="card-link">Modifier/Ajouter</a>
-        </div>
+    <div class="card border-primary">
+      <div class="card-body" id="ambiance">
+          <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#ambianceCollapse" aria-expanded="true" aria-controls="ambianceCollapse">
+            <h3 class="card-title card-blue text-primary">Sorties et Ambiance</h3>
+          </button>
+          <div id="ambianceCollapse" class="collapse card-body" aria-labelledby="ambiance">
+              <!-- universite.get_ambiance_html()-->
+              <a href="#" class="card-link">Modifier/Ajouter</a>
+          </div>
+      </div>
     </div>
     <!-- FIN INFOS -->
+
+    <!-- Supprimer l'accord -->
+    <form class="well form-horizontal" action=" " method="post">
+      {{ form.hidden_tag() }}
+      <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
+    </form>
 
 
 </div>

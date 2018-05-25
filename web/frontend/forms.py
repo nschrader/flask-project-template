@@ -17,3 +17,13 @@ class FilterForm(FlaskForm):
 
     def is_tous_departements(self):
         return self.departement.data == self.__class__.tous
+
+# TODO : faire marcher EditAgreementForm et DeleteAgreementForm
+
+class EditAgreementForm(FlaskForm):
+    type = SelectField('Type d\'accord')
+    departements = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
+    submit = SubmitField('S\'inscrire')
+
+class DeleteAgreementForm(FlaskForm):
+    submit = SubmitField('Supprimer l\'accord')

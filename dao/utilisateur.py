@@ -65,10 +65,11 @@ class Utilisateur(UserMixin, Document):
             password = generate_password_hash(config.ROOT_PSWD)
             root_user = Utilisateur(
                 mail = config.ROOT,
-                password = config.ROOT_PSWD,
+                password = password,
                 nom = config.ROOT,
                 prenom = "",
-                admin = True
+                admin = True,
+                active = True
             )
             root_user.save()
         return root_user

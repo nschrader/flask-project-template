@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import SelectField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
-from dao import Departement
+from dao import Departement,Universite
 from bson.objectid import ObjectId
 
 class RegistrationForm(FlaskForm):
@@ -10,7 +10,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
     niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
-    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')], validators=[DataRequired()])
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[(univ.pk, univ.nom) for univ in Universite.objects.all()], coerce=ObjectId, validators=None)
     mdp = PasswordField('Mot de passe', validators=[DataRequired()])
     mdp2 = PasswordField('Répétez le mot de passe', validators=[DataRequired(), EqualTo('mdp')])
     submit = SubmitField('S\'inscrire')
@@ -28,7 +28,7 @@ class EditUserProfileForm(FlaskForm):
     email = StringField('Email')
     departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId)
     niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')])
-    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[('o', 'Oui'), ('n', 'Non')], validators=None)
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[(univ.pk, univ.nom) for univ in Universite.objects.all()], coerce=ObjectId, validators=None)
     submit = SubmitField('Valider les changements')
 
 class ChangePasswordForm(FlaskForm):
