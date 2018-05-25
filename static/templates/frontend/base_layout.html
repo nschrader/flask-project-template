@@ -99,10 +99,7 @@
                           <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
                           <ul class="dropdown-menu">
                               <li class="dropdown-item">
-                                <a href="profil">Profil</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="javascript:;">Messagerie</a>
+                                <a href="{{ url_for( 'profil' ) }}">Profil</a>
                               </li>
                               <li class="divider"></li>
                               <li class="dropdown-item">

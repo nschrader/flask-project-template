@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 
 from dao import Utilisateur
 from mail import send_to
-from web.auth.forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, DeleteUserForm, SettingsForm
+from web.auth.forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, DeleteUserForm
 
 @app.route('/inscription', methods=['GET', 'POST'])
 def inscription():
