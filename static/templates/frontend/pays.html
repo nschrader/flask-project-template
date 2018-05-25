@@ -20,29 +20,30 @@
             <ol class="breadcrumb" >
                 <li class="active">
                   <form action="" method="POST" name="form">
+                    {{ form.hidden_tag() }}
                     <!-- TODO : link filters to real actions, use a nice flask form -->
-                    Filtres :
-
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" checked>
-                        <label class="form-check-label" for="inlineCheckbox2">Doubles Diplômes</label>
-                    </div>
+                    <strong>Filtres :</strong>
+                    
+                    &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }} 
+                    {% for error in form.doublediplome.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                      
+                    &emsp;{{ form.F_echange.label }} {{ form.F_echange() }} 
+                    {% for error in form.F_echange.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                      
                     <!-- menu déroulant pour le choix du département-->
-                    <div class="form-check form-check-inline">
-                        <select class="form-control form-control-sm">
-                        <option selected>Sélectionner le département...</option>
-                        <option>GM</option>
-                        <option>GI</option>
-                        <option>GEN</option>
-                        <option>GCU</option>
-                        <option>IF</option>
-                        <option>TC</option>
-                        <option>BB/BIM</option>
-                        <option>SGM</option>
-                        <option>GE</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-success " type="submit">Filtrer</button>
+                  
+                    &emsp; {{ form.departement.label }}
+                    {{ form.departement }}
+                    {% for error in form.departement.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ form.submit() }}
+                      
                   </form>
                 </li>
             </ol>
@@ -64,7 +65,9 @@
           </tr>
         </thead>
         <tbody>
-          {% for uni, echng in Universite.get_with_echanges_for_pays(pays) %}
+
+          {% for uni, echng in univ_echng %}
+           
           <tr>
             <td><a href="{{ url_for('universite', id=uni.pk) }}">{{ uni.nom }}</a></td>
             <td>{{ echng.accord.nom }}</td>
@@ -97,7 +100,7 @@
                 <h3 class="card-title card-green">Vie pratique</h3>
             </button>
             <div id="viePratiqueCollapse" class="card-body" aria-labelledby="viePratique">
-                {{ pays.get_vie_pratique_html() }}
+                {{ Article.get_markup_for(pays.vie_pratique) }}
                 <a href="#" class="card-link">Modifier/Ajouter</a>
             </div>
         </div>
@@ -108,10 +111,10 @@
             <h3 class="card-title card-yellow text-warning">Tourisme</h3>
         </button>
         <div id="tourismeCollapse" class="collapse card-body" aria-labelledby="tourisme">
-          {{ pays.get_tourisme_html() }}
+          {{ Article.get_markup_for(pays.tourisme) }}
           <a href="#" class="card-link">Modifier/Ajouter</a>
         </div>
-      </div> 
+      </div>
     </div>
     <div class="card card-red">
       <div class="card-body" id="culture">
@@ -119,7 +122,7 @@
             <h3 class="card-title card-red text-danger">Culture</h3>
           </button>
           <div id="cultureCollapse" class="collapse card-body" aria-labelledby="culture">
-              {{ pays.get_culture_html() }}
+              {{ Article.get_markup_for(pays.culture) }}
               <a href="#" class="card-link">Modifier/Ajouter</a>
           </div>
       </div>
@@ -130,7 +133,7 @@
             <h3 class="card-title card-blue text-primary">Climat</h3>
           </button>
           <div id="climatCollapse" class="collapse card-body" aria-labelledby="climat">
-              {{ pays.get_climat_html() }}
+              {{ Article.get_markup_for(pays.climat) }}
               <a href="#" class="card-link">Modifier/Ajouter</a>
           </div>
       </div>

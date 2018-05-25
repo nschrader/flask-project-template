@@ -56,7 +56,7 @@
                 <h3 class="card-title card-green">Cours</h3>
             </button>
             <div id="coursCollapse" class="card-body" aria-labelledby="cours">
-                <!-- universite.get_cours_html() -->
+                {{ Article.get_markup_for(universite.cours) }}
                 <a href="#" class="card-link">Modifier/Ajouter</a>
             </div>
         </div>
@@ -67,10 +67,10 @@
             <h3 class="card-title card-yellow text-warning">Accessibilité</h3>
         </button>
         <div id="accessibiliteCollapse" class="collapse card-body" aria-labelledby="accessibilite">
-          <!-- universite.get_accessibilite_html() -->
+          {{ Article.get_markup_for(universite.accessibilite) }}
           <a href="#" class="card-link">Modifier/Ajouter</a>
         </div>
-      </div> 
+      </div>
     </div>
     <div class="card card-red">
       <div class="card-body" id="logement">
@@ -78,7 +78,7 @@
             <h3 class="card-title card-red text-danger">Logement</h3>
           </button>
           <div id="logementCollapse" class="collapse card-body" aria-labelledby="logement">
-              <!-- universite.get_logement_html() -->
+              {{ Article.get_markup_for(universite.logement) }}
               <a href="#" class="card-link">Modifier/Ajouter</a>
           </div>
       </div>
@@ -89,17 +89,20 @@
             <h3 class="card-title card-blue text-primary">Sorties et Ambiance</h3>
           </button>
           <div id="ambianceCollapse" class="collapse card-body" aria-labelledby="ambiance">
-              <!-- universite.get_ambiance_html()-->
+              {{ Article.get_markup_for(universite.ambiance) }}
               <a href="#" class="card-link">Modifier/Ajouter</a>
           </div>
       </div>
     </div>
     <!-- FIN INFOS -->
-
+    <br>
+    <br>
     <!-- Supprimer l'accord -->
     <form class="well form-horizontal" action=" " method="post">
       {{ form.hidden_tag() }}
-      <span class="badge badge-light"><a>{{ form.submit() }} </a></span>
+        <p align="right">
+            <span class="badge badge-light badge-pill"><a>{{ form.submit() }} </a></span>
+        </p>
     </form>
 
 
