@@ -100,8 +100,13 @@
                 <h3 class="card-title card-green">Vie pratique</h3>
             </button>
             <div id="viePratiqueCollapse" class="card-body" aria-labelledby="viePratique">
-                {{ pays.get_vie_pratique_html() }}
-                <a href="#" class="card-link">Modifier/Ajouter</a>
+                <div>
+                    <!-- si on n'a pas cliqué sur modifier-->
+                    {{ pays.get_vie_pratique_html() }}
+                    <!-- si on a cliqué sur modifier-->
+                    <textarea class="form-control collapse" id="viePratiqueModif">{{ pays.vie_pratique.text }}</textarea> 
+                </div>
+                <button class="btn btn-link" data-toggle="collapse" data-target="#viePratiqueModif" aria-controls="viePratiqueModif">Modifier/Ajouter</button>
             </div>
         </div>
     </div>
