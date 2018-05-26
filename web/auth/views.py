@@ -22,7 +22,8 @@ def inscription():
         if Utilisateur.objects(mail = form.email.data).first() :
             flash("Il y a déjà un compte associé à cette adresse email", category='error')
         else :
-            envoyer_mail(utilisateur.mail)
+            envoyer_mail(utilisateur)
+            return redirect(url_for('login', mail = utilisateur.mail))
             '''utilisateur.make_token()
             utilisateur.save()
             debut_url = request.host_url
@@ -39,7 +40,7 @@ def inscription_token(token, mail):
         flash('Merci, votre inscription a été validée.')
         return redirect(url_for('login', mail = mail))
     elif Utilisateur.verifify_token(token) == 0 :
-        envoyer_mail(utilisateur.mail)
+        envoyer_mail(utilisateur)
         flash("Un nouveau mail de confirmation vous a été envoyé", category='info')
         return redirect(url_for('login', mail = mail))
     else :
@@ -123,7 +124,7 @@ def modif_mdp() :
         utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
         utilisateur.save()
         flash("Vos modifications ont été enregistrées", category='success')
-        return render_template('auth/profil.html', title='Mon profil')
+        return render_template('auth/profil.html')
     return render_template('auth/modif_mdp.html', form=form)
 
 
@@ -150,13 +151,10 @@ def logout():
     return redirect(url_for('index'))
 
 
-def envoyer_mail(mail) :
-    utilisateur = Utilisateur.objects(mail = mail).first()
-    if utilisateur :
-        utilisateur.make_token()
-        utilisateur.save()
-        debut_url = request.host_url
-        debut_url = debut_url[:-1]
-        url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = mail)
-        send_to(utilisateur.mail, "Bli", url)
-        return redirect(url_for('login', mail = mail))
+def envoyer_mail(utilisateur) :
+    utilisateur.make_token()
+    utilisateur.save()
+    debut_url = request.host_url
+    debut_url = debut_url[:-1]
+    url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail)
+    send_to(utilisateur.mail, "Bli", url)
