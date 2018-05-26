@@ -5,7 +5,10 @@
   <div id="content">
     <div class="container-fluid sol-sm">
       <h1 class="page-header text-light">Erreur 404</h1>
-      <p class="font-weight-bold text-white">La page <code>{{ request.url }}</code> que vous cherchez n'existe pas.</p>
+        <p class="font-weight-bold text-white">La page <code>{{ request.url }}</code> que vous cherchez n'existe pas.</p>
+      <h5 class="text-light">Comme vous vous êtes perdu, aidez nous à retrouver Charlie ;) </h5>
+        <img class="media-object" src="{{ url_for('static', filename='assets/404.jpg') }}" >
+
       <p><a href="/">&larr; Vers la page d'acceuil</a></p>
     </div>
   </div>

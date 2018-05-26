@@ -107,6 +107,8 @@
                     <textarea class="form-control collapse" id="viePratiqueModif">{{ pays.vie_pratique.text }}</textarea> 
                 </div>
                 <button class="btn btn-link" data-toggle="collapse" data-target="#viePratiqueModif" aria-controls="viePratiqueModif">Modifier/Ajouter</button>
+                <!--{{ Article.get_markup_for(pays.vie_pratique) }}-->
+
             </div>
         </div>
     </div>
@@ -116,10 +118,10 @@
             <h3 class="card-title card-yellow text-warning">Tourisme</h3>
         </button>
         <div id="tourismeCollapse" class="collapse card-body" aria-labelledby="tourisme">
-          {{ pays.get_tourisme_html() }}
+          {{ Article.get_markup_for(pays.tourisme) }}
           <a href="#" class="card-link">Modifier/Ajouter</a>
         </div>
-      </div> 
+      </div>
     </div>
     <div class="card card-red">
       <div class="card-body" id="culture">
@@ -127,7 +129,7 @@
             <h3 class="card-title card-red text-danger">Culture</h3>
           </button>
           <div id="cultureCollapse" class="collapse card-body" aria-labelledby="culture">
-              {{ pays.get_culture_html() }}
+              {{ Article.get_markup_for(pays.culture) }}
               <a href="#" class="card-link">Modifier/Ajouter</a>
           </div>
       </div>
@@ -138,7 +140,7 @@
             <h3 class="card-title card-blue text-primary">Climat</h3>
           </button>
           <div id="climatCollapse" class="collapse card-body" aria-labelledby="climat">
-              {{ pays.get_climat_html() }}
+              {{ Article.get_markup_for(pays.climat) }}
               <a href="#" class="card-link">Modifier/Ajouter</a>
           </div>
       </div>

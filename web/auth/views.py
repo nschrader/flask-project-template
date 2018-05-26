@@ -2,9 +2,9 @@ from flask import render_template, redirect, request, g, flash, url_for, current
 from flask_login import current_user, login_required, fresh_login_required, logout_user, login_user
 from werkzeug.security import generate_password_hash
 
-from dao import Utilisateur
+from dao import Utilisateur, Universite
 from mail import send_to
-from .forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, DeleteUserForm
+from .forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, ResetPasswordForm, DeleteUserForm
 
 @app.route('/inscription', methods=['GET', 'POST'])
 def inscription():
@@ -17,43 +17,66 @@ def inscription():
             mail = form.email.data,
             departement = form.departement.data,
             niveau = form.niveau.data,
-            mobilites = [form.mobilite.data],
-            password = generate_password_hash(form.mdp.data)
-        )
-        utilisateur.make_token()
-        utilisateur.save()
-        send_to(utilisateur.mail, "Bli", url_for("inscription_token", token=utilisateur.token))
+            mobilites = [] if form.mobilite_is_non() else [form.mobilite.data] ,
+            password = generate_password_hash(form.mdp.data))
+        if Utilisateur.objects(mail = form.email.data).first() :
+            flash("Il y a déjà un compte associé à cette adresse email", category='error')
+        else :
+            envoyer_mail(utilisateur)
+            return redirect(url_for('login', mail = utilisateur.mail))
+            '''utilisateur.make_token()
+            utilisateur.save()
+            debut_url = request.host_url
+            debut_url = debut_url[:-1]
+            send_to(utilisateur.mail, "Bli", debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail))
+            return redirect(url_for('login', mail = utilisateur.mail))'''
     return render_template('auth/inscription.html', form = form)
 
 
-@app.route('/inscription/<token>')
-def inscription_token(token):
-    if Utilisateur.verifify_token(token):
+@app.route('/inscription/<token>/<mail>')
+def inscription_token(token, mail):
+    utilisateur = Utilisateur.objects(mail = mail).first()
+    if Utilisateur.verifify_token(token) == 1 :
         flash('Merci, votre inscription a été validée.')
-        return redirect(url_for('login'))
-    else:
-        flash("Votre token n'est pas bon, faites vous en renvoyer un.")
-        return redirect(url_for("reset"))
+        return redirect(url_for('login', mail = mail))
+    elif Utilisateur.verifify_token(token) == 0 :
+        envoyer_mail(utilisateur)
+        flash("Un nouveau mail de confirmation vous a été envoyé", category='info')
+        return redirect(url_for('login', mail = mail))
+    else :
+        utilisateur.delete()
+        flash("Vous devez vous inscrire à nouveau", category='error')
+        return redirect(url_for('inscription'))
 
 
-@app.route("/reset")
-def reset():
-    return "Do stuff..."
+'''@app.route('/reinitialiser-mdp/<mail>', methods=['GET', 'POST'])
+def reinitialiser_mdp(mail):
+    utilisateur = Utilisateur.objects(mail = mail).first()
+    form = ResetPasswordForm(email = mail)
+    if request.method == 'POST' and form.validate_on_submit() :
+        envoyer_mail(utilisateur.mail)
+    return render_template('auth/reinit_mdp.html', form=form)'''
 
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        user = Utilisateur.objects.get(mail = form.email.data)
-        if user and user.validate_login(form.mdp.data):
-            if login_user(user, form.remember_me.data):
-                flash("Vous êtes connecté", category='success')
-                return redirect(request.args.get("next") or url_for("index"))
-            else:
-                flash("Votre inscription n'est pas confirmée", category='error')
-                return redirect(url_for("reset"))
-        flash("Email ou mot de passe erroné", category='error')
+@app.route('/login', defaults={'mail': None}, methods = ['GET', 'POST'])
+@app.route('/login/<mail>', methods = ['GET', 'POST'])
+def login(mail = None):
+    form = LoginForm(email = mail)
+    if request.method == 'POST' and form.validate_on_submit() :
+        user = Utilisateur.objects(mail = form.email.data).first()
+        if user :
+            if user.validate_login(form.mdp.data) :
+                if user.is_active :
+                    if login_user(user, form.remember_me.data) :
+                        flash("Vous êtes connecté", category='success')
+                        return redirect(request.args.get("next") or url_for("index"))
+                else :
+                    flash("Votre inscription n'est pas confirmée", category='error')
+                    return redirect(url_for('inscription_token', token = user.token, mail = user.mail))
+            else :
+                flash("Email ou mot de passe erroné", category='error')
+        else :
+            flash("Pas de compte associé à cette adresse email", category='error')
     return render_template('auth/login.html', form=form)
 
 
@@ -67,16 +90,20 @@ def profil() :
 @fresh_login_required
 def modif_profil() :
     utilisateur = current_user
-    form = EditUserProfileForm()
+    form = EditUserProfileForm(
+        prenom = utilisateur.prenom,
+        nom = utilisateur.nom,
+        email = utilisateur.mail,
+        departement = utilisateur.departement.pk,
+        niveau = str(utilisateur.niveau),
+        mobilite = utilisateur.mobilites[0].pk if utilisateur.mobilites else [])
     if request.method == 'POST' and form.validate_on_submit():
         prenom = form.prenom.data
         nom = form.nom.data
         mail = form.email.data
-        departement = form.departement.data if form.departement.data else utilisateur.departement
-        niveau = form.niveau.data if form.niveau.data else utilisateur.niveau
-        mobilites = utilisateur.mobilites
-        if form.mobilite.data is not utilisateur.mobilites[0] :
-            mobilites =  [form.mobilite.data]
+        departement = form.departement.data
+        niveau = form.niveau.data
+        mobilites = [form.mobilite.data]
         utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
         utilisateur.save()
         flash(current_user.prenom, category='success')
@@ -97,7 +124,7 @@ def modif_mdp() :
         utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
         utilisateur.save()
         flash("Vos modifications ont été enregistrées", category='success')
-        return render_template('auth/profil.html', title='Mon profil')
+        return render_template('auth/profil.html')
     return render_template('auth/modif_mdp.html', form=form)
 
 
@@ -110,7 +137,7 @@ def suppr_profil() :
         if not utilisateur.validate_login(form.mdp.data) :
             flash("Mot de passe erroné", category='error')
             return render_template('auth/suppr_profil.html', form=form)
-        utilisateur.remove()
+        utilisateur.delete()
         logout_user()
         flash("Votre compte a bien été supprimé", category='success')
         return render_template('frontend/accueil.html')
@@ -122,3 +149,12 @@ def suppr_profil() :
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+def envoyer_mail(utilisateur) :
+    utilisateur.make_token()
+    utilisateur.save()
+    debut_url = request.host_url
+    debut_url = debut_url[:-1]
+    url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail)
+    send_to(utilisateur.mail, "Bli", url)
