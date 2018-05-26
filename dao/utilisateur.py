@@ -55,10 +55,13 @@ class Utilisateur(UserMixin, Document):
         if user:
             timediff = datetime.now() - user.token_timestamp
             if timediff.total_seconds() < config.TOKEN_TIMEOUT:
-                user.active = True
-                user.save()
-                return True
-        return False
+                if timediff.total_seconds() < config.TOKEN_VALIDITY_TIMEOUT:
+                    user.active = True
+                    user.save()
+                    return 1
+                else:
+                    return 0
+        return -1
 
 
 
@@ -70,8 +73,8 @@ class Utilisateur(UserMixin, Document):
             root_user = Utilisateur(
                 mail = config.ROOT,
                 password = password,
-                nom = config.ROOT,
-                prenom = "",
+                nom = "Root",
+                prenom = "Admin",
                 admin = True,
                 active = True
             )
