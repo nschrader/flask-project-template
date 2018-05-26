@@ -1,16 +1,16 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import SelectField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
-from dao import Departement,Universite
+from dao import Departement, Universite, Utilisateur
 from bson.objectid import ObjectId
 
 class RegistrationForm(FlaskForm):
     prenom = StringField('Prénom', validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
-    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
-    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[(univ.pk, univ.nom) for univ in Universite.objects.all()], coerce=ObjectId, validators=None)
+    departement = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
+    niveau = SelectField('Année d\'études', choices=Utilisateur.get_annee_choices(), validators=[DataRequired()])
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=Universite.get_choices(), coerce=ObjectId)
     mdp = PasswordField('Mot de passe', validators=[DataRequired()])
     mdp2 = PasswordField('Répétez le mot de passe', validators=[DataRequired(), EqualTo('mdp')])
     submit = SubmitField('S\'inscrire')
@@ -26,9 +26,9 @@ class EditUserProfileForm(FlaskForm):
     prenom = StringField('Prénom')
     nom = StringField('Nom')
     email = StringField('Email')
-    departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId)
-    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')])
-    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=[(univ.pk, univ.nom) for univ in Universite.objects.all()], coerce=ObjectId, validators=None)
+    departement = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId)
+    niveau = SelectField('Année d\'études', choices=Utilisateur.get_annee_choices())
+    mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=Universite.get_choices(), coerce=ObjectId, validators=None)
     submit = SubmitField('Valider les changements')
 
 class ChangePasswordForm(FlaskForm):

@@ -1,4 +1,5 @@
 from mongoengine import *
+
 from .departement import Departement
 from .audit import Audit
 
@@ -23,3 +24,9 @@ class Universite(Audit, Document):
         us = cls.objects(pays=pays)
         dpt = Departement.objects.with_id(departement)
         return [(u, e) for u in us for e in u.echanges if dpt in e.departements]
+
+
+    @classmethod
+    def get_choices(cls):
+        unis = [(univ.pk, univ.nom) for univ in cls.objects.all()]
+        return sorted(unis, key=lambda x: x[1])

@@ -4,6 +4,7 @@ from mongoengine import *
 from .std_user_proxy import StdUserProxy
 from .audit_query_set import AuditQuerySet
 
+#TODO: Make this more coherent...
 class Audit():
     meta = {
         'abstract': True,
@@ -14,6 +15,7 @@ class Audit():
     modified_time = DateTimeField(default = datetime.now)
 
 
+    #TODO: Make this work
     def save(self, *args, **kwargs):
         self.modified_date = datetime.now()
         self.modified_user = StdUserProxy.get()

@@ -6,19 +6,23 @@ from datetime import datetime
 from mongoengine import *
 
 import config
+import dao.voeu
 
 class Utilisateur(UserMixin, Document):
     nom = StringField(required = True)
     prenom = StringField(required = True)
-    departement = ReferenceField("Departement")
-    niveau = IntField()
-    mobilites = ListField(ReferenceField("Universite"))
     mail = EmailField(required = True, domain_whitelist = ["insa-lyon.fr"], unique = True)
     password = StringField(required = True)
     token = StringField()
     token_timestamp = DateTimeField()
     active = BooleanField(default = False)
     admin = BooleanField(default = False)
+
+    departement = ReferenceField("Departement")
+    niveau = IntField()
+    mobilites = ListField(ReferenceField("Universite"))
+    voeu_1 = EmbeddedDocumentField("Voeu")
+    voeu_2 = EmbeddedDocumentField("Voeu")
 
 
     def get_nom(self):
@@ -73,3 +77,8 @@ class Utilisateur(UserMixin, Document):
             )
             root_user.save()
         return root_user
+
+
+    @staticmethod
+    def get_annee_choices():
+        return [("2", "2A"), ("3", "3A"), ("4", "4A"), ("5", "5A")]

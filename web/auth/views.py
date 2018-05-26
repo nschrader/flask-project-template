@@ -75,11 +75,10 @@ def modif_profil() :
         departement = form.departement.data if form.departement.data else utilisateur.departement
         niveau = form.niveau.data if form.niveau.data else utilisateur.niveau
         mobilites = utilisateur.mobilites
-        if form.mobilite.data is not utilisateur.mobilites[0] :
+        if form.mobilite.data not in utilisateur.mobilites:
             mobilites =  [form.mobilite.data]
         utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
         utilisateur.save()
-        flash(current_user.prenom, category='success')
         flash("Vos modifications ont été enregistrées", category='success')
         return redirect(url_for('profil'))
     return render_template('auth/modif_profil.html', form=form)
