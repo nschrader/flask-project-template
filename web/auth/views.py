@@ -24,6 +24,7 @@ def inscription():
         else :
             envoyer_mail(utilisateur)
             return redirect(url_for('login', mail = utilisateur.mail))
+            #TODO: Pas logique, on contourne le sens d'un token
             '''utilisateur.make_token()
             utilisateur.save()
             debut_url = request.host_url
@@ -32,7 +33,7 @@ def inscription():
             return redirect(url_for('login', mail = utilisateur.mail))'''
     return render_template('auth/inscription.html', form = form)
 
-
+#TODO: On ne devrait pas avoir besoin du mail ici
 @app.route('/inscription/<token>/<mail>')
 def inscription_token(token, mail):
     utilisateur = Utilisateur.objects(mail = mail).first()
@@ -42,13 +43,15 @@ def inscription_token(token, mail):
     elif Utilisateur.verifify_token(token) == 0 :
         envoyer_mail(utilisateur)
         flash("Un nouveau mail de confirmation vous a été envoyé", category='info')
+        #TODO: Pas logique, on contourne le sens d'un token
         return redirect(url_for('login', mail = mail))
     else :
+        #TODO: Pas logique, on n'arrive jamais ici
         utilisateur.delete()
         flash("Vous devez vous inscrire à nouveau", category='error')
         return redirect(url_for('inscription'))
 
-
+#TODO: Faire marcher
 '''@app.route('/reinitialiser-mdp/<mail>', methods=['GET', 'POST'])
 def reinitialiser_mdp(mail):
     utilisateur = Utilisateur.objects(mail = mail).first()
@@ -58,6 +61,7 @@ def reinitialiser_mdp(mail):
     return render_template('auth/reinit_mdp.html', form=form)'''
 
 
+#TODO: Il devrait pas y avoir besoin du mail. Ce truc ne fait aucon sens, on peut contrurner tout le systeme des tokens ?
 @app.route('/login', defaults={'mail': None}, methods = ['GET', 'POST'])
 @app.route('/login/<mail>', methods = ['GET', 'POST'])
 def login(mail = None):
