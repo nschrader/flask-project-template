@@ -14,7 +14,7 @@
       <div class="form-group row">
         <div class="col-10">
         <label for="Prénom" class="col-2 col-form-label">{{ form.prenom.label }}<br></label>
-            {{ form.prenom(size=32, value=current_user.prenom) }}<br>
+            {{ form.prenom(size=32) }}<br>
             {% for error in form.prenom.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -24,7 +24,7 @@
       <div class="form-group row">
         <div class="col-10">
         <label for="Nom" class="col-2 col-form-label">{{ form.nom.label }}<br></label>
-            {{ form.nom(size=32, value=current_user.nom) }}<br>
+            {{ form.nom(size=32) }}<br>
             {% for error in form.nom.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -34,7 +34,7 @@
         <div class="form-group row">
           <div class="col-10">
             <label for="email" class="col-2 col-form-label">{{ form.email.label }}<br></label>
-            {{ form.email(size=32, value=current_user.mail) }}<br>
+            {{ form.email(size=32) }}<br>
             {% for error in form.email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
