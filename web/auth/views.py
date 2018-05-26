@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 
 from dao import Utilisateur, Universite
 from mail import send_to
-from .forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, DeleteUserForm
+from .forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, ResetPasswordForm, DeleteUserForm
 
 @app.route('/inscription', methods=['GET', 'POST'])
 def inscription():
@@ -22,33 +22,45 @@ def inscription():
         if Utilisateur.objects(mail = form.email.data).first() :
             flash("Il y a déjà un compte associé à cette adresse email", category='error')
         else :
-            utilisateur.make_token()
+            envoyer_mail(utilisateur.mail)
+            '''utilisateur.make_token()
             utilisateur.save()
             debut_url = request.host_url
             debut_url = debut_url[:-1]
-            send_to(utilisateur.mail, "Bli", debut_url + url_for("inscription_token", token=utilisateur.token))
-            return redirect(url_for('login'))
+            send_to(utilisateur.mail, "Bli", debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail))
+            return redirect(url_for('login', mail = utilisateur.mail))'''
     return render_template('auth/inscription.html', form = form)
 
 
-@app.route('/inscription/<token>')
-def inscription_token(token):
-    if Utilisateur.verifify_token(token):
+@app.route('/inscription/<token>/<mail>')
+def inscription_token(token, mail):
+    utilisateur = Utilisateur.objects(mail = mail).first()
+    if Utilisateur.verifify_token(token) == 1 :
         flash('Merci, votre inscription a été validée.')
-        return redirect(url_for('login'))
-    else:
-        flash("Votre token n'est pas bon, faites vous en renvoyer un.")
-        return redirect(url_for("reset"))
+        return redirect(url_for('login', mail = mail))
+    elif Utilisateur.verifify_token(token) == 0 :
+        envoyer_mail(utilisateur.mail)
+        flash("Un nouveau mail de confirmation vous a été envoyé", category='info')
+        return redirect(url_for('login', mail = mail))
+    else :
+        utilisateur.delete()
+        flash("Vous devez vous inscrire à nouveau", category='error')
+        return redirect(url_for('inscription'))
 
 
-@app.route("/reset")
-def reset():
-    return "Do stuff..."
+'''@app.route('/reinitialiser-mdp/<mail>', methods=['GET', 'POST'])
+def reinitialiser_mdp(mail):
+    utilisateur = Utilisateur.objects(mail = mail).first()
+    form = ResetPasswordForm(email = mail)
+    if request.method == 'POST' and form.validate_on_submit() :
+        envoyer_mail(utilisateur.mail)
+    return render_template('auth/reinit_mdp.html', form=form)'''
 
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    form = LoginForm()
+@app.route('/login', defaults={'mail': None}, methods = ['GET', 'POST'])
+@app.route('/login/<mail>', methods = ['GET', 'POST'])
+def login(mail = None):
+    form = LoginForm(email = mail)
     if request.method == 'POST' and form.validate_on_submit() :
         user = Utilisateur.objects(mail = form.email.data).first()
         if user :
@@ -59,7 +71,7 @@ def login():
                         return redirect(request.args.get("next") or url_for("index"))
                 else :
                     flash("Votre inscription n'est pas confirmée", category='error')
-                    return redirect(url_for("reset"))
+                    return redirect(url_for('inscription_token', token = user.token, mail = user.mail))
             else :
                 flash("Email ou mot de passe erroné", category='error')
         else :
@@ -136,3 +148,15 @@ def suppr_profil() :
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+def envoyer_mail(mail) :
+    utilisateur = Utilisateur.objects(mail = mail).first()
+    if utilisateur :
+        utilisateur.make_token()
+        utilisateur.save()
+        debut_url = request.host_url
+        debut_url = debut_url[:-1]
+        url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = mail)
+        send_to(utilisateur.mail, "Bli", url)
+        return redirect(url_for('login', mail = mail))

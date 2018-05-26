@@ -40,6 +40,9 @@ class ChangePasswordForm(FlaskForm):
     nouveau_mdp2 = PasswordField('Répétez le nouveau mot de passe', validators=[EqualTo('nouveau_mdp')])
     submit = SubmitField('Valider le changement de mot de passe')
 
+class ResetPasswordForm(ChangePasswordForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+
 class DeleteUserForm(FlaskForm):
     mdp = PasswordField('Mot de passe requis', validators=[DataRequired()])
     submit = SubmitField('Supprimer mon compte (cette opération est irréversible)')

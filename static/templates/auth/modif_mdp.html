@@ -42,13 +42,6 @@
 
 <p><span class="badge badge-light">{{ form.submit() }}</span></p>
 
-{% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
-<div class="alert alert-dismissable alert-danger" align="center">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ error[1] }}
-</div>
-{% endfor %}
-
 </div>
     <fieldset>
   </form>
