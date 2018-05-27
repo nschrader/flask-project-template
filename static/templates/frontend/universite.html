@@ -21,7 +21,7 @@
 
                 <div class="media col">
                     <div class="media-body align-self-center">
-                        <h2 class="page-header"><a href="{{ url_for("pays", id=universite.pays.pk) }}">{{ universite.pays.nom }}</a></h2>
+                        <h2 class="page-header"><a href="{{ url_for('pays', id=universite.pays.pk) }}">{{ universite.pays.nom }}</a></h2>
                     </div>
                 </div>
                 <div class = "col-md-auto align-self-center">
@@ -33,6 +33,7 @@
                     <div class="btn-group ">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
                         <div class="dropdown-menu">
+                        <!-- TODO : make these names real ones -->
                         <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
                         <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
                         <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>

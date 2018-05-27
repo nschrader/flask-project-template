@@ -4,6 +4,7 @@
 
 <!-- TEMPLATE PAGE PAYS -->
 
+
 <div class="container-fluid">
 
     <!-- header -->
@@ -96,19 +97,31 @@
     <h2 class="font-weight-bold text-light">Informations</h2>
     <div class="card card-green">
         <div class="card-body" id="viePratique">
-            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#viePratiqueCollapse" aria-expanded="true" aria-controls="viePratiqueCollapse">
+            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#viePratiqueCollapse, #viePratiqueData, #button1" aria-expanded="true" aria-controls="viePratiqueCollapse">
                 <h3 class="card-title card-green">Vie pratique</h3>
             </button>
-            <div id="viePratiqueCollapse" class="card-body" aria-labelledby="viePratique">
-                <div>
-                    <!-- si on n'a pas cliqué sur modifier-->
-                    {{ pays.get_vie_pratique_html() }}
-                    <!-- si on a cliqué sur modifier-->
-                    <textarea class="form-control collapse" id="viePratiqueModif">{{ pays.vie_pratique.text }}</textarea> 
+            <div id="viePratiqueCollapse" class="card-body collapse" aria-labelledby="viePratique">
+                
+                <!-- COCO ça se passe ici -->
+                <!-- données affichées : disparaît quand on clique sur modifier/ajouter -->
+                <!--                     apparaît quand on clique sur enregistrer ou annuler -->
+                <div class="collapse multi-collapse" id="viePratiqueData">
+                    {{ Article.get_markup_for(pays.vie_pratique)}}
                 </div>
-                <button class="btn btn-link" data-toggle="collapse" data-target="#viePratiqueModif" aria-controls="viePratiqueModif">Modifier/Ajouter</button>
-                <!--{{ Article.get_markup_for(pays.vie_pratique) }}-->
-
+                <!-- zone de texte et bouton Enregister : apparaît quand on clique sur modifier/ajouter -->
+                <!--                                      disparaît quand on clique sur enregistrer ou annuler -->
+                <form class="collapse multi-collapse" id="viePratiqueModif">
+                    <textarea class="form-control">{{ pays.vie_pratique.text }}</textarea>
+                    <!-- doit mettre à jour la BD et recharger la page avec les données -->
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Enregistrer</button>
+                    <!-- doit annuler la saisie de texte (et recharger la page initiale ?) -->
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Annuler</button>
+                </form>
+                <div id="button1" class="multi-collapse collapse">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Modifier/Ajouter</button>
+                </div>
+                <!---->
+                
             </div>
         </div>
     </div>

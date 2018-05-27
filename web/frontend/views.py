@@ -29,11 +29,6 @@ def pays(id):
         univ_echng=Universite.get_with_echanges_for_pays(pays)
     return render_template('frontend/pays.html', pays=pays, univ_echng=univ_echng, form=form)
 
-@app.route('/editer')
-@login_required
-def editer():
-    return render_template('frontend/edit.html')
-
 @app.route('/projet')
 def projet():
     return render_template('frontend/projet.html')
