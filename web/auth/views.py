@@ -1,9 +1,9 @@
 from flask import render_template, redirect, request, g, flash, url_for, current_app as app
 from flask_login import current_user, login_required, fresh_login_required, logout_user, login_user
 from werkzeug.security import generate_password_hash
-
 from dao import Utilisateur, Universite
 from mail import send_to
+from web.mail import sendMail
 from .forms import LoginForm, RegistrationForm, EditUserProfileForm, ChangePasswordForm, ResetPasswordForm, DeleteUserForm
 
 @app.route('/inscription', methods=['GET', 'POST'])
@@ -155,14 +155,13 @@ def logout():
     return redirect(url_for('index'))
 
 
-def envoyer_mail(mail) :
-    utilisateur = Utilisateur.objects(mail = mail).first()
-    if utilisateur :
-        utilisateur.make_token()
-        utilisateur.save()
-        debut_url = request.host_url
-        debut_url = debut_url[:-1]
-        url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = mail)
-        #send_to(utilisateur.mail, "Bli", url)
-        testMail(utilisateur.mail,url)
-        return redirect(url_for('login', mail = mail))
+def envoyer_mail(utilisateur) :
+    utilisateur.make_token()
+    utilisateur.save()
+    debut_url = request.host_url
+    debut_url = debut_url[:-1]
+    url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail)
+    print(utilisateur.mail)
+    #send_to(utilisateur.mail, "Bli", url)
+    sendMail(utilisateur.mail,url)
+    return redirect(url_for('login', mail = utilisateur.mail))
