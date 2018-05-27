@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import SelectField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
-from dao import Departement,Universite
+from dao import Departement, Universite, Utilisateur
 from bson.objectid import ObjectId
 
 class ProfileForm(FlaskForm):
@@ -9,8 +9,8 @@ class ProfileForm(FlaskForm):
     prenom = StringField('Prénom', validators=[DataRequired()])
     nom = StringField('Nom', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    departement = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
-    niveau = SelectField('Année d\'études', choices=[('3', '3A'), ('4', '4A')], validators=[DataRequired()])
+    departement = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
+    niveau = SelectField('Année d\'études', choices=Utilisateur.get_annee_choices(), validators=[DataRequired()])
     # TODO : ordonner par ordre alphabétique
     choix_mobilite = [(non, 'Non')]
     for univ in Universite.objects.all() :

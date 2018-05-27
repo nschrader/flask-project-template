@@ -74,19 +74,15 @@
                       <li class="dropdown nav-item">
                           <a href="javascript:;" class="nav-link dropdown-toggle" data-toggle="dropdown">  {{ current_user.get_nom() }} <b class="caret"></b></a>
                           <ul class="dropdown-menu">
-                              <li class="dropdown-item">
-                                <a href="{{ url_for( 'profil' ) }}">Profil</a>
-                              </li>
+                                <a class="dropdown-item" href="{{ url_for( 'profil' ) }}" ><font color="#0080ff">Profil</font></a>
                               <li class="divider"></li>
-                              <li class="dropdown-item">
-                                  <a href="{{ url_for( 'logout' ) }}">Se déconnecter</a>
-                              </li>
+                                <a class="dropdown-item" href="{{ url_for( 'logout' ) }}"><font color="#0080ff">Se déconnecter</font></a>
                           </ul>
                       </li>
 
                     {% else %}
                       <!-- TODO: Use url_for insted of hard coded links -->
-                      <a class="nav-link" href="{{ url_for( 'login' ) }}">Se connecter</a>
+                    <a class="nav-link" href="{{ url_for( 'login' ) }}">Se connecter</a>
                     {% endif %}
 
                 <!-- nave bar -->

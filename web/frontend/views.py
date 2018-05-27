@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
 
 from dao import *
-from .forms import FilterForm,DeleteAgreementForm
+from .forms import FilterForm, DeleteAgreementForm, VoeuxForm, DeleteVoeuxForm,AjoutEchngForm
 
 @app.route('/')
 @login_required
@@ -42,14 +42,61 @@ def universite(id):
         return redirect(url_for('suppr-accord'))
     return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id), form=deleteForm)
 
+
+@app.route('/ajout')
+@login_required
+def ajout():
+    form=AjoutEchngForm()
+    return render_template('frontend/ajout_echng.html',form=form)
+
+
 @app.route('/suppr-accord/<id>')
 def suppr_accord(id):
     return render_template('frontend/suppr_accord.html', universite=Universite.objects.id_or_404(id))
 
-@app.route('/voeux')
+@app.route('/voeux', methods=['GET', 'POST'])
 @login_required
 def voeux():
-    return render_template('frontend/voeux.html')
+    form = VoeuxForm()
+    enregistre = False
+    if request.method == 'POST' and form.validate_on_submit():
+        if form.universite_1.data == form.universite_2.data:
+            flash("Il faut que les deux universités soient distinctes", category="error")
+        else:
+            flash("Vos voeux étaient bien enregistrés", category="success")
+            current_user.voeu_1 = Voeu(
+                universite=form.universite_1.data,
+                semestre=form.semestre_1.data,
+            )
+            current_user.voeu_2 = Voeu(
+                universite=form.universite_2.data,
+                semestre=form.semestre_2.data,
+            )
+            current_user.voeux_annee = form.annee.data
+            current_user.save()
+            enregistre = True
+
+    elif current_user.voeu_1 and current_user.voeu_2:
+        form = VoeuxForm(
+            universite_1 = current_user.voeu_1.universite.pk,
+            universite_2 = current_user.voeu_2.universite.pk,
+            semestre_1 = current_user.voeu_1.semestre,
+            semestre_2 = current_user.voeu_2.semestre,
+            annee = current_user.voeux_annee
+        )
+        enregistre = True
+
+    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre)
+
+@app.route('/voeux/delete', methods=['POST'])
+def delete_voeux():
+    del_form=DeleteVoeuxForm()
+    if del_form.validate_on_submit():
+        current_user.voeu_1 = None
+        current_user.voeu_2 = None
+        current_user.voeux_annee = None
+        current_user.save()
+    return redirect(url_for("voeux"))
 
 @app.route('/robots.txt')
 def static_from_root():

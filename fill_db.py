@@ -302,11 +302,16 @@ mm = Utilisateur(
     mail="oma123@opa456.com",
     departement=tc,
     niveau=5,
-    password=generate_password_hash("hallo")
+    password=generate_password_hash("hallo"),
+    active=True,
+    voeux_annee = 4,
+    voeu_1=Voeu(
+        semestre=1,
+        universite=uj
+    ),
+    voeu_2=Voeu(
+        semestre=2,
+        universite=udg
+    )
 )
 mm.save()
-
-v1 = Voeu(
-    utilisateur=mm,
-    universite=uj
-).saveAndGet()
