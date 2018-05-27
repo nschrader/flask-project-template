@@ -21,21 +21,20 @@
                 <li class="active">
                   <form action="" method="POST" name="form">
                     {{ form.hidden_tag() }}
-                    <!-- TODO : link filters to real actions, use a nice flask form -->
                     <strong>Filtres :</strong>
-                    
-                    &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }} 
+
+                    &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }}
                     {% for error in form.doublediplome.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
-                      
-                    &emsp;{{ form.F_echange.label }} {{ form.F_echange() }} 
+
+                    &emsp;{{ form.F_echange.label }} {{ form.F_echange() }}
                     {% for error in form.F_echange.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
-                      
+
                     <!-- menu déroulant pour le choix du département-->
-                  
+
                     &emsp; {{ form.departement.label }}
                     {{ form.departement }}
                     {% for error in form.departement.errors %}
@@ -68,7 +67,7 @@
         <tbody>
 
           {% for uni, echng in univ_echng %}
-           
+
           <tr>
             <td><a href="{{ url_for('universite', id=uni.pk) }}">{{ uni.nom }}</a></td>
             <td>{{ echng.accord.nom }}</td>

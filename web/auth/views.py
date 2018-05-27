@@ -22,7 +22,9 @@ def inscription():
         if Utilisateur.objects(mail = form.email.data).first() :
             flash("Il y a déjà un compte associé à cette adresse email", category='error')
         else :
-            envoyer_mail(utilisateur.mail)
+            envoyer_mail(utilisateur)
+            return redirect(url_for('login', mail = utilisateur.mail))
+            #TODO: Pas logique, on contourne le sens d'un token
             '''utilisateur.make_token()
             utilisateur.save()
             debut_url = request.host_url
@@ -31,7 +33,7 @@ def inscription():
             return redirect(url_for('login', mail = utilisateur.mail))'''
     return render_template('auth/inscription.html', form = form)
 
-
+#TODO: On ne devrait pas avoir besoin du mail ici
 @app.route('/inscription/<token>/<mail>')
 def inscription_token(token, mail):
     utilisateur = Utilisateur.objects(mail = mail).first()
@@ -39,15 +41,17 @@ def inscription_token(token, mail):
         flash('Merci, votre inscription a été validée.')
         return redirect(url_for('login', mail = mail))
     elif Utilisateur.verifify_token(token) == 0 :
-        envoyer_mail(utilisateur.mail)
+        envoyer_mail(utilisateur)
         flash("Un nouveau mail de confirmation vous a été envoyé", category='info')
+        #TODO: Pas logique, on contourne le sens d'un token
         return redirect(url_for('login', mail = mail))
     else :
+        #TODO: Pas logique, on n'arrive jamais ici
         utilisateur.delete()
         flash("Vous devez vous inscrire à nouveau", category='error')
         return redirect(url_for('inscription'))
 
-
+#TODO: Faire marcher
 '''@app.route('/reinitialiser-mdp/<mail>', methods=['GET', 'POST'])
 def reinitialiser_mdp(mail):
     utilisateur = Utilisateur.objects(mail = mail).first()
@@ -57,6 +61,7 @@ def reinitialiser_mdp(mail):
     return render_template('auth/reinit_mdp.html', form=form)'''
 
 
+#TODO: Il devrait pas y avoir besoin du mail. Ce truc ne fait aucon sens, on peut contrurner tout le systeme des tokens ?
 @app.route('/login', defaults={'mail': None}, methods = ['GET', 'POST'])
 @app.route('/login/<mail>', methods = ['GET', 'POST'])
 def login(mail = None):
@@ -89,6 +94,7 @@ def profil() :
 @fresh_login_required
 def modif_profil() :
     utilisateur = current_user
+    print(utilisateur.mobilites)
     form = EditUserProfileForm(
         prenom = utilisateur.prenom,
         nom = utilisateur.nom,
@@ -105,7 +111,6 @@ def modif_profil() :
         mobilites = [form.mobilite.data]
         utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
         utilisateur.save()
-        flash(current_user.prenom, category='success')
         flash("Vos modifications ont été enregistrées", category='success')
         return redirect(url_for('profil'))
     return render_template('auth/modif_profil.html', form=form)
@@ -123,7 +128,7 @@ def modif_mdp() :
         utilisateur.password = generate_password_hash(form.nouveau_mdp.data)
         utilisateur.save()
         flash("Vos modifications ont été enregistrées", category='success')
-        return render_template('auth/profil.html', title='Mon profil')
+        return render_template('auth/profil.html')
     return render_template('auth/modif_mdp.html', form=form)
 
 
