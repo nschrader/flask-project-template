@@ -23,10 +23,9 @@ class FilterForm(FlaskForm):
 class VoeuxForm(FlaskForm):
     universite_1 = SelectField("Université:", choices=Universite.get_choices(), coerce=ObjectId, validators=[DataRequired()])
     universite_2 = SelectField("Université:", choices=Universite.get_choices(), coerce=ObjectId, validators=[DataRequired()])
-    annee_1 = SelectField("Année:", choices=Utilisateur.get_annee_choices(), validators=[DataRequired()])
-    annee_2 = SelectField("Année:", choices=Utilisateur.get_annee_choices(), validators=[DataRequired()])
     semestre_1 = SelectField("Semestre:", choices=Voeu.get_semestre_choices(), validators=[DataRequired()])
     semestre_2 = SelectField("Semestre:", choices=Voeu.get_semestre_choices(), validators=[DataRequired()])
+    annee = SelectField("Année:", choices=Utilisateur.get_annee_choices(), validators=[DataRequired()])
     submit = SubmitField("Soumettre")
 
 

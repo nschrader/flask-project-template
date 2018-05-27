@@ -65,25 +65,19 @@ def voeux():
     form = VoeuxForm()
     enregistre = False
     if request.method == 'POST' and form.validate_on_submit():
-        invalid = False
         if form.universite_1.data == form.universite_2.data:
-            invalid = True
             flash("Il faut que les deux universités soient distinctes", category="error")
-        if form.annee_1.data != form.annee_2.data:
-            invalid = True
-            flash("Il faut que vous fassiez deux voeux pour la même année", category="error")
-        if not invalid:
+        else:
             flash("Vos voeux étaient bien enregistrés", category="success")
             current_user.voeu_1 = Voeu(
                 universite=form.universite_1.data,
-                annee=form.annee_1.data,
                 semestre=form.semestre_1.data,
             )
             current_user.voeu_2 = Voeu(
                 universite=form.universite_2.data,
-                annee=form.annee_2.data,
                 semestre=form.semestre_2.data,
             )
+            current_user.voeux_annee = form.annee.data
             current_user.save()
             enregistre = True
 
@@ -93,8 +87,7 @@ def voeux():
             universite_2 = current_user.voeu_2.universite.pk,
             semestre_1 = current_user.voeu_1.semestre,
             semestre_2 = current_user.voeu_2.semestre,
-            annee_1 = current_user.voeu_1.annee,
-            annee_2 = current_user.voeu_2.annee
+            annee = current_user.voeux_annee
         )
         enregistre = True
 
@@ -106,6 +99,7 @@ def delete_voeux():
     if del_form.validate_on_submit():
         current_user.voeu_1 = None
         current_user.voeu_2 = None
+        current_user.voeux_annee = None
         current_user.save()
     return redirect(url_for("voeux"))
 

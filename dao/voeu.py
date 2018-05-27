@@ -6,7 +6,6 @@ from .audit import Audit
 
 class Voeu(EmbeddedDocument):
     universite = ReferenceField("Universite", required = True)
-    annee = IntField()
     semestre = IntField(min_value = 1, max_value = 2)
     modified_time = DateTimeField(default = datetime.now)
 

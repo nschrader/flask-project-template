@@ -15,13 +15,6 @@
             {% endif %}
 
             &emsp;
-            {{ form.annee_1.label }}
-            {{ form.annee_1() }}
-            {% for error in form.annee_1.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-            &emsp;
             {{ form.semestre_1.label }}
             {{ form.semestre_1() }}
             {% for error in form.semestre_1.errors %}
@@ -44,13 +37,6 @@
             {% endif %}
 
             &emsp;
-            {{ form.annee_2.label }}
-            {{ form.annee_2() }}
-            {% for error in form.annee_2.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-            &emsp;
             {{ form.semestre_2.label }}
             {{ form.semestre_2() }}
             {% for error in form.semestre_2.errors %}
@@ -66,6 +52,13 @@
           </div>
 
           <div>
+            {{ form.annee.label }}
+            {{ form.annee() }}
+            {% for error in form.annee.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+            &emsp;
             {{ form.submit() }}
           </div>
         </form>

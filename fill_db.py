@@ -304,13 +304,12 @@ mm = Utilisateur(
     niveau=5,
     password=generate_password_hash("hallo"),
     active=True,
+    voeux_annee = 4,
     voeu_1=Voeu(
-        annee=4,
         semestre=1,
         universite=uj
     ),
     voeu_2=Voeu(
-        annee=4,
         semestre=2,
         universite=udg
     )

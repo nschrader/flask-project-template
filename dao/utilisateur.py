@@ -21,6 +21,7 @@ class Utilisateur(UserMixin, Document):
     departement = ReferenceField("Departement")
     niveau = IntField()
     mobilites = ListField(ReferenceField("Universite"))
+    voeux_annee = IntField()
     voeu_1 = EmbeddedDocumentField("Voeu")
     voeu_2 = EmbeddedDocumentField("Voeu")
 
@@ -50,6 +51,7 @@ class Utilisateur(UserMixin, Document):
 
 
     @classmethod
+    #TODO: Use endm instead of -1, 0, 1
     def verifify_token(cls, token):
         user = cls.objects(token = token).first()
         if user:
