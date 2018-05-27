@@ -94,7 +94,6 @@ def profil() :
 @fresh_login_required
 def modif_profil() :
     utilisateur = current_user
-    print(utilisateur.mobilites)
     form = EditUserProfileForm(
         prenom = utilisateur.prenom,
         nom = utilisateur.nom,
@@ -108,7 +107,7 @@ def modif_profil() :
         mail = form.email.data
         departement = form.departement.data
         niveau = form.niveau.data
-        mobilites = [form.mobilite.data]
+        mobilites = [] if form.mobilite_is_non() else [form.mobilite.data]
         utilisateur.update(prenom=prenom, nom=nom, mail=mail, departement=departement, niveau=niveau, mobilites=mobilites)
         utilisateur.save()
         flash("Vos modifications ont été enregistrées", category='success')
