@@ -1,0 +1,35 @@
+{% extends "base_layout_slim.html" %}
+
+{% block display %}
+<div class="mx-auto" >
+    <div class="container">
+        <div class="mx-auto" >
+            <div class="p-3 mb-2 bg-secondary text-dark">
+                <form class="well form-horizontal" action=" " method="post">
+                  {{ form.hidden_tag() }}
+                  <fieldset>
+                      <legend><h1>Ajouter un échange</h1></legend>
+                      {{ form.nom.label}}
+                      {{ form.nom(size=32) }}<br>
+                      {% for error in form.nom.errors %}
+                      <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                      <br>
+                      {{ form.type.label}}
+                      {{ form.type(size=32) }}<br>
+                    {% for error in form.type.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                      <br>
+                     <!--  {{ form.departement.label }}
+                       {{ form.departement }}<br>
+                        {% for error in form.departement.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}-->
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import SelectField, BooleanField, SubmitField
+from wtforms.fields import SelectField, BooleanField, SubmitField, StringField
 from wtforms.validators import DataRequired
 from dao import Departement
 from bson.objectid import ObjectId
@@ -27,3 +27,10 @@ class EditAgreementForm(FlaskForm):
 
 class DeleteAgreementForm(FlaskForm):
     submit = SubmitField('Supprimer l\'accord')
+
+class AjoutEchngForm(FlaskForm):
+    nom = StringField('Nom', validators=[DataRequired()])
+    type = SelectField('Type d\'accord')
+    #TODO faire marcher pour durée du séjour
+    departements = SelectField('Département INSA', choices=[(d.pk, d.nom) for d in Departement.objects.all()], coerce=ObjectId, validators=[DataRequired()])
+    submit = SubmitField("Créer l'accord")

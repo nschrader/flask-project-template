@@ -158,5 +158,6 @@ def envoyer_mail(mail) :
         debut_url = request.host_url
         debut_url = debut_url[:-1]
         url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = mail)
-        send_to(utilisateur.mail, "Bli", url)
+        #send_to(utilisateur.mail, "Bli", url)
+        testMail(utilisateur.mail,url)
         return redirect(url_for('login', mail = mail))

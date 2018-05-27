@@ -43,10 +43,11 @@
                     {% endfor %}
 
                     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ form.submit() }}
-                      
-                  </form>
+                    </form>
                 </li>
             </ol>
+            <!--TODO Lié au template Ajout -->
+            <p align="right"> <a class="btn btn-light btn-sm" href="{{ url_for( 'ajout' ) }}" role="button">Ajouter un accord</a></p>
         </div>
         <!-- FIN FILTRES -->
 

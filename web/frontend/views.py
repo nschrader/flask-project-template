@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
 
 from dao import *
-from .forms import FilterForm,DeleteAgreementForm
+from .forms import FilterForm,DeleteAgreementForm,AjoutEchngForm
 
 @app.route('/')
 @login_required
@@ -46,6 +46,14 @@ def universite(id):
     if deleteForm.validate_on_submit():
         return redirect(url_for('suppr-accord'))
     return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id), form=deleteForm)
+
+
+@app.route('/ajout')
+@login_required
+def ajout():
+    form=AjoutEchngForm()
+    return render_template('frontend/ajout_echng.html',form=form)
+
 
 @app.route('/suppr-accord/<id>')
 def suppr_accord(id):
