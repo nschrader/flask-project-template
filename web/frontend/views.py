@@ -55,7 +55,6 @@ def wiki_vie_pratique(id) :
         pays.vie_pratique = Article(text=vie_pratique.texte.data)
         pays.save()
         flash("Vos modifications ont été enregistrées", category='success')
-    print(vie_pratique.errors)
     return redirect(url_for('pays', id=id))
 
 @app.route('/projet')
