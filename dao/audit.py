@@ -15,7 +15,6 @@ class Audit():
     modified_time = DateTimeField(default = datetime.now)
 
 
-    #TODO: Make this work
     def save(self, *args, **kwargs):
         self.modified_date = datetime.now()
         self.modified_user = StdUserProxy.get()

@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from flask import render_template, flash, redirect, url_for
 
 from dao import *
-from .forms import FilterForm, DeleteAgreementForm, VoeuxForm, DeleteVoeuxForm,AjoutEchngForm
+from .forms import FilterForm, WikiForm, DeleteAgreementForm, VoeuxForm, DeleteVoeuxForm, AjoutEchngForm
 
 @app.route('/')
 @login_required
@@ -13,21 +13,61 @@ def index():
 @app.route('/pays/<id>', methods=['GET', 'POST'])
 @login_required
 def pays(id):
-    form=FilterForm()
-    pays=Pays.objects.id_or_404(id)
+    pays = Pays.objects.id_or_404(id)
+    univ_echng=Universite.get_with_echanges_for_pays(pays)
 
-    if request.method == 'POST' and form.validate_on_submit():
-        if form.is_tous_departements():
-            univ_echng=Universite.get_with_echanges_for_pays(pays)
-        else:
-            univ_echng=Universite.get_with_echanges_for_pays_and_departement(pays, form.departement.data)
-        if form.doublediplome.data and not form.F_echange.data :
-            univ_echng=filter(lambda x: x[1].accord.nom == "Double Diplôme", univ_echng)
-        elif not form.doublediplome.data and form.F_echange.data :
-            univ_echng=filter(lambda x: x[1].accord.nom != "Double Diplôme", univ_echng)
-    else:
-        univ_echng=Universite.get_with_echanges_for_pays(pays)
-    return render_template('frontend/pays.html', pays=pays, univ_echng=univ_echng, form=form)
+    filter_form = FilterForm()
+    vie_pratique = WikiForm (texte = pays.vie_pratique.text)
+    tourisme = WikiForm (texte = pays.tourisme.text)
+    culture = WikiForm (texte = pays.culture.text)
+    climat = WikiForm (texte = pays.climat.text)
+
+    if request.method == 'POST' :
+        if filter_form.validate_on_submit() :
+            if filter_form.is_tous_departements() :
+                univ_echng=Universite.get_with_echanges_for_pays(pays)
+            else:
+                univ_echng=Universite.get_with_echanges_for_pays_and_departement(pays, filter_form.departement.data)
+            if filter_form.doublediplome.data and not filter_form.F_echange.data :
+                univ_echng=filter(lambda x: x[1].accord.nom == "Double Diplôme", univ_echng)
+            elif not filter_form.doublediplome.data and filter_form.F_echange.data :
+                univ_echng=filter(lambda x: x[1].accord.nom != "Double Diplôme", univ_echng)
+
+        '''if vie_pratique.validate_on_submit() :
+            print('VIE PRATIQUE')
+            pays.vie_pratique = Article(text=vie_pratique.texte.data)
+        if tourisme.validate_on_submit() :
+            pays.update(set__tourisme__text = tourisme.texte.data)
+        if culture.validate_on_submit() :
+            pays.update(set__culture__text = culture.texte.data)
+        if climat.validate_on_submit() :
+            pays.update(set__climat__text = climat.texte.data)
+
+        print(pays.modified_user.pk)
+        pays.save()'''
+
+    return render_template('frontend/pays.html',
+        pays = pays,
+        univ_echng = univ_echng,
+        filter_form = filter_form,
+        vie_pratique = vie_pratique,
+        tourisme = tourisme,
+        culture = culture,
+        climat = climat
+    )
+
+
+@app.route('/pays/<id>/vie-pratique', methods=['POST'])
+@login_required
+def wiki_vie_pratique(id) :
+    pays = Pays.objects.id_or_404(id)
+    vie_pratique = WikiForm (texte = pays.vie_pratique.text)
+    if request.method == 'POST' and vie_pratique.validate_on_submit() :
+        pays.vie_pratique = Article(text=vie_pratique.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    print(vie_pratique.errors)
+    return redirect(url_for('pays', id=id))
 
 @app.route('/projet')
 def projet():

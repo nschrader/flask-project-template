@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import SelectField, BooleanField, SubmitField, StringField
+from wtforms.fields import SelectField, BooleanField, SubmitField, StringField, TextAreaField
 from wtforms.validators import DataRequired
 from dao import Departement, Universite, Utilisateur, Voeu, Accord
 from bson.objectid import ObjectId
@@ -18,6 +18,11 @@ class FilterForm(FlaskForm):
 
     def is_tous_departements(self):
         return self.departement.data == self.__class__.tous
+
+
+class WikiForm(FlaskForm):
+    texte = TextAreaField()
+    submit = SubmitField('Enregistrer')
 
 
 class VoeuxForm(FlaskForm):

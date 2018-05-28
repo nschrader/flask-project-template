@@ -11,8 +11,8 @@ class StdUserProxy:
 
     @classmethod
     def get(cls):
-        if current_user:
-            return current_user
+        if current_user._get_current_object():
+            return current_user._get_current_object()
         elif not cls.__std_user__:
             raise AttributeError("std_user not set")
         else:

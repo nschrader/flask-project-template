@@ -20,29 +20,29 @@
             <h2 class="font-weight-bold text-light">Universités partenaires</h2>
             <ol class="breadcrumb" >
                 <li class="active">
-                  <form action="" method="POST" name="form">
-                    {{ form.hidden_tag() }}
+                  <form action="" method="POST" name="filter_form">
+                    {{ filter_form.hidden_tag() }}
                     <strong>Filtres :</strong>
 
-                    &emsp;{{ form.doublediplome.label }} {{ form.doublediplome() }}
-                    {% for error in form.doublediplome.errors %}
+                    &emsp;{{ filter_form.doublediplome.label }} {{ filter_form.doublediplome() }}
+                    {% for error in filter_form.doublediplome.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
 
-                    &emsp;{{ form.F_echange.label }} {{ form.F_echange() }}
-                    {% for error in form.F_echange.errors %}
+                    &emsp;{{ filter_form.F_echange.label }} {{ filter_form.F_echange() }}
+                    {% for error in filter_form.F_echange.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
 
                     <!-- menu déroulant pour le choix du département-->
 
-                    &emsp; {{ form.departement.label }}
-                    {{ form.departement }}
-                    {% for error in form.departement.errors %}
+                    &emsp; {{ filter_form.departement.label }}
+                    {{ filter_form.departement }}
+                    {% for error in filter_form.departement.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
 
-                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ form.submit() }}
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ filter_form.submit() }}
                     </form>
                 </li>
             </ol>
@@ -101,7 +101,7 @@
                 <h3 class="card-title card-green">Vie pratique</h3>
             </button>
             <div id="viePratiqueCollapse" class="card-body collapse" aria-labelledby="viePratique">
-                
+
                 <!-- COCO ça se passe ici -->
                 <!-- données affichées : disparaît quand on clique sur modifier/ajouter -->
                 <!--                     apparaît quand on clique sur enregistrer ou annuler -->
@@ -110,10 +110,22 @@
                 </div>
                 <!-- zone de texte et bouton Enregister : apparaît quand on clique sur modifier/ajouter -->
                 <!--                                      disparaît quand on clique sur enregistrer ou annuler -->
-                <form class="collapse multi-collapse" id="viePratiqueModif">
-                    <textarea class="form-control">{{ pays.vie_pratique.text }}</textarea>
+                <form class="collapse multi-collapse" id="viePratiqueModif" name="vie_pratique" method="post" action="{{ url_for('wiki_vie_pratique', id=pays.pk) }}">
+                    <div class="form-group row">
+                      <div class="col-10">
+                          {{ vie_pratique.hidden_tag() }}
+                          {{ vie_pratique.texte(cols="100", rows="5") }}<br>
+                          {% for error in vie_pratique.texte.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                          {% endfor %}
+                      </div>
+                    </div>
+                    <p>{{ vie_pratique.submit() }}</p>
+
+
+                    <!-- <textarea class="form-control">{{ pays.vie_pratique.text }}</textarea> -->
                     <!-- doit mettre à jour la BD et recharger la page avec les données -->
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Enregistrer</button>
+                    <!-- <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Enregistrer</button> -->
                     <!-- doit annuler la saisie de texte (et recharger la page initiale ?) -->
                     <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Annuler</button>
                 </form>
@@ -121,7 +133,7 @@
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Modifier/Ajouter</button>
                 </div>
                 <!---->
-                
+
             </div>
         </div>
     </div>

@@ -11,14 +11,15 @@ def inscription():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash('Un mail vous a été envoyé.')
-        utilisateur = Utilisateur(
+        utilisateur = Utilisateur (
             nom = form.nom.data,
             prenom = form.prenom.data,
             mail = form.email.data,
             departement = form.departement.data,
             niveau = form.niveau.data,
             mobilites = [] if form.mobilite_is_non() else [form.mobilite.data],
-            password = generate_password_hash(form.mdp.data))
+            password = generate_password_hash(form.mdp.data)
+        )
         if Utilisateur.objects(mail = form.email.data).first() :
             flash("Il y a déjà un compte associé à cette adresse email", category='error')
         else :
@@ -55,9 +56,10 @@ def reinitialiser_mdp(token):
 @app.route('/login', defaults={'token': None}, methods = ['GET', 'POST'])
 @app.route('/login/<token>', methods = ['GET', 'POST'])
 def login(token = None):
-    utilisateur = Utilisateur.objects(token = token).first()
+    utilisateur = Utilisateur.objects(token = token).first() if token else None
     form = LoginForm(email = utilisateur.mail if utilisateur else "")
     if request.method == 'POST' and form.validate_on_submit() :
+        utilisateur = Utilisateur.objects(mail = form.email.data).first()
         if utilisateur :
             if utilisateur.validate_login(form.mdp.data) :
                 if utilisateur.is_active :
@@ -84,13 +86,14 @@ def profil() :
 @fresh_login_required
 def modif_profil() :
     utilisateur = current_user
-    form = EditUserProfileForm(
+    form = EditUserProfileForm (
         prenom = utilisateur.prenom,
         nom = utilisateur.nom,
         email = utilisateur.mail,
         departement = utilisateur.departement.pk,
         niveau = str(utilisateur.niveau),
-        mobilite = utilisateur.mobilites[0].pk if utilisateur.mobilites else [])
+        mobilite = utilisateur.mobilites[0].pk if utilisateur.mobilites else []
+    )
     if request.method == 'POST' and form.validate_on_submit():
         prenom = form.prenom.data
         nom = form.nom.data
