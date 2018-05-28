@@ -4,6 +4,7 @@ from flask import render_template, flash, redirect, url_for
 
 from dao import *
 from .forms import FilterForm, WikiForm, DeleteAgreementForm, VoeuxForm, DeleteVoeuxForm, AjoutEchngForm
+from .dtos import UniversiteForPaysDTO
 
 @app.route('/')
 @login_required
@@ -14,7 +15,7 @@ def index():
 @login_required
 def pays(id):
     pays = Pays.objects.id_or_404(id)
-    univ_echng=Universite.get_with_echanges_for_pays(pays)
+    dtos = UniversiteForPaysDTO.get_for_pays(pays)
 
     filter_form = FilterForm()
     vie_pratique = WikiForm (texte = pays.vie_pratique.text)
@@ -25,30 +26,18 @@ def pays(id):
     if request.method == 'POST' :
         if filter_form.validate_on_submit() :
             if filter_form.is_tous_departements() :
-                univ_echng=Universite.get_with_echanges_for_pays(pays)
+                dtos = UniversiteForPaysDTO.get_for_pays(pays)
             else:
-                univ_echng=Universite.get_with_echanges_for_pays_and_departement(pays, filter_form.departement.data)
-            if filter_form.doublediplome.data and not filter_form.F_echange.data :
-                univ_echng=filter(lambda x: x[1].accord.nom == "Double Diplôme", univ_echng)
-            elif not filter_form.doublediplome.data and filter_form.F_echange.data :
-                univ_echng=filter(lambda x: x[1].accord.nom != "Double Diplôme", univ_echng)
-
-        '''if vie_pratique.validate_on_submit() :
-            print('VIE PRATIQUE')
-            pays.vie_pratique = Article(text=vie_pratique.texte.data)
-        if tourisme.validate_on_submit() :
-            pays.update(set__tourisme__text = tourisme.texte.data)
-        if culture.validate_on_submit() :
-            pays.update(set__culture__text = culture.texte.data)
-        if climat.validate_on_submit() :
-            pays.update(set__climat__text = climat.texte.data)
-
-        print(pays.modified_user.pk)
-        pays.save()'''
+                dtos = UniversiteForPaysDTO.get_for_pays_and_departement(pays, filter_form.departement.data)
+            for dto in dtos:
+                if filter_form.doublediplome.data and not filter_form.F_echange.data :
+                    dto.universite.echanges=[e for e in dto.universite.echanges if e.accord.nom == "Double Diplôme"]
+                elif not filter_form.doublediplome.data and filter_form.F_echange.data :
+                    dto.universite.echanges=[e for e in dto.universite.echanges if e.accord.nom != "Double Diplôme"]
 
     return render_template('frontend/pays.html',
         pays = pays,
-        univ_echng = univ_echng,
+        dtos = dtos,
         filter_form = filter_form,
         vie_pratique = vie_pratique,
         tourisme = tourisme,
