@@ -1,0 +1,165 @@
+{% extends "base_layout.html" %}
+
+{% block content %}
+
+<!-- TEMPLATE PAGE PROJET -->
+
+<div class="container-fluid">
+
+    <!-- header -->
+   
+        
+            <!-- TODO : dynamic country name -->
+            <h1 class="page-header text-light" align="center">Projet WEB</h1>
+            <h3 class="page-header text-light"align="center">Rapport de fin de projet</h3>
+            <img class="img-fluid" alt="Responsive image" src="{{ url_for('static', filename='assets/rapport/image1.jpg') }}" >
+        
+    
+    <!-- fin header-->
+
+    <!-- body -->
+
+    <div id="accordion">
+
+      <div class="card card-green">
+        <div class="card-body" id="headingOne">
+            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h3 class="card-title card-green">Rappel du projet</h3>
+            </button>
+            <p id="collapseOne" class="card-body" aria-labelledby="headingOne">
+            <u>Membres du groupe </u>: Nick Schrader, Corentin Leroy, Grégoire Launay, Pauline Schmitt
+                <br>
+                <br>
+            <u> Projet</u>: Site collaboratif d’informations et de voeux préliminaires pour les échanges et doubles diplômes à l’INSA de Lyon
+                Objectifs :<br>
+                <strong>1-</strong> Centraliser de façon collaborative toutes les informations disponibles sur les échanges académiques et doubles diplômes : les étudiants complètent eux-mêmes les informations de l’université et du pays dans lequel ils sont partis&nbsp;<br>
+                <strong>2- </strong>Proposer une phase de voeux préliminaire pour évaluer le ratio nombre de demandes / nombre de places par destination<br>
+
+            </p>
+        </div>
+      </div>
+      <div class="card card-yellow">
+        <div class="card-body" id="headingTwo">
+            <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <h3 class="card-title card-yellow">Documentation Technique</h3>
+            </button>
+            <p id="collapseTwo" class="collapse card-body" aria-labelledby="headingTwo">
+                <img src="{{ url_for('static', filename='assets/rapport/image6.png')}}" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+                <u><strong>Compte utilisateur</strong></u><br>
+                L’accès à toutes les pages du site nécessite d’être connecté avec un compte utilisateur. Si ce n’est pas le cas, on est redirigé sur la page de connexion.
+
+                Pour se créer un compte, un utilisateur doit fournir plusieurs informations, dont l’adresse mail qui est unique ; un seul compte peut être associé à une seule adresse mail. Le site est destiné aux étudiants de l’INSA Lyon exclusivement, aussi il est obligatoire de renseigner son département INSA. Cela sert pour la fonctionnalité de voeux (voir p. 5) notamment.
+                <br>
+                Une fois tous les champs remplis, un email est envoyé à l’adresse renseignée avec un lien unique permettant de valider l’inscription.
+                <br>
+                <br>
+                <img src="{{ url_for('static', filename='assets/rapport/image2.png')}}" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+                <br>Un token est attribué à chaque utilisateur au moment de la création du compte, avec une période de validité. Le lien envoyé dans le mail de confirmation est associé à ce token. Le nouvel utilisateur a 10 minutes pour cliquer sur ce lien afin de finaliser son inscription. S’il le fait après 10 minutes, un nouveau mail avec un nouveau token lui est envoyé. S’il le fait après 1 heure, son compte est supprimé de la base de données et il doit recommencer tout le processus d’inscription.
+                À tout moment, un utilisateur inscrit peut modifier ses informations personnelles en accédant à la page ‘Profil’.
+                <br>
+                <br>
+                <img src="{{ url_for('static', filename='assets/rapport/image4.png')}}" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+                <br>
+                <br>
+                <img src="{{ url_for('static', filename='assets/rapport/image8.png')}}" class="img-fluid rounded float-right" alt="Responsive image" >
+                <u><strong>Page d’accueil</strong></u>
+                La page d’accueil du site comporte un diaporama de photos qui rappelle les principales fonctionnalités du site. Sur la gauche, un panneau vertical permet d’accéder aux rubriques ‘Informations’ et ‘Voeux’.
+                <br>
+                <br>
+                <u><strong>Informations</strong></u>
+                Au sein du panneau latéral gauche, un menu déroulant avec les différents continents apparaît lorsque l’on clique sur ‘Informations’. Si l’on clique sur l’un des continents, un nouveau menu déroulant apparaît avec les pays. Cliquer sur l’un de ces pays renvoie vers la page qui lui est associée.
+                Sur la page d’un pays, on peut voir toutes les universités ayant des accords avec l’INSA. Il est possible de filtrer l’affichage de ces universités en sélectionnant par exemple ‘Double diplôme’ pour n’afficher que les accords de double diplôme. De même, il est possible de n’afficher que les accords concernant un département INSA en particulier. Pour chaque université, le type d’accord est affiché (Erasmus+, UNITECH, accord bilatéral, double diplôme, etc.) ainsi que le nombre de places, le(s) département(s) concerné(s), et les demandes déjà formulées par d’autres utilisateurs pour cette université (cf fonctionnalité ‘Voeux’ ci-dessous). En dessous de la liste des universités du pays se trouve un wiki qui comporte des informations générales sur la vie dans le pays. Les sections ‘Vie pratique’, ‘Tourisme’, ‘Culture’ et ‘Climat’ sont modifiables par tout utilisateur.
+                <br>
+                <br>
+                <img src="{{ url_for('static', filename='assets/rapport/image5.png')}}" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+                <br>
+                Sur la page d’une université (accessible en cliquant sur le nom de l’université depuis la page du pays associé), on peut voir tous les accords qu’elle possède avec l’INSA. On peut également voir si elle a été demandée par d’autres utilisateurs dans la rubrique ‘Voeux’. En dessous se trouve un wiki similaire à celui présent sur les pages de pays. Il comporte les sections ‘Cours’,  ‘Accessibilité’,  ‘Logement’,  ‘Sorties et ambiance’.
+                <br>
+                <br>
+                <img src="{{ url_for('static', filename='assets/rapport/image3.png')}}" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+                <br>
+                 Il est important de noter que nous avons choisi de réaliser un site totalement collaboratif. Nous avions au départ pensé le site comme pouvant être repris par l’administration de l’INSA et donc avec des comptes administrateurs possédant certains privilèges, comme la possibilité de supprimer des informations. Toutefois nous nous sommes rendus compte que le site est fait pour les étudiants et qu’il serait préférable qu’il soit géré entièrement par les étudiants. Tout son contenu est donc ajoutable, modifiable et supprimable par tous les utilisateurs. Nous avons conscience qu’un site purement collaboratif implique un risque de vandalisme, mais nous pensons qu’à l’échelle de l’INSA et compte tenu de l’objectif du site, ce risque devrait être faible. Actuellement, nous pouvons savoir qui a effectué une modification en dernier.
+                <br>
+                <br>
+                <u><strong>Voeux</strong></u>
+                <img src="{{ url_for('static', filename='assets/rapport/image7.png')}}" class="img-fluid rounded mx-auto d-block" alt="Responsive image">
+                <br>
+                Tout utilisateur peut formuler deux voeux de mobilité en cliquant sur ‘Voeux’ dans le panneau latéral à gauche. Il ne peut choisir que des universités ayant des accords avec son département. Pour soumettre une demande, il doit renseigner l’année et le semestre de départ pour chaque voeu. En dessous de la zone pour formuler une demande, on peut voir une liste des universités avec les demandes soumises par les autres utilisateurs.
+            </p>
+        </div>
+      </div>
+      <div class="card card-red">
+        <div class="card-body" id="headingThree">
+            <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                <h3 class="card-title card-red">Solutions technologiques utilisées</h3>
+            </button>
+            <p id="collapseThree" class="collapse card-body" aria-labelledby="headingThree">
+                Notre projet utilise plusieurs langages et outils de développement web.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><strong>Framework</strong></u> : Flask<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><strong>Base de données</strong></u> : Mongo, Mongoengine (Document-Object Mapper)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><strong>Back-end</strong></u> : WTForms (Création et validation des formulaires),  Python3<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u><strong>Frontend</strong></u> : HTML, CSS, Bootstrap (framework CSS), Markdown (Langage de balisage léger),  Jinja (Template engine)
+                <br>
+                <br>
+                Au début du projet nous utilisions PyMongo, un pilote pour Mongo écrit en Python qui permet de lancer des requêtes et de récupérer les résultats. La base de données étant encore très légère, cette solution semblait appropriée car elle permettait simplement d’insérer, de modifier, de supprimer et de rechercher des documents. Avec l’avancée du projet cette base de données est devenue de plus en plus complexe, avec des références entres objets et des documents imbriqués, de telle façon que notre solution avec PyMongo n’était plus viable.<br>
+                Nous avons alors opté pour MongoEngine, un Document-Object Mapper qui, avec très peu de configuration, permet non seulement les opérations basiques, mais aussi un déréférencement automatique.  Il met à disposition quasiment toutes les fonctionnalités de Mongo en Python et se marie bien avec les autres bibliothèques utilisées.
+
+
+            </p>
+        </div>
+      </div>
+      <div class="card border-primary">
+        <div class="card-body" id="headingFour">
+            <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                <h3 class="card-title card-blue">Modules</h3>
+            </button>
+            <p id="collapseFour" class="collapse card-body" aria-labelledby="headingFour">
+            Notre projet est une application Flask écrite en Python3, divisée en plusieurs modules : DAO, Mail, Web et Static.<br>
+            A la racine du projet, le fichier python entry sert à lancer l’application. Le fichier config contient les valeurs de différents paramètres comme le nom de la base de données, les identifiants root, les ports et adresses mail utilisés. fill_db permet de remplir la base de données avec des données “exemples” de base, permettant un affichage propre du site, l’idée étant que les étudiants utilisateurs le complètent eux-mêmes.<br><br>
+
+            <u><strong>DAO (Data Access Objects)</strong></u>
+            Ce module contient une représentation des objets de la base de données, ainsi que des fonctions de requêtes permettant de la manipuler (voir la section base de données pour plus de détails).
+            <br>
+            <br>
+            <u><strong>Mail</strong></u>
+            Ce petit module contient une fonction permettant d’envoyer un mail à l’utilisateur lors de son inscription ou d’un oubli de mot de passe.<br><br>
+
+            <u><strong>Web</strong></u>
+            Ce module contient le code Flask : les contrôleurs et formulaires pour l’authentification et les autres pages, ainsi que le fichier Python app qui instancie l’application Flask.<br><br>
+
+            <u><strong>Static</strong></u>
+            Ce module contient toute la partie statique du site : les images utilisées dans assets,  le code CSS et Javascript de Bootstrap, les templates HTML des différentes pages (layout de base, authentification,  accueil, voeux, université, pays, pages d’erreur).
+
+        </div>
+      </div>
+        <div class="card border-secondary">
+        <div class="card-body" id="headingFive">
+            <button class="btn btn-link text-secondary" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                <h3 class="card-title card-grey">Base de données</h3>
+            </button>
+            <p id="collapseFive" class="collapse card-body" aria-labelledby="headingFive">
+            La base de données est modélisée avec MongoDB, un système de gestion de bases de données No-SQL. Mongo permet de stocker des documents dans des collections. Nous avons identifié neuf objets différents, dont sept avec un suivi des modifications (A) : Utilisateur, Voeu, Université (A), Pays (A), Continent (A), Article (A), Échange (A), Accord (A) et Département (A).<br>
+            Chaque objet utilisateur contient les attributs nécessaires à la gestion de sa connexion au site, est affecté à un département et peut formuler deux voeux. Chaque voeu se fait pour une université. Chaque université propose plusieurs échanges, et se trouve dans un pays qui se trouve sur un continent. Chaque échange se fait avec plusieurs départements sur la base d’un accord comme Erasmus+.<br>
+            Quatre articles de wiki sur une université (Cours, Logement, Ambiance et Accessibilité) et quatre articles sur un pays (Climat, Culture, Vie pratique, Tourisme) peuvent être écrits.<br>
+            Tous les documents décrivant des objets du même type se trouvent dans une collection avec le nom du type, par exemple utilisateur. Ci-après, se trouve le modèle entité-association de notre base de données.<br>
+            <img class="img-fluid" alt="Responsive image" src="{{ url_for('static', filename='assets/rapport/BD - schéma.png') }}" >
+        </div>
+      </div>
+     <div class="card border-dark">
+        <div class="card-body" id="headingFour">
+            <button class="btn btn-link text-dark" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                <h3 class="card-title card-black">Améliorations futures</h3>
+            </button>
+            <p id="collapseSix" class="collapse card-body" aria-labelledby="headingSix">
+            De par la durée limitée pour le développement du projet et notre manque d’expérience, nous n’avons pas pu implémenter toutes les fonctionnalités prévues initialement. Par exemple, nous n’avons pas réalisé de fils de discussion pour permettre aux utilisateurs de communiquer sur le site. De plus, nous ne mettons pas pour l’instant à profit l’information de mobilité pour chaque utilisateur. Cela serait utile pour permettre de trouver les étudiants ayant effectué des mobilités les années précédentes, afin de les contacter par exemple. Concernant les risques de perte d’informations dues au côté collaboratif du site, nous pourrions garder un historique des modifications. Ainsi, il serait possible de savoir qui a effectué quelle modification et quand. Il serait également judicieux de conserver des sauvegardes de l’état du site pendant une certaine durée, ce qui permettrait de revenir en arrière si un accident devait arriver. Enfin, l’interface du site a été entièrement personnalisée, et elle est perfectible.
+
+        </div>
+      </div>
+    </div>
+
+    <!-- fin body -->
+
+
+</div>
+
+{% endblock %}

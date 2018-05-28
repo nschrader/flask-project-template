@@ -60,7 +60,7 @@ def wiki_vie_pratique(id) :
 
 @app.route('/projet')
 def projet():
-    return render_template('frontend/projet.html')
+    return render_template('projet.html')
 
 @app.route('/universite/<id>')
 @login_required
