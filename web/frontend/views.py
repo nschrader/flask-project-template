@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for
 
 from dao import *
 from .forms import FilterForm, WikiForm, DeleteAgreementForm, VoeuxForm, DeleteVoeuxForm, AjoutEchngForm
-from .dtos import UniversiteForPaysDTO
+from .dtos import VoeuxByUniversityDTO, UniversityByPaysDTO
 
 @app.route('/')
 @login_required
@@ -15,7 +15,7 @@ def index():
 @login_required
 def pays(id):
     pays = Pays.objects.id_or_404(id)
-    dtos = UniversiteForPaysDTO.get_for_pays(pays)
+    dtos = VoeuxByUniversityDTO.get_for_pays(pays)
 
     filter_form = FilterForm()
     vie_pratique = WikiForm (texte = pays.vie_pratique.text)
@@ -26,9 +26,9 @@ def pays(id):
     if request.method == 'POST' :
         if filter_form.validate_on_submit() :
             if filter_form.is_tous_departements() :
-                dtos = UniversiteForPaysDTO.get_for_pays(pays)
+                dtos = VoeuxByUniversityDTO.get_for_pays(pays)
             else:
-                dtos = UniversiteForPaysDTO.get_for_pays_and_departement(pays, filter_form.departement.data)
+                dtos = VoeuxByUniversityDTO.get_for_pays_and_departement(pays, filter_form.departement.data)
             for dto in dtos:
                 if filter_form.doublediplome.data and not filter_form.F_echange.data :
                     dto.universite.echanges=[e for e in dto.universite.echanges if e.accord.nom == "Double Diplôme"]
@@ -55,7 +55,6 @@ def wiki_vie_pratique(id) :
         pays.vie_pratique = Article(text=vie_pratique.texte.data)
         pays.save()
         flash("Vos modifications ont été enregistrées", category='success')
-    print(vie_pratique.errors)
     return redirect(url_for('pays', id=id))
 
 @app.route('/projet')
@@ -67,7 +66,7 @@ def projet():
 def universite(id):
     # TODO : faire marcher la suppression
     deleteForm = DeleteAgreementForm()
-    dto=UniversiteForPaysDTO.get_for_universite(id)
+    dto=VoeuxByUniversityDTO.get_for_universite(id)
     if deleteForm.validate_on_submit():
         return redirect(url_for('suppr_accord', id = id))
     return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id), form=deleteForm, dto=dto)
@@ -116,7 +115,8 @@ def voeux():
         )
         enregistre = True
 
-    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre)
+    dtos = UniversityByPaysDTO.get()
+    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos)
 
 @app.route('/voeux/delete', methods=['POST'])
 def delete_voeux():

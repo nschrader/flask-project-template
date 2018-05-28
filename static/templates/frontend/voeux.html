@@ -101,61 +101,53 @@
       <th scope="col">Université</th>
       <th scope="col">Type</th>
       <th scope="col">Nombre de places</th>
+      <th scope="col">Département(s) concerné(s)</th>
       <th scope="col">Demandes</th>
     </tr>
   </thead>
   <tbody>
+    {% for pays_dto in pays_dtos %}
+    {% for uni_dto in pays_dto.universites %}
+    {% for echange in uni_dto.universite.echanges %}
+
     <tr>
-      <th scope="row">Suède</th>
-      <td>KTH</td>
-      <td>Echange</td>
-      <td>2x5</td>
-      <td><div class="btn-group ">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Demandes
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-          <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-          <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
+      {% if loop.first %}
+      <td class="align-middle" rowspan="{{ loop.length }}">
+        <a href="{{ url_for('pays', id=pays_dto.pays.pk) }}">{{ pays_dto.pays.nom }}</a>
+      </td>
+      {% endif %}
+
+      {% if loop.first %}
+      <td class="align-middle" rowspan="{{ loop.length }}">
+        <a href="{{ url_for('universite', id=uni_dto.universite.pk) }}">{{ uni_dto.universite.nom }}</a>
+      </td>
+      {% endif %}
+
+      <td>{{ echange.accord.nom }}</td>
+      <td>{{ echange.places }}</td>
+      <td>{{ echange.get_departments_str() }}</td>
+
+      {% if loop.first %}
+      <td class="align-middle" align="center" rowspan="{{ loop.length }}">
+        <div class="btn-group dropleft">
+          {% if uni_dto.has_voeux() %}
+          <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
+          <div class="dropdown-menu">
+            {% for v in uni_dto.get_voeux() %}
+            <a class="dropdown-item" href="#">{{ v }}</a>
+            {% endfor %}
           </div>
-          </div>
-        </td>
+          {% else %}
+          <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Pas de demande</button>
+          {% endif %}
+        </div>
+      </td>
+      {% endif %}
     </tr>
-    <tr>
-      <th scope="row">Suède</th>
-      <td>Chalmers</td>
-      <td>Double Diplôme</td>
-      <td>4x5</td>
-      <td><div class="btn-group">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Demandes
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-          <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-          <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-          </div>
-          </div>
-        </td>
-    </tr>
-    <tr>
-      <th scope="row">Suède</th>
-      <td>SU</td>
-      <td>Echange</td>
-      <td>5x5</td>
-      <td><div class="btn-group ">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Demandes
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-          <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-          <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-          </div>
-          </div>
-        </td>
-    </tr>
+
+    {% endfor %}
+    {% endfor %}
+    {% endfor %}
   </tbody>
 </table>
 
