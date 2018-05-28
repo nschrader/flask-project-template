@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import SelectField, BooleanField, SubmitField, StringField
 from wtforms.validators import DataRequired
-from dao import Departement, Universite, Utilisateur, Voeu
+from dao import Departement, Universite, Utilisateur, Voeu, Accord
 from bson.objectid import ObjectId
 
 class FilterForm(FlaskForm):
@@ -10,10 +10,10 @@ class FilterForm(FlaskForm):
     choices_depart.append((tous,'Tous'))
     choices_depart.reverse()
 
-    departement = SelectField('Département INSA:',choices=choices_depart, coerce=ObjectId, validators=[DataRequired()])
+    departement = SelectField('Département INSA:', choices=choices_depart, coerce=ObjectId, validators=[DataRequired()])
     submit = SubmitField('Filtrer')
-    doublediplome = BooleanField('Double Diplôme:')
-    F_echange = BooleanField('\tEchange:')
+    doublediplome = BooleanField('Doubles diplômes:')
+    F_echange = BooleanField('\tEchanges:')
 
 
     def is_tous_departements(self):
@@ -34,10 +34,17 @@ class DeleteVoeuxForm(FlaskForm):
 
 
 # TODO : faire marcher EditAgreementForm et DeleteAgreementForm
-class EditAgreementForm(FlaskForm):
-    type = SelectField('Type d\'accord')
-    departements = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
-    submit = SubmitField('S\'inscrire')
+class AgreementForm(FlaskForm):
+    type = SelectField('Type d\'accord', choices=Accord.get_choices(), validators=[DataRequired()])
+    #departements = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
+    nb_places_TC = SelectField('Nombre de places', choices=[(i, i) for i in range(0,16)], validators=[DataRequired()])
+    nb_mois_TC = SelectField('Nombre de mois', choices=[(5, '5'), (10, '10')], validators=[DataRequired()])
+
+class CreateAgreementForm(AgreementForm):
+    submit = SubmitField('Ajouter l\'accord')
+
+class EditAgreementForm(AgreementForm):
+    submit = SubmitField('Valider les changements')
 
 
 class DeleteAgreementForm(FlaskForm):

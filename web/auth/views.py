@@ -17,66 +17,56 @@ def inscription():
             mail = form.email.data,
             departement = form.departement.data,
             niveau = form.niveau.data,
-            mobilites = [] if form.mobilite_is_non() else [form.mobilite.data] ,
+            mobilites = [] if form.mobilite_is_non() else [form.mobilite.data],
             password = generate_password_hash(form.mdp.data))
         if Utilisateur.objects(mail = form.email.data).first() :
             flash("Il y a déjà un compte associé à cette adresse email", category='error')
         else :
             envoyer_mail(utilisateur)
-            return redirect(url_for('login', mail = utilisateur.mail))
-            #TODO: Pas logique, on contourne le sens d'un token
-            '''utilisateur.make_token()
-            utilisateur.save()
-            debut_url = request.host_url
-            debut_url = debut_url[:-1]
-            send_to(utilisateur.mail, "Bli", debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail))
-            return redirect(url_for('login', mail = utilisateur.mail))'''
+            return redirect(url_for('login', token = utilisateur.token))
     return render_template('auth/inscription.html', form = form)
 
-#TODO: On ne devrait pas avoir besoin du mail ici
-@app.route('/inscription/<token>/<mail>')
-def inscription_token(token, mail):
-    utilisateur = Utilisateur.objects(mail = mail).first()
+
+@app.route('/inscription/<token>')
+def inscription_token(token):
+    utilisateur = Utilisateur.objects(token = token).first()
     if Utilisateur.verifify_token(token) == 1 :
         flash('Merci, votre inscription a été validée.')
-        return redirect(url_for('login', mail = mail))
+        return redirect(url_for('login', token = token))
     elif Utilisateur.verifify_token(token) == 0 :
         envoyer_mail(utilisateur)
         flash("Un nouveau mail de confirmation vous a été envoyé", category='info')
-        #TODO: Pas logique, on contourne le sens d'un token
-        return redirect(url_for('login', mail = mail))
+        return redirect(url_for('login', token = token))
     else :
-        #TODO: Pas logique, on n'arrive jamais ici
         utilisateur.delete()
         flash("Vous devez vous inscrire à nouveau", category='error')
         return redirect(url_for('inscription'))
 
 #TODO: Faire marcher
-'''@app.route('/reinitialiser-mdp/<mail>', methods=['GET', 'POST'])
-def reinitialiser_mdp(mail):
-    utilisateur = Utilisateur.objects(mail = mail).first()
-    form = ResetPasswordForm(email = mail)
+@app.route('/reinitialiser-mdp/<token>', methods=['GET', 'POST'])
+def reinitialiser_mdp(token):
+    utilisateur = Utilisateur.objects(token = token).first()
+    form = ResetPasswordForm(email = utilisateur.mail)
     if request.method == 'POST' and form.validate_on_submit() :
         envoyer_mail(utilisateur.mail)
-    return render_template('auth/reinit_mdp.html', form=form)'''
+    return render_template('auth/reinit_mdp.html', form=form)
 
 
-#TODO: Il devrait pas y avoir besoin du mail. Ce truc ne fait aucon sens, on peut contrurner tout le systeme des tokens ?
-@app.route('/login', defaults={'mail': None}, methods = ['GET', 'POST'])
-@app.route('/login/<mail>', methods = ['GET', 'POST'])
-def login(mail = None):
-    form = LoginForm(email = mail)
+@app.route('/login', defaults={'token': None}, methods = ['GET', 'POST'])
+@app.route('/login/<token>', methods = ['GET', 'POST'])
+def login(token = None):
+    utilisateur = Utilisateur.objects(token = token).first()
+    form = LoginForm(email = utilisateur.mail if utilisateur else "")
     if request.method == 'POST' and form.validate_on_submit() :
-        user = Utilisateur.objects(mail = form.email.data).first()
-        if user :
-            if user.validate_login(form.mdp.data) :
-                if user.is_active :
-                    if login_user(user, form.remember_me.data) :
+        if utilisateur :
+            if utilisateur.validate_login(form.mdp.data) :
+                if utilisateur.is_active :
+                    if login_user(utilisateur, form.remember_me.data) :
                         flash("Vous êtes connecté", category='success')
                         return redirect(request.args.get("next") or url_for("index"))
                 else :
                     flash("Votre inscription n'est pas confirmée", category='error')
-                    return redirect(url_for('inscription_token', token = user.token, mail = user.mail))
+                    return redirect(url_for('inscription_token', token = utilisateur.token))
             else :
                 flash("Email ou mot de passe erroné", category='error')
         else :
@@ -159,8 +149,8 @@ def envoyer_mail(utilisateur) :
     utilisateur.save()
     debut_url = request.host_url
     debut_url = debut_url[:-1]
-    url = debut_url + url_for("inscription_token", token = utilisateur.token, mail = utilisateur.mail)
+    url = debut_url + url_for("inscription_token", token = utilisateur.token)
     print(utilisateur.mail)
     #send_to(utilisateur.mail, "Bli", url)
     sendMail(utilisateur.mail,url)
-    return redirect(url_for('login', mail = utilisateur.mail))
+    return redirect(url_for('login', token = utilisateur.token))

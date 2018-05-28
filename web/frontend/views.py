@@ -39,7 +39,7 @@ def universite(id):
     # TODO : faire marcher la suppression
     deleteForm = DeleteAgreementForm()
     if deleteForm.validate_on_submit():
-        return redirect(url_for('suppr-accord'))
+        return redirect(url_for('suppr_accord', id = id))
     return render_template('frontend/universite.html', universite=Universite.objects.id_or_404(id), form=deleteForm)
 
 

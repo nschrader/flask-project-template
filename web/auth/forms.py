@@ -11,10 +11,9 @@ class ProfileForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     departement = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
     niveau = SelectField('Année d\'études', choices=Utilisateur.get_annee_choices(), validators=[DataRequired()])
-    # TODO : ordonner par ordre alphabétique
-    choix_mobilite = [(non, 'Non')]
-    for univ in Universite.objects.all() :
-        choix_mobilite.append((univ.pk, univ.nom))
+    choix_mobilite = Universite.get_choices()
+    choix_mobilite.append((non, 'Non'))
+    choix_mobilite.reverse()
     mobilite = SelectField('J\'ai déjà effectué une mobilité internationale : ', choices=choix_mobilite, coerce=ObjectId, validators=[DataRequired()])
 
     def mobilite_is_non(self):
