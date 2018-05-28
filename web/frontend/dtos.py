@@ -30,6 +30,10 @@ class UniversiteForPaysDTO(BaseDTO):
     def get_for_pays(pays):
         return [UniversiteForPaysDTO(universite=u) for u in Universite.objects(pays=pays)]
 
+    @staticmethod
+    def get_for_universite(id):
+        return UniversiteForPaysDTO(universite=Universite.objects.id_or_404(id))
+
 
     @staticmethod
     def get_for_pays_and_departement(pays, departement):

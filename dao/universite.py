@@ -1,5 +1,5 @@
 from mongoengine import *
-
+from .pays import Pays
 from .departement import Departement
 from .audit import Audit
 
@@ -17,3 +17,9 @@ class Universite(Audit, Document):
     def get_choices(cls):
         unis = [(univ.pk, univ.nom) for univ in cls.objects.all()]
         return sorted(unis, key=lambda x: x[1])
+
+    #@classmethod
+    #def get_all_echanges(cls):
+    #    [(p.pk, p.nom) for p in Pays.objects.all()]
+    #    [cls.objects(id=p.pk)for id in p.pk]
+    #    return [(u, e) for u in us for e in u.echanges]
