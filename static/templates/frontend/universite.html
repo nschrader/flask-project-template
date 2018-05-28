@@ -25,20 +25,24 @@
                     </div>
                 </div>
                 <div class = "col-md-auto align-self-center">
-                    {% for echange in universite.echanges %}
-                    <h5>{{ echange.get_summary_str() }}</h5>
-                    {% endfor %}
+                    
+                   
                 </div>
                 <div class = "col-md-auto align-self-center">
-                    <div class="btn-group ">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
-                        <div class="dropdown-menu">
-                        <!-- TODO : make these names real ones -->
-                        <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-                        <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-                        <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-                        </div>
+                   <div class="btn-group dropleft">
+                    {% if dto.has_voeux() %}
+                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
+                    <div class="dropdown-menu">
+                      {% for v in dto.get_voeux() %}
+                      <a class="dropdown-item" href="#">{{ v }}</a>
+                      {% endfor %}
                     </div>
+                    {% else %}
+                    <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Pas de demande</button>
+                    {% endif %}
+                    
+                    
+                  </div>
                 </div>
 
             </ol>
