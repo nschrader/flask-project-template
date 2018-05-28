@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for
 
 from dao import *
 from .forms import FilterForm, WikiForm, DeleteAgreementForm, VoeuxForm, DeleteVoeuxForm, AjoutEchngForm
-from .dtos import VoeuxByUniversityDTO
+from .dtos import VoeuxByUniversityDTO, UniversityByPaysDTO
 
 @app.route('/')
 @login_required
@@ -115,7 +115,8 @@ def voeux():
         )
         enregistre = True
 
-    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre)
+    dtos = UniversityByPaysDTO.get()
+    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos)
 
 @app.route('/voeux/delete', methods=['POST'])
 def delete_voeux():
