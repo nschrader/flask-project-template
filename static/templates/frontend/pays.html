@@ -67,25 +67,39 @@
         </thead>
         <tbody>
 
-          {% for uni, echng in univ_echng %}
+          {% for dto in dtos %}
+          {% for echange in dto.universite.echanges %}
 
           <tr>
-            <td><a href="{{ url_for('universite', id=uni.pk) }}">{{ uni.nom }}</a></td>
-            <td>{{ echng.accord.nom }}</td>
-            <td>{{ echng.places }}</td>
-            <td>{{ echng.get_departments_str() }}</td>
-            <td>
-              <div class="btn-group ">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
-              <!-- TODO : all data should be dynamic -->
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Jean-Paul Dupont 4AS1</a>
-                <a class="dropdown-item" href="#">Jean-Michel Chanron 5AS2</a>
-                <a class="dropdown-item" href="#">Hubert De la pâte Feuilletée 4AS1</a>
-              </div>
+            {% if loop.first %}
+            <td class="align-middle" rowspan="{{ loop.length }}">
+              <a href="{{ url_for('universite', id=dto.universite.pk) }}">{{ dto.universite.nom }}</a>
+            </td>
+            {% endif %}
+
+            <td>{{ echange.accord.nom }}</td>
+            <td>{{ echange.places }}</td>
+            <td>{{ echange.get_departments_str() }}</td>
+
+            {% if loop.first %}
+            <td class="align-middle" align="center" rowspan="{{ loop.length }}">
+              <div class="btn-group dropleft">
+                {% if dto.has_voeux() %}
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Demandes</button>
+                <div class="dropdown-menu">
+                  {% for v in dto.get_voeux() %}
+                  <a class="dropdown-item" href="#">{{ v }}</a>
+                  {% endfor %}
+                </div>
+                {% else %}
+                <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Pas de demande</button>
+                {% endif %}
               </div>
             </td>
+            {% endif %}
           </tr>
+
+          {% endfor %}
           {% endfor %}
         </tbody>
     </table>
