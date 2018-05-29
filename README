@@ -1,0 +1,13 @@
+Afin de tester notre application, il suffit de suivre ces trois étapes :
+1) Il faut que mongodb tourne sur le port 27017 et aue l'adresse ip soit 127.0.0.1
+2) Installer toutes les dépendances avec la commande : "python3 setup.py develop --user"
+3) Lancer l'application : "python3 entry.py"
+
+Pour des raisons pratiques il y a aussi un Makefile:
+ * make / make run : Lancer mongodb et l'application
+ * make run-mongo : Lancer mongodb
+ * make kill-mongo : Arreter mongodb
+ * make clean : Nettoyer le répertoire
+
+ En ce qui concerne un déploiement réel, il faut configurer un serveur HTTP
+ avec un module WSGI et ensuite charger notre application dedans. Nous n'avons cependant jamais essayé.

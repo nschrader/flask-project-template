@@ -4,9 +4,6 @@ run: run-mongo
 	python3 setup.py develop --user
 	python3 entry.py
 
-build:
-	python3 setup.py install --user
-
 clean:
 	python3 setup.py clean
 	rm -rf dist/ build/ *.egg-info/
