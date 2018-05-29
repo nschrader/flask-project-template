@@ -32,7 +32,7 @@ class VoeuxByUniversityDTO:
 
     @staticmethod
     def get_for_pays_and_departement(pays, departement):
-        dtos = [UniversiteForPaysDTO(universite=u) for u in Universite.objects(pays=pays)]
+        dtos = [VoeuxByUniversityDTO(universite=u) for u in Universite.objects(pays=pays)]
         dpt = Departement.objects.with_id(departement)
         for dto in dtos:
             dto.universite.echanges = [e for e in dto.universite.echanges if dpt in e.departements]
