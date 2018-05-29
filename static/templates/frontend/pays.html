@@ -20,7 +20,7 @@
             <h2 class="font-weight-bold text-light">Universités partenaires</h2>
             <ol class="breadcrumb" >
                 <li class="active">
-                  <form action="" method="POST" name="filter_form">
+                  <form method="POST" action="" name="filter_form">
                     {{ filter_form.hidden_tag() }}
                     <strong>Filtres :</strong>
 
@@ -43,7 +43,7 @@
                     {% endfor %}
 
                     &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ filter_form.submit() }}
-                    </form>
+                  </form>
                 </li>
             </ol>
             <!--TODO Lié au template Ajout -->
