@@ -19,10 +19,10 @@ def pays(id):
     dtos = VoeuxByUniversityDTO.get_for_pays(pays)
 
     filter_form = FilterForm()
-    vie_pratique = WikiForm (texte = Article.get_article_text(pays.vie_pratique))
-    tourisme = WikiForm (texte = Article.get_article_text(pays.tourisme))
-    culture = WikiForm (texte = Article.get_article_text(pays.culture))
-    climat = WikiForm (texte = Article.get_article_text(pays.climat))
+    vie_pratique = WikiForm(formdata=None, texte = Article.get_article_text(pays.vie_pratique))
+    tourisme = WikiForm(formdata=None, texte = Article.get_article_text(pays.tourisme))
+    culture = WikiForm(formdata=None, texte = Article.get_article_text(pays.culture))
+    climat = WikiForm(formdata=None, texte = Article.get_article_text(pays.climat))
 
     if request.method == 'POST' and filter_form.validate_on_submit() :
         if filter_form.is_tous_departements() :
