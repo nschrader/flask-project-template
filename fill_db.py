@@ -333,3 +333,123 @@ mm = Utilisateur(
     )
 )
 mm.save()
+
+pschmitt = Utilisateur(
+    prenom="Pauline",
+    nom="Schmitt",
+    mail="pauline@schmitt.com",
+    departement=tc,
+    niveau=3,
+    password=generate_password_hash("azerty"),
+    active=True,
+    voeux_annee = 4,
+    voeu_1=Voeu(
+        semestre=1,
+        universite=uj
+    ),
+    voeu_2=Voeu(
+        semestre=2,
+        universite=udg
+    )
+)
+pschmitt.save()
+
+lprigent = Utilisateur(
+    prenom="Lucas",
+    nom="Prigent",
+    mail="l.pr@laposte.com",
+    departement=sgm,
+    niveau=3,
+    password=generate_password_hash("1234"),
+    active=True,
+    voeux_annee = 4,
+    voeu_1=Voeu(
+        semestre=1,
+        universite=rwth
+    ),
+    voeu_2=Voeu(
+        semestre=2,
+        universite=git
+    )
+)
+lprigent.save()
+
+mloria = Utilisateur(
+    prenom="Maria",
+    nom="Loria",
+    mail="maria.lo@gmail.com",
+    departement=sgm,
+    niveau=3,
+    password=generate_password_hash("world"),
+    active=True,
+    voeux_annee = 4,
+    voeu_1=Voeu(
+        semestre=1,
+        universite=uj
+    ),
+    voeu_2=Voeu(
+        semestre=2,
+        universite=aalto
+    )
+)
+mloria.save()
+
+sdupont = Utilisateur(
+    prenom="Sophie",
+    nom="Dupont",
+    mail="sophie.dupont@gmail.com",
+    departement=gm,
+    niveau=3,
+    password=generate_password_hash("hellothere"),
+    active=True,
+    voeux_annee = 4,
+    voeu_1=Voeu(
+        semestre=2,
+        universite=rwth
+    ),
+    voeu_2=Voeu(
+        semestre=1,
+        universite=kit
+    )
+)
+sdupont.save()
+
+mlionel = Utilisateur(
+    prenom="Martin",
+    nom="Lionel",
+    mail="martin.lionel@gmail.com",
+    departement=ge,
+    niveau=4,
+    password=generate_password_hash("flower"),
+    active=True,
+    voeux_annee = 5,
+    voeu_1=Voeu(
+        semestre=1,
+        universite=rwth
+    ),
+    voeu_2=Voeu(
+        semestre=1,
+        universite=kit
+    )
+)
+mlionel.save()
+
+leroi = Utilisateur(
+    prenom="Corentin",
+    nom="Leroi",
+    mail="coco.leroy@gmail.com",
+    departement=tc,
+    niveau=4,
+    password=generate_password_hash("cocolaloutre"),
+    active=True,
+    voeux_annee = 5,
+    voeu_1=Voeu(
+        semestre=1,
+        universite=tu_b
+    ),
+    voeu_2=Voeu(
+        semestre=1,
+        universite=rwth
+    )
+)
+leroi.save()
