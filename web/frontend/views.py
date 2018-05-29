@@ -205,7 +205,7 @@ def voeux():
                 elif not filter_form.doublediplome.data and filter_form.F_echange.data :
                     u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom != "Double Diplôme"]
 
-    elif current_user.voeu_1 and current_user.voeu_2:
+    if current_user.voeu_1 and current_user.voeu_2:
         form = VoeuxForm(
             universite_1 = current_user.voeu_1.universite.pk,
             universite_2 = current_user.voeu_2.universite.pk,
