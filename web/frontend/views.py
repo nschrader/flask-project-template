@@ -46,6 +46,42 @@ def pays(id):
     )
 
 
+@app.route('/pays/<id>/tourisme', methods=['POST'])
+@login_required
+def wiki_tourisme(id) :
+    pays = Pays.objects.id_or_404(id)
+    tourisme = WikiForm (texte = pays.tourisme.text)
+    if request.method == 'POST' and tourisme.validate_on_submit() :
+        pays.tourisme = Article(text=tourisme.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    return redirect(url_for('pays', id=id))
+
+
+@app.route('/pays/<id>/culture', methods=['POST'])
+@login_required
+def wiki_culture(id) :
+    pays = Pays.objects.id_or_404(id)
+    culture = WikiForm (texte = pays.culture.text)
+    if request.method == 'POST' and culture.validate_on_submit() :
+        pays.culture = Article(text=culture.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    return redirect(url_for('pays', id=id))
+
+
+@app.route('/pays/<id>/climat', methods=['POST'])
+@login_required
+def wiki_climat(id) :
+    pays = Pays.objects.id_or_404(id)
+    climat = WikiForm (texte = pays.climat.text)
+    if request.method == 'POST' and climat.validate_on_submit() :
+        pays.climat = Article(text=climat.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    return redirect(url_for('pays', id=id))
+
+
 @app.route('/pays/<id>/vie-pratique', methods=['POST'])
 @login_required
 def wiki_vie_pratique(id) :

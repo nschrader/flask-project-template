@@ -22,7 +22,7 @@ class FilterForm(FlaskForm):
 
 class WikiForm(FlaskForm):
     texte = TextAreaField()
-    submit = SubmitField('Enregistrer')
+    enregistrer = SubmitField('Enregistrer')
 
 
 class VoeuxForm(FlaskForm):
@@ -50,7 +50,6 @@ class CreateAgreementForm(AgreementForm):
 
 class EditAgreementForm(AgreementForm):
     submit = SubmitField('Valider les changements')
-
 
 class DeleteAgreementForm(FlaskForm):
     submit = SubmitField('Supprimer l\'accord')
