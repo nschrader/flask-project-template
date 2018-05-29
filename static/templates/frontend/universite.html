@@ -15,7 +15,6 @@
         </div>
         <!-- FIN TITRE -->
         <!-- INFOS PLACES -->
-        <!-- TODO : dynamic infos -->
         <div class="container-fluid">
             <ol class="breadcrumb" >
 
@@ -55,17 +54,36 @@
 
     <!-- INFOS -->
     <h2 class="font-weight-bold text-white">Informations pratiques</h2>
+    
     <div class="card card-green">
         <div class="card-body" id="cours">
-            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#coursCollapse" aria-expanded="true" aria-controls="coursCollapse">
+            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#coursCollapse, #coursData, #coursButton2" aria-expanded="true" aria-controls="coursCollapse">
                 <h3 class="card-title card-green">Cours</h3>
             </button>
-            <div id="coursCollapse" class="card-body" aria-labelledby="cours">
+            <div id="coursCollapse" class="collapse card-body" aria-labelledby="cours">
+            <div class="collapse multi-collapse" id="coursData">
                 {{ Article.get_markup_for(universite.cours) }}
-                <a href="#" class="card-link">Modifier/Ajouter</a>
+            </div>
+            <form class="collapse multi-collapse" id="coursModif" name="cours" method="post" action="{{ url_for('wiki_cours', id=universite.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ cours.hidden_tag() }}
+                      {{ cours.texte(cols="100", rows="5") }}<br>
+                      {% for error in cours.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ cours.enregistrer() }}</p>
+                <button id="coursButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#coursData, #coursModif, #coursButton1, #coursButton2" aria-expanded="false" aria-controls="coursData coursModif">Annuler</button>
+            </form>
+            <div id="coursButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#coursData, #coursModif, #coursButton1, #coursButton2" aria-expanded="false" aria-controls="coursData coursModif">Modifier/Ajouter</button>
             </div>
         </div>
+      </div>
     </div>
+        
     <div class="card card-yellow">
       <div class="card-body" id="accessibilite">
         <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#accessibiliteCollapse" aria-expanded="true" aria-controls="accessibiliteCollapse">
