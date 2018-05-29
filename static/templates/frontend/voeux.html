@@ -63,7 +63,7 @@
           </div>
         </form>
 
-        {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
+       {% for error in get_flashed_messages(with_categories=true, category_filter=["error"]) %}
         <div class="alert alert-dismissable alert-danger" align="center">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
                 {{ error[1] }}
@@ -89,6 +89,33 @@
           </form>
         </div>
       </li>
+    </ol>
+      <!--Filtre--------------------------------------------->
+    <ol class="breadcrumb" >
+      <form action="" method="POST" name="filter_form">
+          {{ filter_form.hidden_tag() }}
+          <strong>Filtres :</strong>
+
+          &emsp;{{ filter_form.doublediplome.label }} {{ filter_form.doublediplome() }}
+          {% for error in filter_form.doublediplome.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          &emsp;{{ filter_form.F_echange.label }} {{ filter_form.F_echange() }}
+          {% for error in filter_form.F_echange.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <!-- menu déroulant pour le choix du département-->
+
+          &emsp; {{ filter_form.departement.label }}
+          {{ filter_form.departement }}
+          {% for error in filter_form.departement.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+
+          &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;{{ filter_form.submit() }}
+      </form>
     </ol>
 
 
