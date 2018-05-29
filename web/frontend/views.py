@@ -11,6 +11,7 @@ from .dtos import VoeuxByUniversityDTO, UniversityByPaysDTO
 def index():
     return render_template('frontend/accueil.html')
 
+
 @app.route('/pays/<id>', methods=['GET', 'POST'])
 @login_required
 def pays(id):
@@ -46,6 +47,42 @@ def pays(id):
     )
 
 
+@app.route('/pays/<id>/tourisme', methods=['POST'])
+@login_required
+def wiki_tourisme(id) :
+    pays = Pays.objects.id_or_404(id)
+    tourisme = WikiForm (texte = pays.tourisme.text)
+    if request.method == 'POST' and tourisme.validate_on_submit() :
+        pays.tourisme = Article(text=tourisme.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    return redirect(url_for('pays', id=id))
+
+
+@app.route('/pays/<id>/culture', methods=['POST'])
+@login_required
+def wiki_culture(id) :
+    pays = Pays.objects.id_or_404(id)
+    culture = WikiForm (texte = pays.culture.text)
+    if request.method == 'POST' and culture.validate_on_submit() :
+        pays.culture = Article(text=culture.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    return redirect(url_for('pays', id=id))
+
+
+@app.route('/pays/<id>/climat', methods=['POST'])
+@login_required
+def wiki_climat(id) :
+    pays = Pays.objects.id_or_404(id)
+    climat = WikiForm (texte = pays.climat.text)
+    if request.method == 'POST' and climat.validate_on_submit() :
+        pays.climat = Article(text=climat.texte.data)
+        pays.save()
+        flash("Vos modifications ont été enregistrées", category='success')
+    return redirect(url_for('pays', id=id))
+
+
 @app.route('/pays/<id>/vie-pratique', methods=['POST'])
 @login_required
 def wiki_vie_pratique(id) :
@@ -57,9 +94,11 @@ def wiki_vie_pratique(id) :
         flash("Vos modifications ont été enregistrées", category='success')
     return redirect(url_for('pays', id=id))
 
+
 @app.route('/projet')
 def projet():
     return render_template('projet.html')
+
 
 @app.route('/universite/<id>')
 @login_required
@@ -83,13 +122,44 @@ def ajout():
 def suppr_accord(id):
     return render_template('frontend/suppr_accord.html', universite=Universite.objects.id_or_404(id))
 
+
 @app.route('/voeux', methods=['GET', 'POST'])
 @login_required
 def voeux():
     filter_form = FilterForm()
-    """form = VoeuxForm()
+    form = VoeuxForm()
     enregistre = False
-    if request.method == 'POST' and form.validate_on_submit():
+    dtos = UniversityByPaysDTO.get()
+    if request.method == 'POST' and filter_form.validate_on_submit() :
+        if filter_form.is_tous_departements() :
+            dtos = UniversityByPaysDTO.get()
+        else:
+            dtos = UniversityByPaysDTO.get_for_departement(filter_form.departement.data)
+        for dto in dtos:
+            for u in dto.universites:
+                if filter_form.doublediplome.data and not filter_form.F_echange.data :
+                    u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom == "Double Diplôme"]
+                elif not filter_form.doublediplome.data and filter_form.F_echange.data :
+                    u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom != "Double Diplôme"]
+
+    elif current_user.voeu_1 and current_user.voeu_2:
+        form = VoeuxForm(
+            universite_1 = current_user.voeu_1.universite.pk,
+            universite_2 = current_user.voeu_2.universite.pk,
+            semestre_1 = current_user.voeu_1.semestre,
+            semestre_2 = current_user.voeu_2.semestre,
+            annee = current_user.voeux_annee
+        )
+        enregistre = True
+
+    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos, filter_form=filter_form)
+
+
+@app.route("/voeux/soumettre", methods=["POST"])
+def submit_voeux():
+    print("Submit")
+    form = VoeuxForm()
+    if form.validate_on_submit():
         if form.universite_1.data == form.universite_2.data:
             flash("Il faut que les deux universités soient distinctes", category="error")
         else:
@@ -104,32 +174,9 @@ def voeux():
             )
             current_user.voeux_annee = form.annee.data
             current_user.save()
-            enregistre = True
 
-    elif current_user.voeu_1 and current_user.voeu_2:
-        form = VoeuxForm(
-            universite_1 = current_user.voeu_1.universite.pk,
-            universite_2 = current_user.voeu_2.universite.pk,
-            semestre_1 = current_user.voeu_1.semestre,
-            semestre_2 = current_user.voeu_2.semestre,
-            annee = current_user.voeux_annee
-        )
-        enregistre = True"""
-    dtos = UniversityByPaysDTO.get()
-    if request.method == 'POST' and filter_form.validate_on_submit() :
-        if filter_form.is_tous_departements() :
-            dtos = UniversityByPaysDTO.get()
-        else:
-            dtos = UniversityByPaysDTO.get_for_departement(filter_form.departement.data)
-        for dto in dtos:
-            for u in dto.universites:
+    return redirect(url_for("voeux"))
 
-                if filter_form.doublediplome.data and not filter_form.F_echange.data :
-                    u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom == "Double Diplôme"]
-                elif not filter_form.doublediplome.data and filter_form.F_echange.data :
-                    u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom != "Double Diplôme"]
-
-    return render_template('frontend/voeux.html', pays_dtos=dtos, filter_form=filter_form)
 
 @app.route('/voeux/delete', methods=['POST'])
 def delete_voeux():
@@ -141,9 +188,11 @@ def delete_voeux():
         current_user.save()
     return redirect(url_for("voeux"))
 
+
 @app.route('/robots.txt')
 def static_from_root():
     return send_from_directory(current_app.static_folder, request.path[1:])
+
 
 @app.route('/favicon.ico')
 def favicon():
