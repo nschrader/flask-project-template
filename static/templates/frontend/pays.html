@@ -106,7 +106,7 @@
 
     <!-- INFOS -->
     <h2 class="font-weight-bold text-light">Informations</h2>
-    
+
     <div class="card card-green">
         <div class="card-body" id="viePratique">
             <button class="btn btn-link text-success" data-toggle="collapse" data-target="#viePratiqueCollapse, #viePratiqueData, #viePratiqueButton2" aria-expanded="true" aria-controls="viePratiqueCollapse">
@@ -126,7 +126,11 @@
                           {% endfor %}
                       </div>
                     </div>
-                    <p>{{ vie_pratique.enregistrer() }}</p>
+                    <p>
+                      {{ vie_pratique.enregistrer() }}
+                      &emsp;
+                      <a target="blank" href="https://guides.github.com/features/mastering-markdown/#examples">Utilisez Markdown, par exemple pour écrire en **gras** ou *italic*</a>
+                    </p>
                     <button id="viePratiqueButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#viePratiqueData, #viePratiqueModif, #viePratiqueButton1, #viePratiqueButton2" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Annuler</button>
                 </form>
                 <div id="viePratiqueButton2" class="multi-collapse collapse">
@@ -155,7 +159,11 @@
                       {% endfor %}
                   </div>
                 </div>
-                <p>{{ tourisme.enregistrer() }}</p>
+                <p>
+                  {{ tourisme.enregistrer() }}
+                  &emsp;
+                  <a target="blank" href="https://guides.github.com/features/mastering-markdown/#examples">Utilisez Markdown, par exemple pour écrire en **gras** ou *italic*</a>
+                </p>
                 <button id="tourismeButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#tourismeData, #tourismeModif, #tourismeButton1, #tourismeButton2" aria-expanded="false" aria-controls="tourismeData tourismeModif">Annuler</button>
             </form>
             <div id="tourismeButton2" class="multi-collapse collapse">
@@ -184,16 +192,20 @@
                       {% endfor %}
                   </div>
                 </div>
-                <p>{{ culture.enregistrer() }}</p>
+                <p>
+                  {{ culture.enregistrer() }}
+                  &emsp;
+                  <a target="blank" href="https://guides.github.com/features/mastering-markdown/#examples">Utilisez Markdown, par exemple pour écrire en **gras** ou *italic*</a>
+                </p>
                 <button id="cultureButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#cultureData, #cultureModif, #cultureButton1, #cultureButton2" aria-expanded="false" aria-controls="cultureData cultureModif">Annuler</button>
             </form>
             <div id="cultureButton2" class="multi-collapse collapse">
               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#cultureData, #cultureModif, #cultureButton1, #cultureButton2" aria-expanded="false" aria-controls="cultureData cultureModif">Modifier/Ajouter</button>
             </div>
-        </div>      
+        </div>
       </div>
     </div>
-    
+
     <div class="card border-primary">
       <div class="card-body" id="climat">
           <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#climatCollapse, #climatData, #climatButton2" aria-expanded="true" aria-controls="climatCollapse">
@@ -213,7 +225,11 @@
                       {% endfor %}
                   </div>
                 </div>
-                <p>{{ climat.enregistrer() }}</p>
+                <p>
+                  {{ climat.enregistrer() }}
+                  &emsp;
+                  <a target="blank" href="https://guides.github.com/features/mastering-markdown/#examples">Utilisez Markdown, par exemple pour écrire en **gras** ou *italic*</a>
+                </p>
                 <button id="climatButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#climatData, #climatModif, #climatButton1, #climatButton2" aria-expanded="false" aria-controls="climatData climatModif">Annuler</button>
             </form>
             <div id="climatButton2" class="multi-collapse collapse">
