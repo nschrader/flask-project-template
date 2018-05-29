@@ -15,3 +15,10 @@ class Article(Audit, EmbeddedDocument):
             return Markup(markdown(article.text))
         else:
             return Markup(markdown("Soyez le premier à rediger un avis"))
+
+    @staticmethod
+    def get_article_text(article):
+        if article:
+            return article.text
+        else:
+            return "Soyez le premier à rediger un avis"
