@@ -86,7 +86,8 @@ def suppr_accord(id):
 @app.route('/voeux', methods=['GET', 'POST'])
 @login_required
 def voeux():
-    form = VoeuxForm()
+    filter_form = FilterForm()
+    """form = VoeuxForm()
     enregistre = False
     if request.method == 'POST' and form.validate_on_submit():
         if form.universite_1.data == form.universite_2.data:
@@ -113,10 +114,22 @@ def voeux():
             semestre_2 = current_user.voeu_2.semestre,
             annee = current_user.voeux_annee
         )
-        enregistre = True
-
+        enregistre = True"""
     dtos = UniversityByPaysDTO.get()
-    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos)
+    if request.method == 'POST' and filter_form.validate_on_submit() :
+        if filter_form.is_tous_departements() :
+            dtos = UniversityByPaysDTO.get()
+        else:
+            dtos = UniversityByPaysDTO.get_for_departement(filter_form.departement.data)
+        for dto in dtos:
+            for u in dto.universites:
+
+                if filter_form.doublediplome.data and not filter_form.F_echange.data :
+                    u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom == "Double Diplôme"]
+                elif not filter_form.doublediplome.data and filter_form.F_echange.data :
+                    u.universite.echanges=[e for e in u.universite.echanges if e.accord.nom != "Double Diplôme"]
+
+    return render_template('frontend/voeux.html', pays_dtos=dtos, filter_form=filter_form)
 
 @app.route('/voeux/delete', methods=['POST'])
 def delete_voeux():

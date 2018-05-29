@@ -41,7 +41,8 @@ class DeleteVoeuxForm(FlaskForm):
 # TODO : faire marcher EditAgreementForm et DeleteAgreementForm
 class AgreementForm(FlaskForm):
     type = SelectField('Type d\'accord', choices=Accord.get_choices(), validators=[DataRequired()])
-    #departements = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
+    nom_universite=StringField("Nom de l'universite", validators=[DataRequired()])
+    departements = SelectField('Département INSA', choices=Departement.get_choices(), coerce=ObjectId, validators=[DataRequired()])
     nb_places_TC = SelectField('Nombre de places', choices=[(i, i) for i in range(0,16)], validators=[DataRequired()])
     nb_mois_TC = SelectField('Nombre de mois', choices=[(5, '5'), (10, '10')], validators=[DataRequired()])
 

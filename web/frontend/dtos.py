@@ -48,3 +48,15 @@ class UniversityByPaysDTO:
     @classmethod
     def get(cls):
         return [cls(p) for p in Pays.objects]
+
+
+    @classmethod
+    def get_for_departement(cls, departement):
+        dtos = [cls(p) for p in Pays.objects]
+        dpt = Departement.objects.with_id(departement)
+        for dto in dtos:
+            for u in dto.universites:
+                u.universite.echanges = [e for e in u.universite.echanges if dpt in e.departements]
+                if not u.universite.echanges:
+                    del u.universite.echanges
+        return dtos
