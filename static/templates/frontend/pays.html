@@ -105,12 +105,11 @@
     <!-- FIN UNIVERSITES -->
 
     <!-- INFOS -->
-    <!-- TODO : le texte du paragraphe doit pouvoir être modifié (utiliser le lien ci-dessous (modifier/ajouter)) -->
-    <!-- TODO : Il faut aussi que le style standard s'applique aussi sur le Markdown -->
     <h2 class="font-weight-bold text-light">Informations</h2>
+    
     <div class="card card-green">
         <div class="card-body" id="viePratique">
-            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#viePratiqueCollapse, #viePratiqueData, #button1" aria-expanded="true" aria-controls="viePratiqueCollapse">
+            <button class="btn btn-link text-success" data-toggle="collapse" data-target="#viePratiqueCollapse, #viePratiqueData, #viePratiqueButton2" aria-expanded="true" aria-controls="viePratiqueCollapse">
                 <h3 class="card-title card-green">Vie pratique</h3>
             </button>
             <div id="viePratiqueCollapse" class="card-body collapse" aria-labelledby="viePratique">
@@ -128,10 +127,10 @@
                       </div>
                     </div>
                     <p>{{ vie_pratique.enregistrer() }}</p>
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Annuler</button>
+                    <button id="viePratiqueButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#viePratiqueData, #viePratiqueModif, #viePratiqueButton1, #viePratiqueButton2" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Annuler</button>
                 </form>
-                <div id="button1" class="multi-collapse collapse">
-                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Modifier/Ajouter</button>
+                <div id="viePratiqueButton2" class="multi-collapse collapse">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#viePratiqueData, #viePratiqueModif, #viePratiqueButton1, #viePratiqueButton2" aria-expanded="false" aria-controls="viePratiqueData viePratiqueModif">Modifier/Ajouter</button>
                 </div>
             </div>
         </div>
@@ -139,51 +138,88 @@
 
     <div class="card card-yellow">
       <div class="card-body" id="tourisme">
-        <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#tourismeCollapse, #button2" aria-expanded="true" aria-controls="tourismeCollapse">
+        <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#tourismeCollapse, #tourismeData, #tourismeButton2" aria-expanded="true" aria-controls="tourismeCollapse">
             <h3 class="card-title card-yellow text-warning">Tourisme</h3>
         </button>
         <div id="tourismeCollapse" class="collapse card-body" aria-labelledby="tourisme">
-            {{ Article.get_markup_for(pays.tourisme)}}
-        </div>
-        <form class="collapse multi-collapse" id="tourismeModif" name="tourisme" method="post" action="{{ url_for('wiki_tourisme', id=pays.pk) }}">
-            <div class="form-group row">
-              <div class="col-10">
-                  {{ tourisme.hidden_tag() }}
-                  {{ tourisme.texte(cols="100", rows="5") }}<br>
-                  {% for error in tourisme.texte.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                  {% endfor %}
-              </div>
+            <div class="collapse multi-collapse" id="tourismeData">
+                {{ Article.get_markup_for(pays.tourisme)}}
             </div>
-            <p>{{ tourisme.enregistrer() }}</p>
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="tourismeData tourismeModif">Annuler</button>
-        </form>
-        <div id="button2" class="multi-collapse collapse">
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="tourismeData tourismeModif">Modifier/Ajouter</button>
+            <form class="collapse multi-collapse" id="tourismeModif" name="tourisme" method="post" action="{{ url_for('wiki_tourisme', id=pays.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ tourisme.hidden_tag() }}
+                      {{ tourisme.texte(cols="100", rows="5") }}<br>
+                      {% for error in tourisme.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ tourisme.enregistrer() }}</p>
+                <button id="tourismeButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#tourismeData, #tourismeModif, #tourismeButton1, #tourismeButton2" aria-expanded="false" aria-controls="tourismeData tourismeModif">Annuler</button>
+            </form>
+            <div id="tourismeButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#tourismeData, #tourismeModif, #tourismeButton1, #tourismeButton2" aria-expanded="false" aria-controls="tourismeData tourismeModif">Modifier/Ajouter</button>
+            </div>
         </div>
       </div>
     </div>
 
     <div class="card card-red">
       <div class="card-body" id="culture">
-          <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#cultureCollapse" aria-expanded="true" aria-controls="cultureCollapse">
+          <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#cultureCollapse, #cultureData, #cultureButton2" aria-expanded="true" aria-controls="cultureCollapse">
             <h3 class="card-title card-red text-danger">Culture</h3>
           </button>
           <div id="cultureCollapse" class="collapse card-body" aria-labelledby="culture">
-              {{ Article.get_markup_for(pays.culture) }}
-              <a href="#" class="card-link">Modifier/Ajouter</a>
-          </div>
+            <div class="collapse multi-collapse" id="cultureData">
+                {{ Article.get_markup_for(pays.culture) }}
+            </div>
+            <form class="collapse multi-collapse" id="cultureModif" name="culture" method="post" action="{{ url_for('wiki_culture', id=pays.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ culture.hidden_tag() }}
+                      {{ culture.texte(cols="100", rows="5") }}<br>
+                      {% for error in culture.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ culture.enregistrer() }}</p>
+                <button id="cultureButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#cultureData, #cultureModif, #cultureButton1, #cultureButton2" aria-expanded="false" aria-controls="cultureData cultureModif">Annuler</button>
+            </form>
+            <div id="cultureButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#cultureData, #cultureModif, #cultureButton1, #cultureButton2" aria-expanded="false" aria-controls="cultureData cultureModif">Modifier/Ajouter</button>
+            </div>
+        </div>      
       </div>
     </div>
+    
     <div class="card border-primary">
       <div class="card-body" id="climat">
-          <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#climatCollapse" aria-expanded="true" aria-controls="climatCollapse">
+          <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#climatCollapse, #climatData, #climatButton2" aria-expanded="true" aria-controls="climatCollapse">
             <h3 class="card-title card-blue text-primary">Climat</h3>
           </button>
           <div id="climatCollapse" class="collapse card-body" aria-labelledby="climat">
-              {{ Article.get_markup_for(pays.climat) }}
-              <a href="#" class="card-link">Modifier/Ajouter</a>
-          </div>
+            <div class="collapse multi-collapse" id="climatData">
+                {{ Article.get_markup_for(pays.climat)}}
+            </div>
+            <form class="collapse multi-collapse" id="climatModif" name="climat" method="post" action="{{ url_for('wiki_climat', id=pays.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ climat.hidden_tag() }}
+                      {{ climat.texte(cols="100", rows="5") }}<br>
+                      {% for error in climat.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ climat.enregistrer() }}</p>
+                <button id="climatButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#climatData, #climatModif, #climatButton1, #climatButton2" aria-expanded="false" aria-controls="climatData climatModif">Annuler</button>
+            </form>
+            <div id="climatButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#climatData, #climatModif, #climatButton1, #climatButton2" aria-expanded="false" aria-controls="climatData climatModif">Modifier/Ajouter</button>
+            </div>
+        </div>
       </div>
     </div>
     <!-- FIN INFOS -->
