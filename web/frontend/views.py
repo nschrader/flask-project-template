@@ -124,7 +124,26 @@ def suppr_accord(id):
 def voeux():
     form = VoeuxForm()
     enregistre = False
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST':
+        pass #Voici Gregoire
+    elif current_user.voeu_1 and current_user.voeu_2:
+        form = VoeuxForm(
+            universite_1 = current_user.voeu_1.universite.pk,
+            universite_2 = current_user.voeu_2.universite.pk,
+            semestre_1 = current_user.voeu_1.semestre,
+            semestre_2 = current_user.voeu_2.semestre,
+            annee = current_user.voeux_annee
+        )
+        enregistre = True
+
+    dtos = UniversityByPaysDTO.get()
+    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos)
+
+@app.route("/voeux/soumettre", methods=["POST"])
+def submit_voeux():
+    print("Submit")
+    form = VoeuxForm()
+    if form.validate_on_submit():
         if form.universite_1.data == form.universite_2.data:
             flash("Il faut que les deux universités soient distinctes", category="error")
         else:
@@ -139,20 +158,8 @@ def voeux():
             )
             current_user.voeux_annee = form.annee.data
             current_user.save()
-            enregistre = True
 
-    elif current_user.voeu_1 and current_user.voeu_2:
-        form = VoeuxForm(
-            universite_1 = current_user.voeu_1.universite.pk,
-            universite_2 = current_user.voeu_2.universite.pk,
-            semestre_1 = current_user.voeu_1.semestre,
-            semestre_2 = current_user.voeu_2.semestre,
-            annee = current_user.voeux_annee
-        )
-        enregistre = True
-
-    dtos = UniversityByPaysDTO.get()
-    return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos)
+    return redirect(url_for("voeux"))
 
 @app.route('/voeux/delete', methods=['POST'])
 def delete_voeux():

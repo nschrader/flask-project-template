@@ -5,7 +5,7 @@
     <h1 class="text-light">Voeux d'échanges</h1>
     <ol class="breadcrumb" >
       <li class="active">
-        <form action="" method="POST" name="form">
+        <form action="{{ url_for('submit_voeux') }}" method="POST">
           {{ form.hidden_tag() }}
           <div>
             {% if enregistre %}
@@ -27,8 +27,6 @@
             {% for error in form.universite_1.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-              &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<br>
-              <br>
           </div>
 
           <div>
@@ -52,7 +50,7 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
           </div>
-            <br>
+
           <div>
             {{ form.annee.label }}
             {{ form.annee() }}
@@ -84,12 +82,12 @@
         </div>
         {% endfor %}
 
-        <!--<div align="right">
-          <form action="{{ url_for('delete_voeux') }}" method="POST" name="del_form">
+        <div align="left">
+          <form action="{{ url_for('delete_voeux') }}" method="POST">
             {{ form.hidden_tag() }}
             {{ del_form.submit() }}
           </form>
-        </div>-->
+        </div>
       </li>
     </ol>
 
