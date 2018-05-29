@@ -23,10 +23,13 @@
                         <h2 class="page-header"><a href="{{ url_for('pays', id=universite.pays.pk) }}">{{ universite.pays.nom }}</a></h2>
                     </div>
                 </div>
+
                 <div class = "col-md-auto align-self-center">
-                    
-                   
+                  {% for echange in universite.echanges %}
+                    <h5>{{ echange.get_summary_str() }}</h5>
+                  {% endfor %}
                 </div>
+
                 <div class = "col-md-auto align-self-center">
                    <div class="btn-group dropleft">
                     {% if dto.has_voeux() %}
@@ -39,8 +42,8 @@
                     {% else %}
                     <button type="button" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Pas de demande</button>
                     {% endif %}
-                    
-                    
+
+
                   </div>
                 </div>
 
@@ -122,9 +125,9 @@
     <br>
     <!-- TODO Supprimer l'accord -->
     <!--<form class="well form-horizontal" action=" " method="post">
-      {{ form.hidden_tag() }}
+      {{ deleteForm.hidden_tag() }}
         <p align="right">
-            <span class="badge badge-light badge-pill"><a>{{ form.submit() }} </a></span>
+            <span class="badge badge-light badge-pill"><a>{{ deleteForm.submit() }} </a></span>
         </p>
     </form>-->
 
