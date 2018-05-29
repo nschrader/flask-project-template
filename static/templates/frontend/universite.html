@@ -83,40 +83,93 @@
             <div id="coursButton2" class="multi-collapse collapse">
               <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#coursData, #coursModif, #coursButton1, #coursButton2" aria-expanded="false" aria-controls="coursData coursModif">Modifier/Ajouter</button>
             </div>
-        </div>
+          </div>
       </div>
     </div>
         
     <div class="card card-yellow">
       <div class="card-body" id="accessibilite">
-        <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#accessibiliteCollapse" aria-expanded="true" aria-controls="accessibiliteCollapse">
+        <button class="btn btn-link text-warning" data-toggle="collapse" data-target="#accessibiliteCollapse, #accessibiliteData, #accessibiliteButton2" aria-expanded="true" aria-controls="accessibiliteCollapse">
             <h3 class="card-title card-yellow text-warning">Accessibilité</h3>
         </button>
         <div id="accessibiliteCollapse" class="collapse card-body" aria-labelledby="accessibilite">
-          {{ Article.get_markup_for(universite.accessibilite) }}
-          <a href="#" class="card-link">Modifier/Ajouter</a>
+            <div class="collapse multi-collapse" id="accessibiliteData">
+                {{ Article.get_markup_for(universite.accessibilite) }}
+            </div>
+            <form class="collapse multi-collapse" id="accessibiliteModif" name="accessibilite" method="post" action="{{ url_for('wiki_accessibilite', id=universite.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ accessibilite.hidden_tag() }}
+                      {{ accessibilite.texte(cols="100", rows="5") }}<br>
+                      {% for error in accessibilite.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ accessibilite.enregistrer() }}</p>
+                <button id="accessibiliteButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#accessibiliteData, #accessibiliteModif, #accessibiliteButton1, #accessibiliteButton2" aria-expanded="false" aria-controls="accessibiliteData accessibiliteModif">Annuler</button>
+            </form>
+            <div id="accessibiliteButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accessibiliteData, #accessibiliteModif, #accessibiliteButton1, #accessibiliteButton2" aria-expanded="false" aria-controls="accessibiliteData accessibiliteModif">Modifier/Ajouter</button>
+            </div>
         </div>
       </div>
     </div>
+    
     <div class="card card-red">
       <div class="card-body" id="logement">
-          <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#logementCollapse" aria-expanded="true" aria-controls="logementCollapse">
+          <button class="btn btn-link text-danger" data-toggle="collapse" data-target="#logementCollapse, #logementData, #logementButton2" aria-expanded="true" aria-controls="logementCollapse">
             <h3 class="card-title card-red text-danger">Logement</h3>
           </button>
           <div id="logementCollapse" class="collapse card-body" aria-labelledby="logement">
-              {{ Article.get_markup_for(universite.logement) }}
-              <a href="#" class="card-link">Modifier/Ajouter</a>
+            <div class="collapse multi-collapse" id="logementData">
+                {{ Article.get_markup_for(universite.logement) }}
+            </div>
+            <form class="collapse multi-collapse" id="logementModif" name="logement" method="post" action="{{ url_for('wiki_logement', id=universite.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ logement.hidden_tag() }}
+                      {{ logement.texte(cols="100", rows="5") }}<br>
+                      {% for error in logement.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ logement.enregistrer() }}</p>
+                <button id="logementButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#logementData, #logementModif, #logementButton1, #logementButton2" aria-expanded="false" aria-controls="logementData logementModif">Annuler</button>
+            </form>
+            <div id="logementButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#logementData, #logementModif, #logementButton1, #logementButton2" aria-expanded="false" aria-controls="logementData logementModif">Modifier/Ajouter</button>
+            </div>
           </div>
       </div>
     </div>
+    
     <div class="card border-primary">
       <div class="card-body" id="ambiance">
-          <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#ambianceCollapse" aria-expanded="true" aria-controls="ambianceCollapse">
+          <button class="btn btn-link text-primary" data-toggle="collapse" data-target="#ambianceCollapse, #ambianceData, #ambianceButton2" aria-expanded="true" aria-controls="ambianceCollapse">
             <h3 class="card-title card-blue text-primary">Sorties et Ambiance</h3>
           </button>
           <div id="ambianceCollapse" class="collapse card-body" aria-labelledby="ambiance">
-              {{ Article.get_markup_for(universite.ambiance) }}
-              <a href="#" class="card-link">Modifier/Ajouter</a>
+            <div class="collapse multi-collapse" id="ambianceData">
+                {{ Article.get_markup_for(universite.ambiance) }}
+            </div>
+            <form class="collapse multi-collapse" id="ambianceModif" name="ambiance" method="post" action="{{ url_for('wiki_ambiance', id=universite.pk) }}">
+                <div class="form-group row">
+                  <div class="col-10">
+                      {{ ambiance.hidden_tag() }}
+                      {{ ambiance.texte(cols="100", rows="5") }}<br>
+                      {% for error in ambiance.texte.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+                </div>
+                <p>{{ ambiance.enregistrer() }}</p>
+                <button id="ambianceButton1" class="btn btn-link" type="button" data-toggle="collapse" data-target="#ambianceData, #ambianceModif, #ambianceButton1, #ambianceButton2" aria-expanded="false" aria-controls="ambianceData ambianceModif">Annuler</button>
+            </form>
+            <div id="ambianceButton2" class="multi-collapse collapse">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#ambianceData, #ambianceModif, #ambianceButton1, #ambianceButton2" aria-expanded="false" aria-controls="ambianceData ambianceModif">Modifier/Ajouter</button>
+            </div>
           </div>
       </div>
     </div>
