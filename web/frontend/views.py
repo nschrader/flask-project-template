@@ -19,10 +19,10 @@ def pays(id):
     dtos = VoeuxByUniversityDTO.get_for_pays(pays)
 
     filter_form = FilterForm()
-    vie_pratique = WikiForm (texte = Article.get_markup_for(pays.vie_pratique))
-    tourisme = WikiForm (texte = Article.get_markup_for(pays.tourisme))
-    culture = WikiForm (texte = Article.get_markup_for(pays.culture))
-    climat = WikiForm (texte = Article.get_markup_for(pays.climat))
+    vie_pratique = WikiForm (texte = Article.get_article_text(pays.vie_pratique))
+    tourisme = WikiForm (texte = Article.get_article_text(pays.tourisme))
+    culture = WikiForm (texte = Article.get_article_text(pays.culture))
+    climat = WikiForm (texte = Article.get_article_text(pays.climat))
 
     if request.method == 'POST' and filter_form.validate_on_submit() :
         if filter_form.is_tous_departements() :
@@ -50,7 +50,7 @@ def pays(id):
 @login_required
 def wiki_vie_pratique(id) :
     pays = Pays.objects.id_or_404(id)
-    vie_pratique = WikiForm (texte = Article.get_markup_for(pays.vie_pratique))
+    vie_pratique = WikiForm (texte = Article.get_article_text(pays.vie_pratique))
     if request.method == 'POST' and vie_pratique.validate_on_submit() :
         pays.vie_pratique = Article(text=vie_pratique.texte.data)
         pays.save()
@@ -62,7 +62,7 @@ def wiki_vie_pratique(id) :
 @login_required
 def wiki_tourisme(id) :
     pays = Pays.objects.id_or_404(id)
-    tourisme = WikiForm (texte = Article.get_markup_for(pays.tourisme))
+    tourisme = WikiForm (texte = Article.get_article_text(pays.tourisme))
     if request.method == 'POST' and tourisme.validate_on_submit() :
         pays.tourisme = Article(text=tourisme.texte.data)
         pays.save()
@@ -74,7 +74,7 @@ def wiki_tourisme(id) :
 @login_required
 def wiki_culture(id) :
     pays = Pays.objects.id_or_404(id)
-    culture = WikiForm (texte = Article.get_markup_for(pays.culture))
+    culture = WikiForm (texte = Article.get_article_text(pays.culture))
     if request.method == 'POST' and culture.validate_on_submit() :
         pays.culture = Article(text=culture.texte.data)
         pays.save()
@@ -86,7 +86,7 @@ def wiki_culture(id) :
 @login_required
 def wiki_climat(id) :
     pays = Pays.objects.id_or_404(id)
-    climat = WikiForm (texte = Article.get_markup_for(pays.climat))
+    climat = WikiForm (texte = Article.get_article_text(pays.climat))
     if request.method == 'POST' and climat.validate_on_submit() :
         pays.climat = Article(text=climat.texte.data)
         pays.save()
@@ -110,10 +110,10 @@ def universite(id):
     univ = Universite.objects.id_or_404(id)
     dto = VoeuxByUniversityDTO.get_for_universite(id)
 
-    cours = WikiForm (texte = Article.get_markup_for(univ.cours))
-    accessibilite = WikiForm (texte = Article.get_markup_for(univ.accessibilite))
-    logement = WikiForm (texte = Article.get_markup_for(univ.logement))
-    ambiance = WikiForm (texte = Article.get_markup_for(univ.ambiance))
+    cours = WikiForm (texte = Article.get_article_text(univ.cours))
+    accessibilite = WikiForm (texte = Article.get_article_text(univ.accessibilite))
+    logement = WikiForm (texte = Article.get_article_text(univ.logement))
+    ambiance = WikiForm (texte = Article.get_article_text(univ.ambiance))
 
     return render_template('frontend/universite.html',
         universite=univ,
@@ -130,48 +130,48 @@ def universite(id):
 @login_required
 def wiki_cours(id) :
     univ = Universite.objects.id_or_404(id)
-    cours = WikiForm (texte = Article.get_markup_for(univ.cours))
+    cours = WikiForm (texte = Article.get_article_text(univ.cours))
     if request.method == 'POST' and cours.validate_on_submit() :
         univ.cours = Article(text=cours.texte.data)
         univ.save()
         flash("Vos modifications ont été enregistrées", category='success')
-    return redirect(url_for('univ', id=id))
+    return redirect(url_for('universite', id=id))
 
 
 @app.route('/universite/<id>/accessibilite', methods=['POST'])
 @login_required
 def wiki_accessibilite(id) :
     univ = Universite.objects.id_or_404(id)
-    accessibilite = WikiForm (texte = Article.get_markup_for(univ.accessibilite))
+    accessibilite = WikiForm (texte = Article.get_article_text(univ.accessibilite))
     if request.method == 'POST' and accessibilite.validate_on_submit() :
         univ.accessibilite = Article(text=accessibilite.texte.data)
         univ.save()
         flash("Vos modifications ont été enregistrées", category='success')
-    return redirect(url_for('univ', id=id))
+    return redirect(url_for('universite', id=id))
 
 
 @app.route('/universite/<id>/logement', methods=['POST'])
 @login_required
 def wiki_logement(id) :
     univ = Universite.objects.id_or_404(id)
-    logement = WikiForm (texte = Article.get_markup_for(univ.logement))
+    logement = WikiForm (texte = Article.get_article_text(univ.logement))
     if request.method == 'POST' and logement.validate_on_submit() :
         univ.logement = Article(text=logement.texte.data)
         univ.save()
         flash("Vos modifications ont été enregistrées", category='success')
-    return redirect(url_for('univ', id=id))
+    return redirect(url_for('universite', id=id))
 
 
 @app.route('/universite/<id>/ambiance', methods=['POST'])
 @login_required
 def wiki_ambiance(id) :
     univ = Universite.objects.id_or_404(id)
-    ambiance = WikiForm (texte = Article.get_markup_for(univ.ambiance))
+    ambiance = WikiForm (texte = Article.get_article_text(univ.ambiance))
     if request.method == 'POST' and ambiance.validate_on_submit() :
         univ.ambiance = Article(text=ambiance.texte.data)
         univ.save()
         flash("Vos modifications ont été enregistrées", category='success')
-    return redirect(url_for('univ', id=id))
+    return redirect(url_for('universite', id=id))
 
 
 @app.route('/ajout')
