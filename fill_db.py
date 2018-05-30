@@ -41,7 +41,7 @@ de = Pays(
     climat=Article(text="Plutôt froid en hiver, doux en été"),
     culture=Article(text="Soyez le premier à rédiger un avis"),
     vie_pratique=Article(text="""
-    
+
 * Banques : elles sont généralement ouvertes du lundi au vendredi de 9h à 13h et de 14h30 à 16h ou 17h30.
 
 * Magasins : l'Allemagne imite ses voisins européens et les Länder autorisent désormais les magasins à rester ouverts jusqu’à 20h (Bavière, Sarre, Saxe-Anhalt, Thuringe), 22h (Mecklembourg-Poméranie occidentale, Rhénanie-du-Nord-Westphalie, Rhénanie-Palatinat, Saxe) ou minuit (les autres) en semaine et le samedi. Attention : ce ne sont que les grands magasins et les supermarchés qui peuvent s'offrir de tels horaires, tandis que les pharmacies,  les boulangeries et commerces spécialisés ferment vers 18h en semaine et entre 13h et 14h le samedi (même si là aussi, les horaires d’ouverture tendent à s’allonger, surtout dans les grandes villes). L'ouverture dominicale reste aléatoire et dépend beaucoup de la réglementation de chaque Land.
@@ -49,11 +49,11 @@ de = Pays(
 * Poste : les bureaux sont généralement ouverts du lundi au vendredi de 9h à 18h et le samedi de 9h à 12h. Dans les gares des grandes villes et dans les aéroports, ils restent ouverts plus longtemps et parfois même le dimanche.
 """),
     tourisme=Article(text="""
-    
-* Berlin : De sa mode jusqu'à son architecture en passant par sa riche histoire politique, Berlin est une ville d'avant-garde. Le mur de Berlin est un triste rappel de l'atmosphère pesante qui planait sur la ville après la guerre. Malgré tout, les graffitis qui recouvrent désormais ce qu'il en reste sont devenus le symbole du progrès social. Partez découvrir le Weltzeituhr, horloge universelle surmontée d'une reproduction du système solaire, puis remontez le temps à l'occasion d'un dîner au Zur Letzten Instanz, restaurant dont l'origine remonte au XVIe siècle et qui a compté Napoléon et Beethoven parmi ses clients. 
-    
-* Munich : C'est tout le charme bavarois qui se dégage de Munich. Si vous aimez la bière, rendez-vous directement à la Hofbräuhaus, le paradis du houblon, qui produit les meilleures bières depuis 1589. Cette boisson est une véritable légende pendant l'Oktoberfest, la fête de la bière, à l'occasion de laquelle vous pouvez déguster des bières locales et des spécialités gastronomiques allemandes. Ensuite, partez sur les traces des athlètes internationaux au Parc Olympique ! Vous pourrez réveiller votre âme de champion au cours d'une séance de patinage sur la patinoire olympique. Et ne manquez pas de faire un tour sur la Marienplatz pour observer les passants et pour admirer le Glockenspiel de l'Hôtel de Ville. 
-    
+
+* Berlin : De sa mode jusqu'à son architecture en passant par sa riche histoire politique, Berlin est une ville d'avant-garde. Le mur de Berlin est un triste rappel de l'atmosphère pesante qui planait sur la ville après la guerre. Malgré tout, les graffitis qui recouvrent désormais ce qu'il en reste sont devenus le symbole du progrès social. Partez découvrir le Weltzeituhr, horloge universelle surmontée d'une reproduction du système solaire, puis remontez le temps à l'occasion d'un dîner au Zur Letzten Instanz, restaurant dont l'origine remonte au XVIe siècle et qui a compté Napoléon et Beethoven parmi ses clients.
+
+* Munich : C'est tout le charme bavarois qui se dégage de Munich. Si vous aimez la bière, rendez-vous directement à la Hofbräuhaus, le paradis du houblon, qui produit les meilleures bières depuis 1589. Cette boisson est une véritable légende pendant l'Oktoberfest, la fête de la bière, à l'occasion de laquelle vous pouvez déguster des bières locales et des spécialités gastronomiques allemandes. Ensuite, partez sur les traces des athlètes internationaux au Parc Olympique ! Vous pourrez réveiller votre âme de champion au cours d'une séance de patinage sur la patinoire olympique. Et ne manquez pas de faire un tour sur la Marienplatz pour observer les passants et pour admirer le Glockenspiel de l'Hôtel de Ville.
+
     """),
     continent=eu
 ).saveAndGet()
@@ -153,7 +153,7 @@ tu_b = Universite(
 kit = Universite(
     nom="KIT",
     cours=Article(text="""Se trouve à Karlsruhe.
-    
+
 La recherche: au-delà des cursus d’études intégrées, le KIT offre la possibilité de développer des coopérations en recherche avec le soutien de l’UFA. Au KIT, il est possible de réaliser une thèse en cotutelle par ex. dans le cadre d’une école doctorale franco-allemande. Les doctorants ont ainsi accès au monde de la recherche en France et en Allemagne. Des écoles d’été franco-allemandes donnent aux chercheurs de deux pays l’occasion de fructueux échanges.
 
 Le KIT dispose en outre d'un institut de recherche franco-allemand : Institut Franco-Allemand de Recherche sur l'Environnement (IFAR) """),
@@ -306,7 +306,7 @@ udg = Universite(
         Echange(accord=mxftc, departements=[yf, ge], places="12x1")
     ]
 ).saveAndGet()
-udg = Universite(
+sju = Universite(
     nom="Shanghai Jiaotong University",
     pays=ch,
     echanges=[
@@ -325,11 +325,11 @@ mm = Utilisateur(
     voeux_annee = 4,
     voeu_1=Voeu(
         semestre=1,
-        universite=uj
+        universite=dcu
     ),
     voeu_2=Voeu(
         semestre=2,
-        universite=udg
+        universite=sju
     )
 )
 mm.save()
@@ -345,11 +345,11 @@ pschmitt = Utilisateur(
     voeux_annee = 4,
     voeu_1=Voeu(
         semestre=1,
-        universite=uj
+        universite=dcu
     ),
     voeu_2=Voeu(
         semestre=2,
-        universite=udg
+        universite=sju
     )
 )
 pschmitt.save()
