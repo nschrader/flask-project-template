@@ -191,8 +191,6 @@ def suppr_accord(id):
 def voeux():
     filter_form = FilterForm()
     form = VoeuxForm()
-    form.universite_1.choices = Universite.get_choices_with_departement(current_user.departement)
-    form.universite_2.choices = Universite.get_choices_with_departement(current_user.departement)
     enregistre = False
     dtos = UniversityByPaysDTO.get()
     if request.method == 'POST' and filter_form.validate_on_submit() :
@@ -217,6 +215,8 @@ def voeux():
         )
         enregistre = True
 
+    form.universite_1.choices = Universite.get_choices_with_departement(current_user.departement)
+    form.universite_2.choices = Universite.get_choices_with_departement(current_user.departement)
     return render_template('frontend/voeux.html', form=form, del_form=DeleteVoeuxForm(), enregistre=enregistre, pays_dtos=dtos, filter_form=filter_form)
 
 

@@ -21,11 +21,5 @@ class Universite(Audit, Document):
 
     @classmethod
     def get_choices_with_departement(cls, departement):
-        unis = [(univ.pk, univ.nom) for univ in cls.objects.all() if [d for e in univ.echanges for d in e.departements if d.nom == departement.nom]]
+        unis = [(univ.pk, univ.nom) for univ in cls.objects.all() if [d for e in univ.echanges for d in e.departements if d == departement]]
         return sorted(unis, key=lambda x: x[1])
-
-    #@classmethod
-    #def get_all_echanges(cls):
-    #    [(p.pk, p.nom) for p in Pays.objects.all()]
-    #    [cls.objects(id=p.pk)for id in p.pk]
-    #    return [(u, e) for u in us for e in u.echanges]

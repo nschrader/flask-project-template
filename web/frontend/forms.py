@@ -27,7 +27,6 @@ class WikiForm(FlaskForm):
 
 class VoeuxForm(FlaskForm):
     universite_1 = SelectField("Université:", choices=Universite.get_choices(), coerce=ObjectId, validators=[DataRequired()])
-    #universite_1 = SelectField("Université:", coerce=ObjectId, validators=[DataRequired()])
     universite_2 = SelectField("Université:", choices=Universite.get_choices(), coerce=ObjectId, validators=[DataRequired()])
     semestre_1 = SelectField("Semestre:", choices=Voeu.get_semestre_choices(), validators=[DataRequired()])
     semestre_2 = SelectField("Semestre:", choices=Voeu.get_semestre_choices(), validators=[DataRequired()])
