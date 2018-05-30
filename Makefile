@@ -21,3 +21,6 @@ run-mongo: dep-mongo
 kill-mongo: dep-mongo
 	! mongo --eval "quit()" || mongod --shutdown --logpath .log/mongo --dbpath .db
 	echo "Mongo is down"
+
+fill-mongo: run-mongo
+	python3 fill_db.py
